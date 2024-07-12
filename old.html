@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Translator System ft. Learn a Language</title>
+    <link rel="stylesheet" href="bootstrap-5.1.3/css/bootstrap.min.css">
+    <script src="bootstrap-5.1.3/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="fontawesome-free-6.2.0-web/fontawesome-free-6.2.0-web/css/all.css">
+    <style>
+      body {
+        background-color: #F8F8F8;
+        font-family: Arial, sans-serif;
+      }
+      nav {
+        background-color: white;
+      }
+      .hero-content {
+        padding: 50px 0;
+      }
+      .tagline {
+        font-size: 50px;
+        font-weight: bold;
+        color: blue;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .hero-text {
+        text-align: center;
+      }
+      .hero-images {
+        text-align: center;
+      }
+      h1 {
+        font-size: 36px;
+        margin-bottom: 20px;
+      }
+      .statement1 {
+        font-size: 18px;
+        line-height: 1.6;
+      }
+      .contact{
+        text-align: left;
+        justify-content: center;
+      }
+      input::placeholder{
+        text-align: center;
+      }
+      p{
+        font-size: 18.5px;
+      }
+      .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px 0;
+    }
+    .footer p {
+      margin-bottom: 0;
+    }
+    </style>
+</head>
+<body class = "form-control">
+    <div class = "navi">
+      <nav class="navbar navbar-expand-sm navbar-dark" style="border-style: ridge;">
+          <div class="container-fluid">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link text-dark" href="#about"><i class = "fas fa-house"></i> About Us</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-dark" href="#contact"><i class = "fas fa-phone-flip"></i> Contact Us</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-dark" href="#company"><i class = "fas fa-building"></i> Company Profile</a>
+                </li>
+                </ul>
+              </div>
+              <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+                  <ul class="navbar-nav">
+                      <li class="nav-item">
+                          <a class="nav-link text-dark" href="" data-bs-toggle="modal" data-bs-target="#SignUpModal"><i class="fas fa-user"></i>Sign-Up</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link text-dark" href="" data-bs-toggle="modal" data-bs-target="#LoginModal"><i class="fas fa-right-to-bracket"></i> Log-In</a>
+                      </li>
+                  </ul>
+                  <a class="navbar-brand" href="home.php">
+                      <img src="images/logoo.png" height="50px" class="rounded-pill" alt="Logo">
+                  </a>
+              </div>
+          </div>
+      </nav>
+    </div>
+
+    <section id = "about" class = "animated">
+      <div class="container">
+          <div class="hero-content">
+              <p class="tagline">Breaking Barriers, Connecting Cultures</p>
+              <div class="hero-text">
+                  <h1>Language Translator ft. Learn a Language</h1>
+                  <div class="statement1">
+                      <p>Welcome to our revolutionary Language Translator System, designed to break down barriers and open doors to communication across the globe. With our cutting-edge technology, learning a new language has never been easier.</p>
+                      <p>Our intuitive system empowers users to effortlessly translate text with just a few clicks or taps. Whether you're a seasoned traveler, a global business professional, or simply passionate about exploring new cultures, our Language Translator System is your ultimate companion.</p>
+                      <p>Say goodbye to language barriers and hello to a world of endless possibilities. Join our community of language enthusiasts and embark on a journey of discovery, connection, and growth. With our Language Translator System, the world is at your fingertips. Start exploring today!</p>
+                  </div>
+              </div>
+              <div class="hero-images">
+                  <!-- Add your images here -->
+              </div>
+              <div class="clearfix"></div>
+          </div>
+      </div>
+    </section>
+
+    <section id="contact" class="animated">
+    <div class = "container">
+        <form  id = "ContactForm">
+          <div class = "row h-100 justify-content-center align-items-center">
+            <div class = "col-md-5">
+              <div class = "row mt-3">
+                <div class="col-md-10">
+               <h1><i class = "fas fa-phone-flip"></i> Contact Us!</h1>
+                    <label>Name: </label>
+                      <input type="text" name="nme" id = "nme" class="form-control">
+                  </div>
+                </div>
+                <div class = "row mt-3">
+                  <div class="col-md-10">
+                      <label>Email Address: </label>
+                       <input type="email" name="email" id = "email" class="form-control">
+                  </div>
+                </div>
+                <div class = "row mt-3">
+                  <div class="col-md-10">
+                     <label>Message: </label>
+                     <textarea id="mess" name="mess" id = "mess" rows="4" cols="50"></textarea>
+                  </div>
+              </div>
+              </form>
+              <div class = "row mt-3">
+                <div class = "col-md-6">
+                  <button class = "button" type = "button" id="sendmsg" class = "form-control btn btn-warning">SUBMIT</button>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+</section>
+
+<section id = "company" class = "form-control">
+  <div class = "container p-4 form-control">
+    <h1 class = "text-center" style = "font-family: Century Gothic; font-weight: bold;"><i class = "fas fa-building"></i> Company Profile</h1>
+    <div class = "row mt-3">
+      <div class = "col-md-6">
+        <img src = "images/logoo.png" class = "rounded-circle">
+      </div>
+      <div class = "col-md-6">
+        <p>Prem Tech Industries is a trailblazing creative technology company, sculpting imaginative and immersive experiences in the digital realm.</p>
+        <p>Established in 2009, our dynamic team of visionaries and technologists have consistently pushed the boundaries of creativity and innovation, shaping a landscape where technology becomes a canvas for artistic expression and limitless possibilities.</p>
+
+        <h2 class = "text-center" style = "font-family: Century Gothic; font-weight: bold;">Mission</h2>
+          <p>At Prem Tech Industries, our mission is to merge the worls of art and technology, creating experiences that captivate, inspire, and redefine conventional boundaries.</p>
+          <p>We are dedicated to pioneering groundbreaking creative solutions that not only push the limits of technological capabilities but also spark the imagination of those who engage with our creations.</p>
+      </div>
+   </div>
+</section>
+
+
+    <!-- Modal for Sign Up-->
+      <form id = "SignUpForm">
+        <div class="modal fade" id="SignUpModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered class -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" id="staticBackdropLabel"><b><i class="fas fa-user ms-2"></i> Sign-Up</b></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center"> <!-- Added text-center class -->
+                        <div class="row justify-content-center"> <!-- Centered content horizontally -->
+                           <div class="col-md-10">
+                                <label>First Name</label>
+                                <input type="text" id="fn" class="form-control text-center">
+                            </div>
+                            <div class="col-md-10">
+                                <label>Last Name</label>
+                                <input type="text" id="ln" class="form-control text-center">
+                            </div>
+                            <div class="col-md-10">
+                                <label>Enter Email</label>
+                                <input type="email" id="un" class="form-control text-center">
+                            </div>
+                            <div class="col-md-10">
+                                <label>Enter Password</label>
+                                <input type="password" id="pw" class="form-control text-center">
+                            </div>
+                            <div class="col-md-10">
+                                <label>Re-Enter Password</label>
+                                <input type="password" id="rpw" class="form-control text-center">
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                    <div class="modal-footer justify-content-center"> <!-- Centered footer buttons -->
+                        <button type="button" id = "signup" class="btn btn-info rounded-pill text-white"><i class="fas fa-right-to-bracket ms-2 text-dark"></i> Sign-Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- Modal for Log-In-->
+    <div class="modal fade" id="LoginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog/ntered"> <!-- Added modal-dialog-centered class -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="staticBackdropLabel"><b><i class="fas fa-user ms-2"></i> Log-In</b></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center"> <!-- Added text-center class -->
+                    <div class="row justify-content-center"> <!-- Centered content horizontally -->
+                        <div class="col-md-10">
+                            <label>Enter Username</label>
+                            <input type="text" id="uname" class="form-control text-center">
+                        </div>
+                        <div class="col-md-10 mt-3">
+                            <label>Enter Password</label>
+                            <input type="password" id="pword" class="form-control text-center">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center"> <!-- Centered footer buttons -->
+                    <button type="button" onclick="planupdate()" class="btn btn-info rounded-pill text-white"><i class="fas fa-right-to-bracket ms-2 text-dark"></i> Log-In</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="footer text-center">
+    <div class="container">
+      <p>&copy; 2024 Prem Tech Industries. All rights reserved.</p>
+      <p>Designed by Prem Tech Industries Inc.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
+
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"></script>
+
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+  import { getDatabase, ref, push, set, update, child} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, setPersistence, browserLocalPersistence, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCI3oijW8nfrlaULCmXtT2y67jRp_TcqI8",
+    authDomain: "ltsystem-822ea.firebaseapp.com",
+    databaseURL: "https://ltsystem-822ea-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "ltsystem-822ea",
+    storageBucket: "ltsystem-822ea.appspot.com",
+    messagingSenderId: "70818669647",
+    appId: "1:70818669647:web:8c1bcbff4db5b152ffb63a",
+    measurementId: "G-CF1CX2ZE4Y"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const auth = getAuth();
+
+  // var ContactFormDB = ref(db, 'ContactForm');
+
+  //       document.getElementById('ContactForm').addEventListener('submit', submitForm);
+
+  //       function submitForm(e){
+  //           e.preventDefault();
+
+  //           var nme = getElementVal("nme");
+  //           var email = getElementVal("email");
+  //           var mess = getElementVal("mess");
+
+  //           savecontact(nme, email, mess);
+
+  //           document.querySelector('.alert').style.display="block";
+
+  //           setTimeout(() => {
+  //               document.querySelector('.alert').style.display="none";
+  //           }, 3000);
+
+  //           document.getElementById('ContactForm').reset();
+
+  //       }
+
+  //       const savecontact = (nme, email, mess) => {
+  //           var newContactForm = push(ContactFormDB);
+
+  //           set(newContactForm, {
+  //               nme: nme,
+  //               email: email,
+  //               mess: mess,
+  //           });
+  //       }
+
+  //       const getElementVal = (id) => {
+  //           return document.getElementById(id).value;
+  //       };
+
+      document.getElementById("sendmsg").addEventListener('click',(e) => {
+            set(ref(db, 'contact/' + document.getElementById("nme").value),
+            {
+                name: document.getElementById("nme").value,
+                email: document.getElementById("email").value,
+                message: document.getElementById("mess").value
+            });
+            document.getElementById("ContactForm").reset()
+            alert("Message Sent!");
+        })
+
+      signup.addEventListener('click', (e) =>{
+        var email = document.getElementById("un").value;
+        var password = document.getElementById("pw").value;
+
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed up 
+          const user = userCredential.user;
+          set(ref(db, 'signup/' + document.getElementById("fn").value),
+            {
+                firstname: document.getElementById("fn").value,
+                lastname: document.getElementById("ln").value,
+                email: document.getElementById("un").value,
+                repass: document.getElementById("rpw").value,
+                password: document.getElementById("pw").value
+            });
+            document.getElementById("SignUpForm").reset()
+            alert("Sign-Up Successful!");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+
+          alert(errorMessage);
+          // ..
+        });
+      })
+
+      /*login.addEventListener('click', (e) =>{
+        var email = document.getElementById('uname').value;
+        var password = document.getElementById('pword').value;
+        signInWithEmailAndPassword(auth, email, password);
+        .then((userCredential) => {
+          //Signed in
+          const user = userCredential.user;
+          const dt = new Date();
+          if(user.uid === "A69gRKhnmOghMy72QPaQXWoXVMB3"){
+            update(ref(db, 'signup/' + user.uid),
+            {
+              last_login: dt.toString()
+            });
+              alert("Login Success");
+              window.location.href = "index.html";
+          }
+          else{
+            update(ref(db, 'signup/' + user.uid),
+            {
+              last_login: dt.toString()
+            });
+              alert("Login Success");
+              window.location.href = "profile.html";
+          }
+        })
+          .catch((error) =>{
+            const errorCode = error.code;
+            const errorMessage = error.message;
+
+            alert(errorMessage);
+          });
+      })*/
+
+
+</script>

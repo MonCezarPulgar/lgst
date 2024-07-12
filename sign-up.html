@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* added */
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            padding: 10px 20px;
+        }
+
+        .logo {
+            color: #ff7200;
+            font-size: 35px;
+            font-family: Arial;
+            float: left;
+            margin-top: 10px; /* adjusted */
+        }
+
+        .menu {
+            float: right; /* adjusted */
+            margin-top: 10px; /* adjusted */
+        }
+
+        ul {
+            list-style-type: none; /* changed */
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        ul li {
+            display: inline-block;
+            margin-left: 20px;
+        }
+
+        ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        ul li a:hover {
+            background-color: #555;
+        }
+
+        ul li a.active {
+            background-color: #555; /* Change background color for active link */
+        }
+
+        .content {
+            text-align: center; /* added */
+            padding: 20px;
+        }
+
+        .content h1 {
+            font-size: 32px; /* adjusted */
+            color: #333;
+        }
+
+        .content p {
+            max-width: 80%;
+            margin: 20px auto; /* adjusted */
+            font-size: 18px;
+            color: #555;
+        }
+
+        .content img {
+            max-width: 30%; /* adjusted */
+            height: auto; /* adjusted */
+            margin-top: 20px;
+        }
+
+        @media screen and (max-width: 830px) {
+            .main {
+                height: 180vh;
+            }
+
+            .card {
+                width: 80%; /* Adjusted */
+            }
+        }
+
+        .card {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 290px;
+            margin: 0 auto; /* Center the card horizontally */
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+
+        .card h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        .input:focus {
+            border-color: #ff7200;
+        }
+
+        .submit {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff7200;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit:hover {
+            background-color: #555;
+        }
+
+        .alert {
+            display: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .alert-un {
+            display: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: white;
+            font-size: 10px;
+            margin-top: 0px;
+            background-color: #f44336;
+        }
+
+        .alert-email {
+            display: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: white;
+            font-size: 10px;
+            margin-top: 0px;
+            background-color: #f44336;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            float: right;
+            margin-top:10px;
+        }
+
+        @media screen and (max-width: 600px) {
+            /* Adjustments for smaller screens */
+
+            .menu {
+                display: none;
+                float: none;
+                margin-top: 50px;
+                text-align: center;
+            }
+
+            .menu.active {
+                display: block;
+            }
+
+            ul li {
+                display: block;
+                margin: 10px 0;
+            }
+
+            ul li a {
+                padding: 10px;
+            }
+
+            .card {
+                width: 95%; /* Adjust width for smaller screens */
+                margin-top: 10px; /* Adjust margin-top for smaller screens */
+            }
+        }
+
+        @media screen and (min-width: 601px) {
+            .menu-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="navbar">
+            <div class="logo">CBI</div>
+            <button class="menu-btn">&#9776;</button>
+            <div class="menu">
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="about.html">ABOUT</a></li>
+                    <li><a href="features.html">FEATURES</a></li>
+                    <li><a href="contactus.html">CONTACT US</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="card">
+                <h2>Sign Up</h2>
+                <div class="alert">Sign-Up Successful</div>
+                <form id="SignUpForm">
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input class="input" type="text" id="username" name="username" required>
+                        <div class="alert-un">Username is already in use</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input class="input" type="email" id="email" name="email" required>
+                        <div class="alert-email">Email is already in use</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input class="input" type="password" id="password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password:</label>
+                        <input class="input" type="password" id="confirmPassword" name="confirmPassword" required>
+                    </div>
+                    <button class="submit" type="submit">Sign Up</button>
+                </form>
+            </div>
+        </div>
+
+        <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+            import { getDatabase, ref, set, get} from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
+            import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyC0G_j3Dw7Etr2Uknx0Ph3IaLO7CAT4cIA",
+                authDomain: "cbis-b1a5d.firebaseapp.com",
+                databaseURL: "https://cbis-b1a5d-default-rtdb.asia-southeast1.firebasedatabase.app",
+                projectId: "cbis-b1a5d",
+                storageBucket: "cbis-b1a5d.appspot.com",
+                messagingSenderId: "792428340861",
+                appId: "1:792428340861:web:592e62a02c8f282bfb3314",
+                measurementId: "G-65J0TPZT22"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const db = getDatabase(app);
+            const auth = getAuth();
+
+           document.getElementById('SignUpForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                var username = document.getElementById("username").value;
+                var email = document.getElementById("email").value;
+                var password = document.getElementById("password").value;
+                var confirmPassword = document.getElementById("confirmPassword").value;
+
+                // Check if passwords match
+                if (password !== confirmPassword) {
+                    alert("Passwords do not match!");
+                    document.getElementById("confirmPassword").style.borderColor = "red"; // Adding indicator for wrong confirmation
+                    return;
+                } else {
+                    document.getElementById("confirmPassword").style.borderColor = ""; // Resetting border color if passwords match
+                }
+
+                // Check if username or email already exists
+                const usersRef = ref(db, 'SignUp');
+                const snapshot = await get(usersRef);
+                let isUsernameTaken = false;
+                let isEmailTaken = false;
+
+                snapshot.forEach((childSnapshot) => {
+                    const userData = childSnapshot.val();
+                    if (userData.username === username) {
+                        isUsernameTaken = true;
+                    }
+                    if (userData.email === email) {
+                        isEmailTaken = true;
+                    }
+                });
+
+                if (isUsernameTaken) {
+                    document.querySelector('.alert-un').style.display = "block";
+                    setTimeout(() => {
+                        document.querySelector('.alert-un').style.display = "none";
+                    }, 4000); // Adjust the delay as needed
+                    return;
+                }
+                if (isEmailTaken) {
+                    document.querySelector('.alert-email').style.display = "block";
+                    setTimeout(() => {
+                        document.querySelector('.alert-email').style.display = "none";
+                    }, 4000); // Adjust the delay as needed
+                    return;
+                }
+
+                // If username and email are not taken, proceed with user creation
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        // Signed up 
+                        const user = userCredential.user;
+
+                        set(ref(db, 'SignUp/' + user.uid), {
+                            username: username,
+                            email: email,
+                            password: password,
+                        });
+
+                        document.querySelector('.alert').style.display = "block";
+
+                        setTimeout(() => {
+                            window.location.href = "index.html"; // Redirect to index.html after sign-up
+                        }, 4000); // Adjust the delay as needed
+
+                        document.getElementById('SignUpForm').reset();
+
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        // ..
+                        alert(errorMessage);
+                    });
+            });
+
+        </script>
+        <script>
+            document.querySelector('.menu-btn').addEventListener('click', function() {
+                document.querySelector('.menu').classList.toggle('active');
+            });
+        </script>
+    </div>
+</body>
+</html>

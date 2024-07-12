@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            padding: 10px 20px;
+        }
+
+        .logo {
+            color: #ff7200;
+            font-size: 35px;
+            font-family: Arial;
+            float: left;
+            margin-top: 10px;
+        }
+
+        .menu {
+            float: right;
+            margin-top: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        ul li {
+            display: inline-block;
+            margin-left: 20px;
+        }
+
+        ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        ul li a:hover {
+            background-color: #555;
+        }
+
+        ul li a.active {
+            background-color: #555;
+        }
+
+        /* Additional CSS styles for the unique content */
+.container {
+    text-align: center;
+    padding: 20px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 600px;
+    margin: 0 auto;
+    animation: slide-in 1s ease-out;
+}
+
+.content h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.content p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+@media screen and (max-width: 768px) {
+    .content h1 {
+        font-size: 2rem;
+    }
+
+    .content p {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    .content h1 {
+        font-size: 1.8rem;
+    }
+
+    .content p {
+        font-size: 0.9rem;
+    }
+}
+
+
+.menu-btn {
+    /* Remove display: none; */
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    float: right;
+    margin-top:10px;
+}
+
+@media screen and (max-width: 600px) {
+    /* Adjustments for smaller screens */
+    .menu {
+        display: none;
+        float: none; /* Remove the float */
+        margin-top:50px;
+        text-align: center; /* Center the menu items */
+    }
+
+    .menu.active {
+        display: block; /* Show the menu when active */
+    }
+
+    ul li {
+        display: block;
+        margin: 10px 0;
+    }
+
+    ul li a {
+        padding: 10px;
+    }
+}
+
+@media screen and (min-width: 601px) {
+    .menu-btn {
+        display: none;
+    }
+}
+
+@keyframes slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+    </style>
+</head>
+
+<body>
+<div class="main">
+    <div class="navbar">
+            <div class="logo">CBI</div>
+            <button class="menu-btn">&#9776;</button>
+        <div class="menu">
+            <ul>
+                <li><a href="userdashboard.html" class="active">HOME</a></li>
+                <li><a href="logout.html">LOG-OUT</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="card">
+        <div class="content">
+            <h1>Welcome to Barangay Insight</h1>
+            <p>Explore the heartbeat of your community with CommuniTrack's Barangay Insight. Here, you'll find the latest updates, events, and important information tailored specifically for residents like you.</p>
+            <p>Stay informed about local news, upcoming community projects, and engage with your neighbors to build a stronger, more connected barangay.</p>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyC0G_j3Dw7Etr2Uknx0Ph3IaLO7CAT4cIA",
+        authDomain: "cbis-b1a5d.firebaseapp.com",
+        databaseURL: "https://cbis-b1a5d-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "cbis-b1a5d",
+        storageBucket: "cbis-b1a5d.appspot.com",
+        messagingSenderId: "792428340861",
+        appId: "1:792428340861:web:592e62a02c8f282bfb3314",
+        measurementId: "G-65J0TPZT22"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const auth = getAuth();
+
+   auth.onAuthStateChanged(function(user) {
+        if (!user) {
+            // User is not logged in, redirect to homepage
+            window.location.href = "index.html";
+        } else {
+            // User is logged in, log user's credentials to console
+            console.log("User email:", user.email);
+            console.log("User UID:", user.uid);
+        }
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelector('.menu-btn').addEventListener('click', function() {
+            document.querySelector('.menu').classList.toggle('active');
+        });
+
+        // Prevent going back via browser's back button or changing URL manually
+        history.pushState(null, null, location.href);
+        window.onpopstate = function(event) {
+            history.go(1);
+        };
+    });
+</script>
+
+</body>
+</html>

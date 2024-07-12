@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+     body {
+        font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+        background-color: #333;
+        overflow: hidden;
+        padding: 10px 20px;
+    }
+
+   .logo {
+        color: #ff7200;
+        font-size: 35px;
+        font-family: Arial;
+        float: left;
+        margin-top: 10px;
+    }
+
+    .menu {
+        float: right;
+        margin-top: 10px;
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+   ul li {
+        display: inline-block;
+        margin-left: 20px;
+    }
+
+    ul li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    ul li a:hover {
+        background-color: #555;
+    }
+
+    ul li a.active {
+         background-color: #555;
+    }
+
+    .container {
+        text-align: center;
+        padding: 20px;
+    }
+
+    .container h1 {
+        font-size: 32px;
+        color: #333;
+    }
+
+    .user-info {
+        max-width: 80%;
+        margin: 20px auto;
+        font-size: 18px;
+        color: #555;
+    }
+
+    .user-info p {
+        margin-bottom: 10px;
+    }
+
+    .user-info img {
+        max-width: 20%;
+        height: auto;
+        margin-top: 20px;
+    }
+
+    .dashboard {
+        padding: 20px;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .card {
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: calc(33.33% - 20px); /* Adjust based on desired number of cards per row */
+        padding: 20px;
+        text-align: center;
+    }
+
+    .card h2 {
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .card-body {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .card-info {
+        flex: 1;
+        padding: 10px;
+    }
+
+    .card-info h3 {
+        color: #666;
+        margin-bottom: 5px;
+    }
+
+    .card-info p {
+        color: #333;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .card-dashboard {
+        font-size: 30px;
+        text-align:center;
+    }
+
+    @media screen and (max-width: 768px) {
+        .container {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card {
+            width: 100%;
+        }
+    }
+
+    @media screen and (max-width: 830px) {
+            .main {
+                height: 180vh;
+            }
+        }
+
+       .menu-btn {
+            /* Remove display: none; */
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            float: right;
+            margin-top:10px;
+        }
+
+        @media screen and (max-width: 600px) {
+            /* Adjustments for smaller screens */
+
+             .menu {
+                display: none;
+                float: none; /* Remove the float */
+                margin-top:50px;
+                text-align: center; /* Center the menu items */
+            }
+
+              .menu.active {
+                  display: block; /* Show the menu when active */
+              }
+
+              ul li {
+                  display: block;
+                  margin: 10px 0;
+              }
+
+              ul li a {
+                  padding: 10px;
+              }
+        }
+
+        @media screen and (min-width: 601px) {
+            .menu-btn {
+                display: none;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="logo">CBI</div>
+         <button class="menu-btn">&#9776;</button>
+    <div class="menu">
+        <ul>
+            <li><a href="admindashboard.html" class="active">HOME</a></li>
+            <li><a href="logout.html">LOG-OUT</a></li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="dashboard">
+    <div class="container">
+        <div class="card-dashboard">
+            <h1> Admin Dashboard </h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2>Total Summary of Population</h2>
+            <div class="card-body">
+                <div class="card-info">
+                    <h3>Total Population</h3>
+                    <p>24</p>
+                </div>
+                <div class="card-info">
+                    <h3>Male</h3>
+                    <p>12</p>
+                </div>
+                <div class="card-info">
+                    <h3>Female</h3>
+                    <p>12</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Complaints</h2>
+            <div class="card-body">
+                <div class="card-info">
+                    <h3>Total Complaints</h3>
+                    <p>4</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Upcoming Events</h2>
+            <div class="card-body">
+                <div class="card-info">
+                    <h3>Total Events</h3>
+                    <p>5</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyC0G_j3Dw7Etr2Uknx0Ph3IaLO7CAT4cIA",
+        authDomain: "cbis-b1a5d.firebaseapp.com",
+        databaseURL: "https://cbis-b1a5d-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "cbis-b1a5d",
+        storageBucket: "cbis-b1a5d.appspot.com",
+        messagingSenderId: "792428340861",
+        appId: "1:792428340861:web:592e62a02c8f282bfb3314",
+        measurementId: "G-65J0TPZT22"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const auth = getAuth();
+
+    auth.onAuthStateChanged(function(user) {
+        if (!user) {
+            // User is not logged in, redirect to homepage
+            window.location.href = "index.html";
+        } else {
+            // User is logged in, log user's credentials to console
+            console.log("User email:", user.email);
+            console.log("User UID:", user.uid);
+        }
+    });
+</script>
+
+<script>
+        document.querySelector('.menu-btn').addEventListener('click', function() {
+            document.querySelector('.menu').classList.toggle('active');
+        });
+</script>
+
+</body>
+</html>
