@@ -81,3 +81,19 @@
         </div>
     </body>
 </html>
+<?php
+include_once'Class/user.php';
+if(isset($_POST['btnadd'])){
+    $planid = $_POST['planid'];
+    $planname = $_POST['planname'];
+    $price = $_POST['price'];
+    $duration = $_POST['duration'];
+    $desc = $_POST['desc'];
+    $u = new User();
+    echo'
+        <script>
+            alert("'.$u->addplan($planid, $planname, $price, $duration, $desc).'");
+        </script>
+    ';
+}
+?>

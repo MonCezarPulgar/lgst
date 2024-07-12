@@ -9,5 +9,13 @@ Class User extends Database {
 			$this->conn->error;
 		}
     }
+    public function addplan($planid, $planname, $price, $duration, $desc){
+        $sql = "insert into plans values (NULL, '$planid','$planname','$price','$duration','$desc')";
+        if($this->conn->query($sql)){
+            return 'Plan Successfully Added!';
+        }else{
+            $this->conn->error;
+        }
+    }
 }
 ?>
