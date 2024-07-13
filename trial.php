@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payroll System</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         /* Custom styles for sidebar */
         .sidebar {
@@ -60,6 +59,15 @@
         <a href="" class="active"><img src="images/logoo.png" height="50px" class="rounded-pill"></a>
         <a href=""><i class="fas fa-house"></i> User Management</a>
         <a href="u"><i class="fas fa-person"></i> Language Management</a>
+        <div class="dropdown">
+            <a class="dropdown-toggle" href="plan.php" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-circle-info"></i> Plan
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item text-dark" href="plan.php">Add Plans</a></li>
+                <li><a class="dropdown-item text-dark" href="updateplan.php">Plan Management</a></li>
+            </ul>
+        </div>
 		<div class="dropdown">
             <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-circle-info"></i> Payment

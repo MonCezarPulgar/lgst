@@ -17,5 +17,10 @@ Class User extends Database {
             $this->conn->error;
         }
     }
+    public function displayplan(){
+        $sql = "select PlanId, PlanName, Price, Duration, Description from plans";
+        $data = $this->conn->query($sql);
+        return $data;
+    }
 }
 ?>
