@@ -22,5 +22,10 @@ Class User extends Database {
         $data = $this->conn->query($sql);
         return $data;
     }
+    public function displayusers(){
+        $sql = "select FirstName, MiddleName, LastName, Address, ZipCode, Birthdate, EmailAddress, Password, Role, Status from tbluser";
+        $data = $this->conn->query($sql);
+        return $data;
+    }
 }
 ?>
