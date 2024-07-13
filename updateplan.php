@@ -126,3 +126,39 @@
         document.getElementById("desc").value=desc;
     }
 </script>
+<?php
+include_once 'Class/User.php';
+if (isset($_POST['btnupdate'])) {
+    $planid = $_POST['planid'];
+    $planname = $_POST['planname'];
+    $price = $_POST['price'];
+    $duration = $_POST['duration'];
+    $desc = $_POST['desc'];
+    $u = new User();
+    $result = $u->planupdate($planid, $planname, $price, $duration, $desc);
+    echo '<script>
+        alert("' . $result . '");
+        window.location.href = window.location.href.split("?")[0] + "?refresh=1";
+    </script>';
+}
+if (isset($_GET['refresh'])) {
+    echo '<script>
+        window.history.replaceState(null, null, window.location.href.split("?")[0]);
+    </script>';
+}
+if (isset($_POST['btndelete'])) {
+    $planid = $_POST['planid'];
+    $u = new User();
+    $result = $u->deleteplan($planid);
+    echo '<script>
+        alert("' . $result . '");
+        window.location.href = window.location.href.split("?")[0] + "?refresh=1";
+    </script>';
+}
+if (isset($_GET['refresh'])) {
+    echo '<script>
+        window.history.replaceState(null, null, window.location.href.split("?")[0]);
+    </script>';
+}
+?>
+?>

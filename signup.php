@@ -236,7 +236,15 @@
                 <h2>Sign Up</h2>
                 <div class="alert">Sign-Up Successful</div>
                 <form action="signup.php" method = "POST">
+                <?php
+                        include 'generateuserid.php';
+                        $userID = generateUSERID();
+                    ?>
                 <div class = "row p-4">
+                        <div class = "col-md-12">
+                            <label><i class = "fas fa-user ms-2" ></i> UserId</label>
+                            <input type="text" name="userid" id="userid" class="form-control text-center" value="<?php echo $userID; ?>" readonly>
+                        </div>
                         <div class = "col-md-6">
                             <label><i class = "fas fa-user ms-2" ></i> First Name</label>
                             <input type="text" name = "fname" id = "fname" class = "form-control text-center">
@@ -286,6 +294,7 @@
 <?php
 include_once 'Class/user.php';
 if(isset($_POST['btnsignup'])){
+    $userid = $_POST['userid'];
     $fname = $_POST['fname'];
     $mname = $_POST['mname'];
     $lname = $_POST['lname'];
@@ -299,7 +308,7 @@ if(isset($_POST['btnsignup'])){
     if($pass == $con){
         echo'
             <script>
-                alert("'.$u->signup($fname, $mname, $lname, $addr, $zip, $bday, $email, $pass, $con).'");
+                alert("'.$u->signup($userid,$fname, $mname, $lname, $addr, $zip, $bday, $email, $pass, $con).'");
             </script>
         ';
     }else{

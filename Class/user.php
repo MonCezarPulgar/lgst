@@ -1,8 +1,8 @@
 <?php
 include_once 'database.php';
 Class User extends Database {
-    public function signup($fname, $mname, $lname, $addr, $zip, $bday, $email, $pass, $con){
-        $sql = "insert into tbluser values (NULL, '$fname','$mname','$lname','$addr','$zip','$bday','$email','$pass','$con','Tourist','Active')";
+    public function signup($userid,$fname, $mname, $lname, $addr, $zip, $bday, $email, $pass, $con){
+        $sql = "insert into tbluser values (NULL, '$userid','$fname','$mname','$lname','$addr','$zip','$bday','$email','$pass','$con','Tourist','Active')";
         if($this->conn->query($sql)){
 			return 'Signup Successful!';
 		}else{
@@ -23,9 +23,27 @@ Class User extends Database {
         return $data;
     }
     public function displayusers(){
-        $sql = "select FirstName, MiddleName, LastName, Address, ZipCode, Birthdate, EmailAddress, Password, Role, Status from tbluser";
+        $sql = "select UserId, FirstName, MiddleName, LastName, Address, ZipCode, Birthdate, EmailAddress, Password, Role, Status from tbluser";
         $data = $this->conn->query($sql);
         return $data;
+    }
+    public function deleteuser($userid){
+        $sql = "delete from tbluser where UserId = '$userid'";
+        $this->conn->query($sql);
+        return 'User has been deleted!';
+    }
+    public function planupdate($planid, $planname, $price, $duration, $desc){
+        $sql = "update plans set Planid = '$planid', PlanName = '$planname', Price = '$price', Duration = '$duration', Description = '$desc' where PlanId = '$planid'";
+        if($this->conn->query($sql)){
+            return 'Plan has been Updated!';
+        }else{
+            $this->conn->error;
+        }
+    }
+    public function deleteplan($planid){
+        $sql = "delete from plans where PlanId = '$planid'";
+        $this->conn->query($sql);
+        return 'Plan has been deleted!';
     }
 }
 ?>
