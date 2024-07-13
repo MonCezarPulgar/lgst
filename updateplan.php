@@ -64,8 +64,65 @@
                             ?>
                         </tbody>
                     </table>
+                    <!-- Modal for Update Plan-->
+                    <div class="modal fade" id="UpdateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-center" id="staticBackdropLabel"><b><i class = "fas fa-user ms-2"></i> Update Plan</b></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="planid" class="form-label">Plan ID</label>
+                                <input type="text" name="planid" id="planid" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="planname" class="form-label">Plan Name</label>
+                                <input type="text" name="planname" id="planname" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="price" class="form-label">Price</label>
+                                <input type="number" name="price" id="price" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="duration" class="form-label">Duration</label>
+                                <select name="duration" id="duration" class="form-control">
+                                    <option value="" selected disabled>Select Duration</option>
+                                    <option value="1 Month">1 Month</option>
+                                    <option value="6 Months">6 Months</option>
+                                    <option value="1 Year">1 Year</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="desc" class="form-label">Description</label>
+                                <textarea id="desc" name="desc" rows="4" class="form-control"></textarea>
+                            </div>
+                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" name = "btnupdate" class="btn btn-info rounded-pill text-white"><i class="fas fa-pen-to-square ms-2 text-dark"></i> Update</button>
+                                    <button type="submit" name = "btndelete" class="btn btn-danger rounded-pill"><i class="fas fa-trash ms-2 text-dark"></i> Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
     </body>
 </html>
+<script>
+    function displayplan(planid,planname,price,duration,desc){
+        document.getElementById("planid").value=planid;
+        document.getElementById("planname").value=planname;
+        document.getElementById("price").value=price;
+        document.getElementById("duration").value=duration;
+        document.getElementById("desc").value=desc;
+    }
+</script>
