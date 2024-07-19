@@ -45,5 +45,18 @@ Class User extends Database {
         $this->conn->query($sql);
         return 'Plan has been deleted!';
     }
+    public function AddContacts($name, $email1, $message){
+		$sql = "INSERT INTO contacts VALUES (NULL, '$name', '$email1', '$message')";
+		if($this->conn->query($sql)){
+			 return 'Contact Successfully Added';
+		 }else{
+			 return $this->conn->error;
+		 }
+	}
+    public function Login($email, $password){
+        $sql="select * from tbluser where EmailAddress='$email' and Password='$password'";
+        $data=$this->conn->query($sql);
+        return $data;
+    }
 }
 ?>
