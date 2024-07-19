@@ -1,15 +1,16 @@
 <?php
-session_start();
+
 include_once 'Class/user.php';
 
 $u = new User();
 
 // Handle contact form submission
 if (isset($_POST['btncontact'])) {
+    $conid = $_POST['conid'];
     $name = $_POST['name'];
     $email1 = $_POST['email1'];
     $message = $_POST['message'];
-    $result = $u->AddContacts($name, $email1, $message);
+    $result = $u->AddContacts($conid,$name, $email1, $message);
     echo '<script>alert("'.$result.'");</script>';
 }
 
@@ -20,22 +21,35 @@ if (isset($_POST['btnlogin'])) {
     $data = $u->Login($email, $password);
 
     if ($row = $data->fetch_assoc()) {
+        session_start();
         $_SESSION['role'] = $row['Role'];
         $_SESSION['id'] = $row['UserId'];
         $_SESSION['status'] = $row['Status'];
         if ($row['Role'] == 'Admin') {
-            echo '<script>window.location.href = "plan.php";</script>';
+            echo '
+                <script>
+                    window.location.href = "plan.php";
+                </script>';
         } else if ($row['Role'] == 'Tourist') {
-            echo '<script>window.location.href = "userprofile.php";</script>';
+            echo '
+                <script>
+                    window.location.href = "userprofile.php";
+                </script>';
         } else if ($row['Role'] == 'Employee') {
             if ($row['Status'] == 'Active') {
-                echo '<script>window.location.href = "profile.php";</script>';
+                echo '<script>
+                        window.location.href = "profile.php";
+                    </script>';
             } else {
-                echo '<script>alert("You are unauthorized to access this account!");</script>';
+                echo '<script>
+                        alert("You are unauthorized to access this account!");
+                    </script>';
             }
         }
     } else {
-        echo '<script>alert("Incorrect Username or Password!");</script>';
+        echo '<script>
+                alert("Incorrect Username or Password!");
+            </script>';
     }
 }
 ?>
@@ -475,6 +489,11 @@ if (isset($_POST['btnlogin'])) {
             <div class="form">
                 <h2>Get in Touch</h2>
                 <form method="POST">
+                <?php
+                        include 'generateconid.php';
+                        $conID = generateCONTACTID();
+                    ?>
+                    <input type="text" name="conid" placeholder="Your Name" value="<?php echo $conID; ?>" readonly>
                     <input type="text" name="name" placeholder="Your Name" required>
                     <input type="email" name="email1" placeholder="Your Email" required>
                     <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
