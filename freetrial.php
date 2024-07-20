@@ -284,7 +284,7 @@ if(isset($_POST['btnsignup'])){
     <div class="main-content">
         <!-- Removed login section -->
         <div class="translator">
-            <h1>PREMTRANSLATE: sample</h1>
+            <h1>PREMTRANSLATE: LANGUAGE TRANSLATOR</h1>
             <div class="columns">
                 <div class="column">
                     <h2>Select Language</h2>
