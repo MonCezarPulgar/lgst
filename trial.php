@@ -58,7 +58,7 @@
     <div class="sidebar">
         <a href="" class="active"><img src="images/logoo.png" height="50px" class="rounded-pill"></a>
         <a href="usermanagement.php"><i class="fas fa-house"></i> User Management</a>
-        <a href="../languages.php"><i class="fas fa-person"></i> Language Management</a>
+        <a href="languages.php"><i class="fas fa-house"></i> Language Management</a>
         <div class="dropdown">
             <a class="dropdown-toggle" href="plan.php" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-circle-info"></i> Plan

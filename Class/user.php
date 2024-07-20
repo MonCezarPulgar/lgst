@@ -67,5 +67,29 @@ Class User extends Database {
 			return $this->conn->error;
 		}
 	}
+    public function getLanguages() {
+        $sql = "SELECT * FROM languages";
+        $data = $this->conn->query($sql);
+        return $data;
+    }
+	
+	public function updatelanguage($lid, $language, $country){
+		$sql="Update languages set Language='$language', Country='$country' where Language_ID='$lid'";
+		if ($this->conn->query($sql)) {
+            return 'Successfully Updated';
+        } else {
+            return $this->conn->error;
+        }
+	}
+	
+	public function deletelanguage($lid) {
+		$sql = "DELETE FROM languages WHERE Language_ID = '$lid'";
+		if ($this->conn->query($sql)) {
+			return 'Successfully Deleted';
+		} else {
+			return $this->conn->error;
+		}
+	}
+
 }
 ?>
