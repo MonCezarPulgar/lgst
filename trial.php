@@ -88,7 +88,7 @@
         </div>
 		<div class = "">
 			<a href=""><i class="fas fa-lock"></i> Change Password</a>
-			<a href=""><i class="fas fa-lock"></i> Log-Out</a>
+			<a href="index.php"><i class="fas fa-lock"></i> Log-Out</a>
 		</div>
     </div>
     <!-- Bootstrap JS -->

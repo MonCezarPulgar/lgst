@@ -1,64 +1,12 @@
 <?php
-
-include_once 'Class/user.php';
-
-$u = new User();
-
-// Handle contact form submission
-if (isset($_POST['btncontact'])) {
-    $conid = $_POST['conid'];
-    $name = $_POST['name'];
-    $email1 = $_POST['email1'];
-    $message = $_POST['message'];
-    $result = $u->AddContacts($conid,$name, $email1, $message);
-    echo '<script>alert("'.$result.'");</script>';
-}
-
-// Handle login form submission
-if (isset($_POST['btnlogin'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $data = $u->Login($email, $password);
-
-    if ($row = $data->fetch_assoc()) {
-        session_start();
-        $_SESSION['role'] = $row['Role'];
-        $_SESSION['id'] = $row['UserId'];
-        $_SESSION['status'] = $row['Status'];
-        if ($row['Role'] == 'Admin') {
-            echo '
-                <script>
-                    window.location.href = "plan.php";
-                </script>';
-        } else if ($row['Role'] == 'Tourist') {
-            echo '
-                <script>
-                    window.location.href = "userprofile.php";
-                </script>';
-        } else if ($row['Role'] == 'Employee') {
-            if ($row['Status'] == 'Active') {
-                echo '<script>
-                        window.location.href = "profile.php";
-                    </script>';
-            } else {
-                echo '<script>
-                        alert("You are unauthorized to access this account!");
-                    </script>';
-            }
-        }
-    } else {
-        echo '<script>
-                alert("Incorrect Username or Password!");
-            </script>';
-    }
-}
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Language Translator</title>
+    <title>PremTranslate: Language Translator</title>
     <style>
         /* Reset and base styles */
         * {
@@ -431,9 +379,9 @@ if (isset($_POST['btnlogin'])) {
             </div>
            <div class="form">
 				<h2>Login</h2>
-				<form id="loginForm" method="POST" action="">
-					<input type="text" name="email" placeholder="Email" required>
-					<input type="password" name="password" placeholder="Password" required>
+				<form method="POST" action="">
+					<input type="text" name="un" placeholder="Email" required>
+					<input type="password" name="pw" placeholder="Password" required>
 					<button type="submit" name="btnlogin">Login</button>
 				</form>
 			</div>
@@ -517,6 +465,61 @@ if (isset($_POST['btnlogin'])) {
         </footer>
     </div>
 
+    <?php
+
+        include_once 'Class/user.php';
+
+        $u = new User();
+
+        // Handle contact form submission
+        if (isset($_POST['btncontact'])) {
+            $conid = $_POST['conid'];
+            $name = $_POST['name'];
+            $email1 = $_POST['email1'];
+            $message = $_POST['message'];
+            $result = $u->AddContacts($conid,$name, $email1, $message);
+            echo '<script>alert("'.$result.'");</script>';
+        }
+
+        // Handle login form submission
+        if (isset($_POST['btnlogin'])) {
+            $un = $_POST['un'];
+            $pw = $_POST['pw'];
+            $data = $u->Login($un, $pw);
+
+            if ($row = $data->fetch_assoc()) {
+                $_SESSION['role'] = $row['Role'];
+                $_SESSION['id'] = $row['UserId'];
+                $_SESSION['status'] = $row['Status'];
+                if ($row['Role'] == 'Admin') {
+                    echo '
+                        <script>
+                            window.open("usermanagement.php","_self");
+                        </script>';
+                } else if ($row['Role'] == 'Tourist') {
+                    echo '
+                        <script>
+                            window.location.href = "userprofile.php";
+                        </script>';
+                } else if ($row['Role'] == 'Employee') {
+                    if ($row['Status'] == 'Active') {
+                        echo '<script>
+                                window.location.href = "profile.php";
+                            </script>';
+                    } else {
+                        echo '<script>
+                                alert("You are unauthorized to access this account!");
+                            </script>';
+                    }
+                }
+            } else {
+                echo '<script>
+                        alert("Incorrect Username or Password!");
+                    </script>';
+            }
+        }
+        ?>
+
     <!-- JavaScript for mobile menu toggle -->
 	<script>
 	// JavaScript for mobile menu toggle and form reset
@@ -546,12 +549,6 @@ if (isset($_POST['btnlogin'])) {
 
 		// Start the typing animation
 		typeWriter();
-
-		// JavaScript to clear the form fields after submission
-		document.getElementById('loginForm').addEventListener('submit', function() {
-			// Clear the form fields
-			this.reset();
-		});
     </script>
 	
 </body>

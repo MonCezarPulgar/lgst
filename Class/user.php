@@ -53,8 +53,8 @@ Class User extends Database {
 			 return $this->conn->error;
 		 }
 	}
-    public function Login($email, $password){
-        $sql="select * from tbluser where EmailAddress='$email' and Password='$password'";
+    public function Login($un, $pw){
+        $sql="select * from tbluser where EmailAddress='$un' and Password='$pw'";
         $data=$this->conn->query($sql);
         return $data;
     }
