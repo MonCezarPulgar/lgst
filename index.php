@@ -358,7 +358,7 @@ session_start();
     <div class="main">
         <!-- Navigation -->
         <div class="navbar">
-            <div class="logo">PremTranslate</div>
+            <div class="logo">PremTranslates</div>
             <div class="menu-btn"></div>
             <div class="menu">
                 <ul>
