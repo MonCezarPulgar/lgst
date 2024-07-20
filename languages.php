@@ -50,6 +50,8 @@ $languages = $u->getLanguages();
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
         }
         .navbar {
             background: linear-gradient(135deg, #00c6ff, #0072ff);
@@ -74,6 +76,8 @@ $languages = $u->getLanguages();
             background: #fff;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             border-radius: 8px;
+            flex: 1;
+            padding: 20px;
         }
         h1, h2 {
             color: #0072ff;
@@ -195,14 +199,25 @@ $languages = $u->getLanguages();
 		.actions{
 			padding: 5px 10px;
 		}
+        .main-container {
+            flex: 1;
+            display: flex;
+        }
+        .sidebar {
+            width: 250px; /* Adjust this width as needed */
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .content {
+
+        }
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <div class="logo">Admin Panel</div>
-    </div>
-    
     <div class="main-content">
+        <div class="sidebar">
+            <?php include_once 'trial.php'; ?>
+        </div>
         <h1>Add New Language</h1>
         <form method="POST" action="">
             <label for="language">Language:</label>
