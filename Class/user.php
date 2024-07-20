@@ -58,5 +58,14 @@ Class User extends Database {
         $data=$this->conn->query($sql);
         return $data;
     }
+    public function addlanguage($language, $country) {
+		$lid = uniqid();
+		$sql = "INSERT INTO languages (Language_ID, Language, Country) VALUES ('$lid', '$language', '$country')";
+		if ($this->conn->query($sql)) {
+			return 'Successfully Added';
+		} else {
+			return $this->conn->error;
+		}
+	}
 }
 ?>
