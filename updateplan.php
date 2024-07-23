@@ -100,7 +100,7 @@
                         ini_set('display_startup_errors', 1);
                         error_reporting(E_ALL);
 
-                        include_once 'Class/User.php';
+                        include_once 'Class/user.php';
                         $u = new User();
                         $data = $u->displayplan();
                         if ($data) {
@@ -187,7 +187,7 @@
 </html>
 
 <?php
-include_once 'Class/User.php';
+include_once 'Class/user.php';
 
 if (isset($_POST['btnupdate'])) {
     $planid = $_POST['planid'];
