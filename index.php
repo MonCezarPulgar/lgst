@@ -388,6 +388,7 @@ session_start();
                 font-size: 16px;
             }
         }
+        
     </style>
 </head>
 <body>
@@ -395,6 +396,7 @@ session_start();
         <nav class="navbar">
             <div class="logo">
                 <a href="freetrial.php"><span style="color: white;">Free Trial</span></a>
+                <a href="#plans"><span style="color: white;">Plans</span></a>
             </div>
             <div class="menu">
                 <ul>
@@ -411,6 +413,40 @@ session_start();
         <section class="section section-title" id = "home">
             <h1>PremTranslate: Bridging Language Gaps with Precision and Innovation</h1>
             <p id="typing-text">"Where words fail, our translations prevail."</p>
+        </section>
+
+        <section class="section section-title" id = "plans">
+            <div class = "container">
+                    <?php
+                        include_once 'Class/user.php';
+                        $u = new User();
+                        $data = $u->displayplan();
+                    ?>
+                    <div class = "row mt-3">
+                        <?php
+                            while($row = $data->fetch_assoc()){
+                                echo'
+                                <div class="col-md-4">
+                                    <div class="card shadow-sm mb-4">
+                                        <div class="card-header text-white bg-info">
+                                            <h2 class="card-title">'.$row['PlanName'].'</h2>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-text text-dark">'.$row['Description'].'</p>
+                                            <p class="card-text text-dark">'.$row['Duration'].'</p>
+                                            <p class="card-text text-dark">$'.$row['Price'].'</p>
+                                        </div>
+                                        <div class="card-footer text-center bg-light">
+                                            <button type="submit" class="btn btn-info">Continue</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                ';
+                            }
+                        ?>
+                </div>
+            </div>
         </section>
 
         <section class="section">
