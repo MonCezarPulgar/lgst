@@ -6,7 +6,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PremTranslate: Language Translator </title>
+    <title>PremTranslate: Language Translator</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -25,76 +25,77 @@ session_start();
             margin: 0;
             padding: 0;
         }
-		
-		* Fix Free Trial button alignment */
-		.freetrial {
-			margin-left: auto; /* Pushes the Free Trial button to the right */
-		}
+
+        /* Fix Free Trial button alignment */
+        .freetrial {
+            margin-left: auto; /* Pushes the Free Trial button to the right */
+        }
 
         .freetrial a {
-			margin-top:5px;
-			display: inline-block;
-			padding: 6px 20px;
-			border-radius: 50px;
-			background: linear-gradient(135deg, #c2e9fb, #ffffff);
-			text-decoration: none;
-			text-align: center;
-			transition: background-color 0.3s;
-			font-weight: bold;
-		}
+            margin-top: 5px;
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #c2e9fb, #ffffff);
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
 
-		.freetrial a:hover {
-			background: linear-gradient(135deg, #c2e9fb, #ffffff);
-		}
-		
+        .freetrial a:hover {
+            background: linear-gradient(135deg, #c2e9fb, #ffffff);
+        }
+
         .logo {
             font-size: 24px;
             font-weight: bold;
         }
+
         /* Navigation styles */
-		.navbar {
-			display: flex;
-			justify-content: space-between;
-			align-items: center; /* Ensure vertical alignment */
-			padding: 15px 30px;
-			font-family: 'Roboto', sans-serif;
-			margin: 0;
-			top: 0;
-			z-index: 1000;
-			animation: fadeIn 2s ease;
-		}
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* Ensure vertical alignment */
+            padding: 15px 30px;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            top: 0;
+            z-index: 1000;
+            animation: fadeIn 2s ease;
+        }
 
-		.menu {
-			display: flex;
-			align-items: center; /* Align items vertically */
-		}
+        .menu {
+            display: flex;
+            align-items: center; /* Align items vertically */
+        }
 
-		.menu ul {
-			display: flex;
-			list-style: none;
-			padding: 0;
-			margin: 0;
-			align-items: center; /* Align items vertically */
-		}
+        .menu ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            align-items: center; /* Align items vertically */
+        }
 
-		.menu ul li {
-			margin-left: 30px;
-		}
+        .menu ul li {
+            margin-left: 30px;
+        }
 
-		.menu ul li a {
-			text-decoration: none;
-			color: #fff;
-			font-weight: bold;
-			font-size: 24px;
-			transition: color 0.3s;
-		}
+        .menu ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 24px;
+            transition: color 0.3s;
+        }
 
-		.menu ul li a:hover {
-			color: #00c6ff;
-			background: linear-gradient(135deg, #c2e9fb, #ffffff);
-			padding: 10px 20px;
-			border-radius: 50px;
-		}
+        .menu ul li a:hover {
+            color: #00c6ff;
+            background: linear-gradient(135deg, #c2e9fb, #ffffff);
+            padding: 10px 20px;
+            border-radius: 50px;
+        }
 
         /* Main sections */
         .main {
@@ -103,14 +104,17 @@ session_start();
             margin: 0 auto;
             padding: 20px;
         }
+
         .section {
             padding: 50px 0;
             animation: fadeIn 2s ease;
         }
+
         .section-title {
             text-align: center;
             margin-bottom: 40px;
         }
+
         .section-title h1 {
             font-size: 50px;
             background: -webkit-linear-gradient(#ffffff, #c2e9fb);
@@ -118,12 +122,14 @@ session_start();
             -webkit-text-fill-color: transparent;
             animation: slideIn 1.5s ease;
         }
+
         .section-title p {
             font-size: 24px;
             color: white;
             text-align: center;
             margin-bottom: 15px;
         }
+
         /* Typing effect */
         #typing-text {
             display: inline-block;
@@ -132,14 +138,17 @@ session_start();
             overflow: hidden;
             animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite;
         }
+
         @keyframes typing {
             from { width: 0; }
             to { width: 100%; }
         }
+
         @keyframes blink-caret {
             from, to { border-color: transparent; }
             50% { border-color: white; }
         }
+
         /* About Section Styles */
         .about-container {
             display: flex;
@@ -149,6 +158,7 @@ session_start();
             padding: 0 20px;
             animation: fadeIn 2s ease;
         }
+
         .about-item {
             background: #fff;
             padding: 20px;
@@ -156,6 +166,7 @@ session_start();
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 48%;
         }
+
         .about-item h2 {
             font-size: 24px;
             margin-bottom: 20px;
@@ -166,17 +177,20 @@ session_start();
             -webkit-text-fill-color: transparent;
             animation: slideIn 1.5s ease;
         }
+
         .about-item p {
             font-size: 18px;
             color: black;
             text-align: center;
             margin-bottom: 15px;
         }
+
         /* Features Section */
         #features {
             padding: 50px 20px;
             animation: fadeIn 2s ease;
         }
+
         .feature {
             width: 80%;
             display: flex;
@@ -187,15 +201,18 @@ session_start();
             margin-bottom: 20px;
             animation: slideIn 2s ease;
         }
+
         .feature-image img {
             width: 100%;
             max-width: 300px;
             border-radius: 10px;
         }
+
         .feature-content {
             flex: 1;
             margin-left: 20px;
         }
+
         .feature-content h2 {
             font-size: 40px;
             font-weight: bold;
@@ -204,15 +221,18 @@ session_start();
             -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
         }
+
         .feature-content p {
             font-size: 24px;
             padding: 10px;
             color: #fff;
         }
-		.feature-content-voice {
+
+        .feature-content-voice {
             flex: 1;
             margin-right: 20px;
         }
+
         .feature-content-voice h2 {
             font-size: 40px;
             font-weight: bold;
@@ -221,12 +241,14 @@ session_start();
             -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
         }
+
         .feature-content-voice p {
             font-size: 24px;
             padding: 10px;
             color: #fff;
-			matgin-right:10px;
+            margin-right: 10px;
         }
+
         /* Form styles */
         .form {
             max-width: 400px;
@@ -238,6 +260,7 @@ session_start();
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             animation: fadeIn 2s ease;
         }
+
         .form h2 {
             font-size: 24px;
             margin-bottom: 20px;
@@ -247,12 +270,14 @@ session_start();
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
         .form p {
             font-size: 18px;
             color: black;
             text-align: center;
             margin-bottom: 15px;
         }
+
         .form input[type="text"],
         .form input[type="email"],
         .form input[type="password"],
@@ -263,6 +288,7 @@ session_start();
             border-radius: 5px;
             border: 1px solid #ccc;
         }
+
         .form button {
             width: 100%;
             background: linear-gradient(to right, #00c6ff, #0072ff);
@@ -272,203 +298,192 @@ session_start();
             border-radius: 5px;
             cursor: pointer;
             transition: background 0.3s;
+            font-size: 20px;
+            font-weight: bold;
         }
+
         .form button:hover {
             background: linear-gradient(to right, #0072ff, #00c6ff);
         }
+
         /* Footer styles */
-        footer {
-            background: #333;
-            color: #fff;
-            padding: 20px;
+        .footer {
             text-align: center;
-            margin-top: 50px;
+            background-color: #0072ff;
+            color: #fff;
+            padding: 10px 0;
+            font-size: 18px;
             animation: fadeIn 2s ease;
         }
-        .footer-links a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 10px;
-            transition: color 0.3s;
-        }
-        .footer-links a:hover {
-            color: #00c6ff;
-        }
-        .footer-line {
-            height: 1px;
-            background: #fff;
-            margin: 20px 0;
-        }
-        /* Responsive styles */
-        @media (max-width: 768px) {
-            .menu {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 60px;
-                left: 0;
-                width: 100%;
-                background-color: rgba(0, 0, 0, 0.8);
-            }
-            .menu.active {
-                display: flex;
-            }
-            .menu ul li {
-                margin: 10px 0;
-                text-align: center;
-            }
-            .menu-btn {
-                display: block;
-            }
-            .form {
-                max-width: 100%;
-            }
-            .feature {
-                flex-direction: column;
-                text-align: center;
-            }
-            .feature-content {
-                margin-left: 0;
-                margin-top: 20px;
-            }
-			.feature-content-voice {
-                margin-right: 0;
-                margin-top: 20px;
-            }
-            .feature-image img {
-                max-width: 100%;
-            }
-            .about-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            .about-item {
-                width: 100%;
-            }
-        }
-        /* Keyframes for animations */
+
+        /* Add keyframes for animations */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
+
         @keyframes slideIn {
             from { transform: translateX(-100%); }
             to { transform: translateX(0); }
         }
+
+        @media (max-width: 768px) {
+            .about-container {
+                flex-direction: column;
+            }
+            .about-item {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .feature {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .feature-image img {
+                margin-bottom: 20px;
+            }
+            .feature-content,
+            .feature-content-voice {
+                margin: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 10px 20px;
+                font-size: 18px;
+            }
+            .menu ul li {
+                margin-left: 20px;
+            }
+            .section-title h1 {
+                font-size: 32px;
+            }
+            .section-title p {
+                font-size: 18px;
+            }
+            .about-item h2,
+            .feature-content h2,
+            .feature-content-voice h2,
+            .form h2 {
+                font-size: 20px;
+            }
+            .about-item p,
+            .feature-content p,
+            .feature-content-voice p,
+            .form p {
+                font-size: 16px;
+            }
+            .form input[type="text"],
+            .form input[type="email"],
+            .form input[type="password"],
+            .form textarea {
+                padding: 8px;
+            }
+            .form button {
+                font-size: 16px;
+                padding: 8px;
+            }
+            .footer {
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="main">
-        <!-- Navigation -->
-        <div class="navbar">
-            <div class="logo form-control">PremTranslates</div>
-            <div class="menu-btn form-control"></div>
-            <div class="menu form-control">
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.php"><span style="color: white;">PremTranslate</span></a>
+            </div>
+            <div class="menu">
                 <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="about.php">About</a></li>
+                    <li><a href="services.php">Services</a></li>
+                    <li><a href="contact.php">Contact</a></li>
                     <li class="freetrial"><a href="freetrial.php">Free Trial</a></li>
                 </ul>
             </div>
-        </div>
+        </nav>
+    </header>
 
-        <!-- Home Section -->
-        <section id="home" class="section">
-            <div class="section-title">
-                <h1>PremTranslate: Language <br> Translator</h1>
-                <p id="animatedText"></p>
-            </div>
-           <div class="form">
-				<h2>Login</h2>
+    <main class="main">
+        <section class="section section-title">
+            <h1>PremTranslate: Bridging Language Gaps with Precision and Innovation</h1>
+            <p id="typing-text">"Where words fail, our translations prevail."</p>
+        </section>
+
+        <section class="section">
+            <div class="form">
+            <h2>Login</h2>
 				<form method="POST" action="">
 					<input type="text" name="un" placeholder="Email" required>
 					<input type="password" name="pw" placeholder="Password" required>
 					<button type="submit" name="btnlogin">Login</button>
 				</form>
-			</div>
+            </div>
         </section>
 
-        <!-- About Section -->
-        <section id="about" class="section">
-            <div class="section-title">
-                <h1>About Us</h1>
-            </div>
+        <section class="section">
             <div class="about-container">
                 <div class="about-item">
-                    <h2>Our Mission</h2>
-                    <p>Our mission is to break down language barriers by providing instant and accurate translations.</p>
+                    <h2>Who We Are</h2>
+                    <p>PremTranslate is a leading provider of language translation services, leveraging cutting-edge technology to deliver accurate and reliable translations.</p>
                 </div>
                 <div class="about-item">
-                    <h2>PremTranslate: Language Translator</h2>
-                    <p>The language translator system aims to address the growing need for seamless communication across languages in the globalized world. With the increasing diversity in language usage, businesses and individuals encounter barriers that hinder effective communication. This project seeks to develop language translator system that can accurately and efficiently translate text between multiple languages, facilitating smooth and effective communication across linguistic borders.</p>
+                    <h2>Our Mission</h2>
+                    <p>We aim to break down language barriers and connect people and businesses around the world through high-quality translation services.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Features Section -->
         <section id="features" class="section">
-            <div class="section-title">
-                <h1>Features</h1>
-            </div>
             <div class="feature">
+                <div class="feature-image">
+                    <img src="translation_image.jpg" alt="Translation Services">
+                </div>
                 <div class="feature-content">
-                    <h2>Accurate Translation</h2>
-                    <p>Accurate translation of fifty (50) languages available. PremTranslate offers accurate translation of fifty languages you can use. Using Premtranslate can avoid you to such mistakes like mistranslation that gives you stress. Accuracy is our top priority!</p>
-                </div>
-                <div class="feature-image">
-                    <img src="texttrans.png" alt="Accurate Translation Image">
+                    <h2>Text Translation</h2>
+                    <p>Our text translation services cover a wide range of languages, ensuring your message is accurately conveyed in the target language.</p>
                 </div>
             </div>
             <div class="feature">
-                <div class="feature-image">
-                    <img src="voicetrans.png" alt="Voice and Text Translation Image">
-                </div>
                 <div class="feature-content-voice">
-                    <h2>Voice and Text Translation</h2>
-                    <p>Tired of typing what to translate, try voice translate. PremTranslate not just offers text translation, but also voice translation. Saves time, less stress!</p>
+                    <h2>Voice Translation</h2>
+                    <p>With our advanced voice translation services, you can communicate seamlessly across languages, no matter where you are.</p>
+                </div>
+                <div class="feature-image">
+                    <img src="voice_translation_image.jpg" alt="Voice Translation Services">
                 </div>
             </div>
         </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="section">
-            <div class="section-title">
-                <h1>Contact Us</h1>
-            </div>
+        <section class="section">
             <div class="form">
-                <h2>Get in Touch</h2>
-                <form method="POST">
+                <h2>Sign Up for a Free Trial</h2>
+                <p>Experience our top-notch translation services with a free trial. Sign up now!</p>
+                <form action="" method="POST">
                 <?php
                         include 'generateconid.php';
                         $conID = generateCONTACTID();
                     ?>
-                    <input type="text" name="conid" placeholder="Your Name" value="<?php echo $conID; ?>" readonly>
+                    <input type="text" name="conid" value="<?php echo $conID; ?>" hidden>
                     <input type="text" name="name" placeholder="Your Name" required>
                     <input type="email" name="email1" placeholder="Your Email" required>
-                    <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                    <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
                     <button type="submit" name="btncontact">Send Message</button>
                 </form>
             </div>
         </section>
+    </main>
 
-        <!-- Footer -->
-        <footer>
-            <div class="footer-links">
-                <a href="#about">About Us</a> |
-                <a href="#features">Features</a> |
-                <a href="#contact">Contact</a>
-            </div>
-            <div class="footer-line"></div>
-            <div class="footer-info">
-                <p>© 2024 Language Translator. All rights reserved.</p>
-                <p>Email: <a href="mailto:info@ltranslator.com">info@ltranslator.com</a></p>
-            </div>
-        </footer>
-    </div>
-
-    <?php
+    <footer class="footer">
+        <p>&copy; 2024 PremTranslate. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+<?php
 
         include_once 'Class/user.php';
 
@@ -522,37 +537,3 @@ session_start();
             }
         }
         ?>
-
-    <!-- JavaScript for mobile menu toggle -->
-	<script>
-	// JavaScript for mobile menu toggle and form reset
-		document.querySelector('.menu-btn').addEventListener('click', function() {
-			document.querySelector('.menu').classList.toggle('active');
-		});
-
-		const text = "Say goodbye to language barriers and hello to a world of endless possibilities. <br> Join our community of language enthusiasts and embark <br> on a journey of discovery, connection, and growth. With our <br> Language Translator System, the world is at your fingertips. Start exploring today!";
-		const speed = 50; // Typing speed in milliseconds
-
-		let index = 0;
-		let animatedText = document.getElementById("animatedText");
-
-		function typeWriter() {
-			if (index < text.length) {
-				if (text[index] === '<') {
-					let endIndex = text.indexOf('>', index) + 1;
-					animatedText.innerHTML += text.substring(index, endIndex);
-					index = endIndex;
-				} else {
-					animatedText.innerHTML += text.charAt(index);
-					index++;
-				}
-				setTimeout(typeWriter, speed);
-			}
-		}
-
-		// Start the typing animation
-		typeWriter();
-    </script>
-	
-</body>
-</html>

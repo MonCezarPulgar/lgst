@@ -69,7 +69,6 @@ if(isset($_POST['btnsignup'])){
             width: 100%;
             top: 0;
             z-index: 1000;
-			margin-bottom: 310apx;
         }
 
         .logo {
@@ -93,7 +92,6 @@ if(isset($_POST['btnsignup'])){
             color: #fff;
             font-size: 24px;
             transition: color 0.3s;
-			margin-right:100px;
         }
 
         .menu ul li a:hover {
@@ -101,21 +99,12 @@ if(isset($_POST['btnsignup'])){
         }
 		
         .main-content {
-			padding: 20px;
-			max-width: 800px;
-			margin: 80px auto 20px; /* Adjust the top margin as needed */
-			background: #fff;
-			box-shadow: 100px 100px 100px rgba(0,0,0,0.1);
-			border-radius: 8px;
-		}
-        .login {
-            text-align: right;
-            margin-bottom: 20px;
-        }
-        .login a {
-            color: #0072ff;
-            text-decoration: none;
-            font-weight: bold;
+            padding: 20px;
+            max-width: 800px;
+            margin: 80px auto 20px; /* Adjust the top margin as needed */
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
         }
         .translator {
             text-align: center;
@@ -242,209 +231,147 @@ if(isset($_POST['btnsignup'])){
             margin-bottom: 20px;
             color: #0072ff;
         }
-        @media screen and (max-width: 830px) {
-            .main {
-                height: 180vh;
-            }
 
-            .card {
-                width: 80%; /* Adjusted */
-            }
-        }
-
+        /* Card styles */
         .card {
             background-color: #f9f9f9;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            max-width: 500px;
-            margin: 0 auto; /* Center the card horizontally */
-            margin-bottom: 20px;
-            margin-top: 30px;
+            margin: 20px 0;
+            text-align: center;
         }
 
-        .card h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            text-align: center;
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0072ff;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .translator .columns {
+                flex-direction: column;
+                align-items: center;
+            }
+            .translator .column {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .form-container {
+                width: 100%;
+                margin: 20px auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .translator h1 {
+                font-size: 24px;
+            }
+            .translator .column h2 {
+                font-size: 18px;
+            }
+            .translator select, .translator textarea {
+                font-size: 14px;
+            }
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+            .menu ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            .menu ul li {
+                margin: 10px 0;
+            }
+            .main-content {
+                margin-top: 120px; /* Adjust top margin for smaller screens */
+            }
         }
     </style>
 </head>
 <body>
     <div class="navbar">
-        <div class="logo">PremTranslate</div>
-        <div class="menu-btn"></div>
-		<div class="menu">
-			<ul>
-				<li><a href="index.php">Home</a></li>
-			</ul>
-		</div>
+        <div class="logo">My Website</div>
+        <div class="menu">
+            <ul>
+                <li><a href="index.php">Home</a></li>
+            </ul>
+        </div>
     </div>
-	
     <div class="main-content">
-        <!-- Removed login section -->
         <div class="translator">
-            <h1>PREMTRANSLATE: LANGUAGE TRANSLATOR</h1>
+            <h1>Language Translator</h1>
             <div class="columns">
                 <div class="column">
-                    <h2>Select Language</h2>
-                    <select id="select-language">
-                        <option value="Filipino" data-country="Philippines" data-flag="phillipines.png">Filipino</option>
-                        <option value="English" data-country="United States" data-flag="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg">English</option>
-                        <option value="Spanish" data-country="Spain" data-flag="https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Spain.svg">Spanish</option>
-                        <option value="French" data-country="France" data-flag="https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg">French</option>
-                        <option value="Chinese" data-country="China" data-flag="https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg">Chinese</option>
-                        <!-- Add more languages as needed -->
+                    <h2>Translate From:</h2>
+                    <select name="fromLanguage">
+                        <option value="en" data-country="United States">English</option>
+                        <option value="fil" data-country="Philippines">Filipino</option>
+                        <option value="es" data-country="Spain">Spanish</option>
+                        <option value="fr" data-country="France">French</option>
+                        <option value="zh" data-country="China">Chinese</option>
                     </select>
-                    <textarea class="input-text" id="source-text" rows="5"></textarea>
+                    <textarea name="fromText" rows="10" placeholder="Enter text here..."></textarea>
                 </div>
                 <div class="column">
-                    <h2 id="target-language-label">Based on Location</h2>
-                    <textarea id="target-text" rows="4"></textarea>
+                    <h2>Translate To:</h2>
+                    <select name="toLanguage">
+                        <option value="en" data-country="United States">English</option>
+                        <option value="fil" data-country="Philippines">Filipino</option>
+                        <option value="es" data-country="Spain">Spanish</option>
+                        <option value="fr" data-country="France">French</option>
+                        <option value="zh" data-country="China">Chinese</option>
+                    </select>
+                    <textarea name="toText" rows="10" placeholder="Translation will appear here..."></textarea>
                 </div>
             </div>
         </div>
         <div class="signup">
-            <p>Want to continue to try other languages? Click <a href="#signup">here</a>!</p>
+            <p>Don't have an account? <a href="#" onclick="showForm()">Sign up here!</a></p>
         </div>
-    </div>
-
-    <!-- Removed Login Form Section -->
-
-    <!-- Signup Form Section -->
-    <div class="signup">
-            <div class="card">
-                <h2>Sign Up</h2>
-                <form action="signup.php" method = "POST">
-                <?php
+        <div class="form-container" id="form-container">
+            <h2 class="form-header">Sign Up</h2>
+            <form method="POST">
+                    <?php
                         include 'generateuserid.php';
                         $userID = generateUSERID();
                     ?>
-                <div class = "row p-4">
-                        <div class = "col-md-12">
-                            <label><i class = "fas fa-user ms-2" ></i> UserId</label>
-                            <input type="text" name="userid" id="userid" class="form-control text-center" value="<?php echo $userID; ?>" readonly>
-                        </div>
-                        <div class = "col-md-6">
-                            <label><i class = "fas fa-user ms-2" ></i> First Name</label>
-                            <input type="text" name = "fname" id = "fname" class = "form-control text-center">
-                        </div>
-                        <div class = "col-md-6">
-                            <label><i class = "fas fa-user ms-2" ></i> Middle Name</label>
-                            <input type="text" name = "mname" id = "mname" class = "form-control text-center">
-                        </div>
-                        <div class = "col-md-6">
-                            <label><i class = "fas fa-user ms-2" ></i> Last Name</label>
-                            <input type="text" name = "lname" id = "lname" class = "form-control text-center">
-                        </div>
-                        <div class = "col-md-6">
-                            <label><i class = "fas fa-home ms-2" ></i> Address</label>
-                            <input type="text" name = "addr" id = "addr" class = "form-control text-center">
-                        </div>
-                        <div class = "col-md-6">
-                            <label><i class = "fas fa-file-zipper ms-2" ></i> Zip Code</label>
-                            <input type="text" name = "zip" id = "zip" class = "form-control text-center">
-                        </div>
-                        <div class = "col-md-6">
-                            <label><i class = "fas fa-calendar ms-2" ></i> Birthdate</label>
-                            <input type="date" name = "bday" id = "bday" class = "form-control text-center">
-                        </div>
-                        <div class = "col-md-12">
-                            <label><i class = "fas fa-envelope ms-2" ></i> Email Address</label>
-                            <input type="email" name = "email" id = "email" class = "form-control text-center" required>
-                        </div>
-                        <div class = "col-md-12">
-                            <label><i class = "fas fa-lock ms-2" ></i> Password</label>
-                            <input type="password" name = "pass" id = "pass" class = "form-control text-center" required>
-                        </div>
-                        <div class = "col-md-12">
-                            <label><i class = "fas fa-lock ms-2" ></i>Confirm Password</label>
-                            <input type="password" name = "con" id = "pass" class = "form-control text-center" required>
-                        </div>
-                    </div>
-                    <div class = "col-md 12">
-                    <button type="submit" name = "btnsignup" class = "btn btn-warning">Sign Up</button>
-                    </div>
-                </form>
-            </div>
+                <label for="userid" hidden>User ID</label>
+                <input type="text" id="userid" name="userid" value = "<?php echo $userID; ?>" hidden>
+                <label for="fname">First Name</label>
+                <input type="text" id="fname" name="fname" required>
+                <label for="mname">Middle Name</label>
+                <input type="text" id="mname" name="mname">
+                <label for="lname">Last Name</label>
+                <input type="text" id="lname" name="lname" required>
+                <label for="addr">Address</label>
+                <textarea id="addr" name="addr" rows="3" required></textarea>
+                <label for="zip">ZIP Code</label>
+                <input type="text" id="zip" name="zip" required>
+                <label for="bday">Birthday</label>
+                <input type="date" id="bday" name="bday" required>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+                <label for="pass">Password</label>
+                <input type="password" id="pass" name="pass" required>
+                <label for="con">Confirm Password</label>
+                <input type="password" id="con" name="con" required>
+                <button type="submit" name="btnsignup">Sign Up</button>
+            </form>
         </div>
-
+    </div>
     <script>
-        // Function to get user's country
-        async function getUserCountry() {
-            try {
-                const response = await fetch('https://ipapi.co/json/');
-                const data = await response.json();
-                return data.country_name;
-            } catch (error) {
-                console.error('Error fetching user location:', error);
-                return null;
-            }
+        function showForm() {
+            document.getElementById('form-container').style.display = 'block';
         }
-
-        // Set target language based on user's country
-        async function setTargetLanguage() {
-            const country = await getUserCountry();
-            const selectLanguage = document.getElementById('select-language');
-            const targetLanguageLabel = document.getElementById('target-language-label');
-            
-            if (country) {
-                switch (country) {
-                    case 'Philippines':
-                        targetLanguageLabel.textContent = 'Filipino';
-                        selectLanguage.value = 'Filipino';
-                        break;
-                    case 'United States':
-                    case 'United Kingdom':
-                        targetLanguageLabel.textContent = 'English';
-                        selectLanguage.value = 'English';
-                        break;
-                    case 'Spain':
-                        targetLanguageLabel.textContent = 'Spanish';
-                        selectLanguage.value = 'Spanish';
-                        break;
-                    case 'France':
-                        targetLanguageLabel.textContent = 'French';
-                        selectLanguage.value = 'French';
-                        break;
-                    case 'China':
-                        targetLanguageLabel.textContent = 'Chinese';
-                        selectLanguage.value = 'Chinese';
-                        break;
-                    default:
-                        targetLanguageLabel.textContent = 'English';
-                        selectLanguage.value = 'English';
-                        break;
-                }
-                
-                // Trigger change event to update flag
-                updateLanguageFlag();
-            } else {
-                targetLanguageLabel.textContent = 'English';
-                selectLanguage.value = 'English';
-            }
-        }
-
-        // Function to update language flag based on selected language
-        function updateLanguageFlag() {
-            const selectLanguage = document.getElementById('select-language');
-            const selectedOption = selectLanguage.options[selectLanguage.selectedIndex];
-            const flagUrl = selectedOption.getAttribute('data-flag');
-            selectLanguage.style.backgroundImage = `url(${flagUrl})`;
-        }
-
-        // Set the initial target language based on user's location
-        setTargetLanguage();
-
-        // Event listener for language selection change
-        document.getElementById('select-language').addEventListener('change', function() {
-            updateLanguageFlag();
-        });
-
-        document.querySelector('.signup a').addEventListener('click', function() {
-            document.getElementById('signup').style.display = 'block';
-            window.scrollTo(0, document.getElementById('signup').offsetTop);
-        });
     </script>
 </body>
 </html>
