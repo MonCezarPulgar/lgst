@@ -171,7 +171,7 @@
 </html>
 
 <?php
-include_once 'Class/User.php';
+include_once 'Class/user.php';
 
 if (isset($_POST['btndelete'])) {
     $userid = $_POST['userid'];
