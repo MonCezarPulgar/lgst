@@ -299,7 +299,7 @@ if(isset($_POST['btnsignup'])){
 </head>
 <body>
     <div class="navbar">
-        <div class="logo">My Website</div>
+        <div class="logo">PremTranslate: Language Translator</div>
         <div class="menu">
             <ul>
                 <li><a href="index.php">Home</a></li>
