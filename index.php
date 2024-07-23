@@ -67,7 +67,7 @@ session_start();
 
         .menu {
             display: flex;
-            align-items: center; /* Align items vertically */
+            align-items: left; /* Align items vertically */
         }
 
         .menu ul {
@@ -75,7 +75,7 @@ session_start();
             list-style: none;
             padding: 0;
             margin: 0;
-            align-items: center; /* Align items vertically */
+            align-items: left; /* Align items vertically */
         }
 
         .menu ul li {
@@ -394,7 +394,7 @@ session_start();
     <header>
         <nav class="navbar">
             <div class="logo">
-                <a href="index.php"><span style="color: white;">PremTranslate</span></a>
+                <a href="freetrial.php"><span style="color: white;">Free Trial</span></a>
             </div>
             <div class="menu">
                 <ul>
@@ -402,7 +402,6 @@ session_start();
                     <li><a href="about.php">About</a></li>
                     <li><a href="services.php">Services</a></li>
                     <li><a href="contact.php">Contact</a></li>
-                    <li><a href="freetrial.php">Free Trial</a></li>
                 </ul>
             </div>
         </nav>
