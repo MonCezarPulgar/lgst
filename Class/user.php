@@ -18,7 +18,7 @@ Class User extends Database {
         }
     }
     public function displayplan(){
-        $sql = "select PlanId, PlanName, Price, Duration, Description from plans";
+        $sql = "select PlanId, PlanName, Price, Duration, Description from plans ORDER BY Price";
         $data = $this->conn->query($sql);
         return $data;
     }
