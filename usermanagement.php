@@ -42,7 +42,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <a href="" class="d-block mb-3"><img src="images/logoo.png" height="50px" class="rounded-pill"></a>
+            <a href="" class="d-block mb-3"><img src="images/logoo.png" height="50px" class="rounded-pill" alt="Logo"></a>
             <a href="usermanagement.php"><i class="fas fa-house"></i> User Management</a><br>
             <a href="languages.php"><i class="fas fa-house"></i> Language Management</a>
             <div class="dropdown mt-2">
@@ -103,26 +103,34 @@
                     </thead>
                     <tbody class="bg-light">
                         <?php
+                        ini_set('display_errors', 1);
+                        ini_set('display_startup_errors', 1);
+                        error_reporting(E_ALL);
+
                         include_once 'Class/User.php';
                         $u = new User();
                         $data = $u->displayusers();
-                        while ($row = $data->fetch_assoc()) {
-                            echo '
-                                <tr>
-                                    <td>' . $row['UserId'] . '</td>
-                                    <td>' . $row['FirstName'] . '</td>
-                                    <td>' . $row['MiddleName'] . '</td>
-                                    <td>' . $row['LastName'] . '</td>
-                                    <td>' . $row['Address'] . '</td>
-                                    <td>' . $row['ZipCode'] . '</td>
-                                    <td>' . $row['Birthdate'] . '</td>
-                                    <td>' . $row['EmailAddress'] . '</td>
-                                    <td>' . $row['Password'] . '</td>
-                                    <td>' . $row['Role'] . '</td>
-                                    <td>' . $row['Status'] . '</td>
-                                    <td><button type="button" name="btndelete" class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#DeleteModal" onclick="deleteuser(&quot;'.$row['UserId'].'&quot;)"><i class="fas fa-trash ms-2 text-dark"></i></button></td>
-                                </tr>
-                            ';
+                        if ($data) {
+                            while ($row = $data->fetch_assoc()) {
+                                echo '
+                                    <tr>
+                                        <td>' . htmlspecialchars($row['UserId']) . '</td>
+                                        <td>' . htmlspecialchars($row['FirstName']) . '</td>
+                                        <td>' . htmlspecialchars($row['MiddleName']) . '</td>
+                                        <td>' . htmlspecialchars($row['LastName']) . '</td>
+                                        <td>' . htmlspecialchars($row['Address']) . '</td>
+                                        <td>' . htmlspecialchars($row['ZipCode']) . '</td>
+                                        <td>' . htmlspecialchars($row['Birthdate']) . '</td>
+                                        <td>' . htmlspecialchars($row['EmailAddress']) . '</td>
+                                        <td>' . htmlspecialchars($row['Password']) . '</td>
+                                        <td>' . htmlspecialchars($row['Role']) . '</td>
+                                        <td>' . htmlspecialchars($row['Status']) . '</td>
+                                        <td><button type="button" name="btndelete" class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#DeleteModal" onclick="deleteuser(&quot;'.$row['UserId'].'&quot;)"><i class="fas fa-trash ms-2 text-dark"></i></button></td>
+                                    </tr>
+                                ';
+                            }
+                        } else {
+                            echo '<tr><td colspan="12">No users found</td></tr>';
                         }
                         ?>
                     </tbody>
@@ -164,15 +172,17 @@
 
 <?php
 include_once 'Class/User.php';
+
 if (isset($_POST['btndelete'])) {
     $userid = $_POST['userid'];
     $u = new User();
     $result = $u->deleteuser($userid);
     echo '<script>
-        alert("' . $result . '");
+        alert("' . htmlspecialchars($result) . '");
         window.location.href = window.location.href.split("?")[0] + "?refresh=1";
     </script>';
 }
+
 if (isset($_GET['refresh'])) {
     echo '<script>
         window.history.replaceState(null, null, window.location.href.split("?")[0]);
