@@ -16,23 +16,69 @@
             .main-container {
                 flex: 1;
                 display: flex;
-            }
-            .sidebar {
-                width: 250px; /* Adjust this width as needed */
-                background-color: #f8f9fa;
-                padding: 20px;
+                flex-wrap: wrap;
             }
             .content {
                 flex: 1;
                 padding: 20px;
             }
+            @media screen and (max-width: 768px) {
+                .offcanvas {
+                    width: 100%;
+                }
+            }
         </style>
     </head>
     <body>
-        <div class="main-container">
-            <div class="sidebar">
-                <?php include_once 'trial.php'; ?>
+        <!-- Button to toggle the sidebar -->
+    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Offcanvas Sidebar -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
+        <div class="offcanvas-header">
+            <h5 id="sidebarLabel">PremTranslate</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <a href="" class="d-block mb-3"><img src="images/logoo.png" height="50px" class="rounded-pill" alt="Logo"></a>
+            <a href="usermanagement.php"><i class="fas fa-house"></i> User Management</a><br>
+            <a href="languages.php"><i class="fas fa-house"></i> Language Management</a>
+            <div class="dropdown mt-2">
+                <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-circle-info"></i> Plan
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item text-dark" href="plan.php">Add Plans</a></li>
+                    <li><a class="dropdown-item text-dark" href="updateplan.php">Plan Management</a></li>
+                </ul>
             </div>
+            <div class="dropdown mt-2">
+                <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-circle-info"></i> Payment
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item text-dark" href="reports.php">Billing</a></li>
+                </ul>
+            </div>
+            <div class="dropdown mt-2">
+                <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-circle-info"></i> Reports
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item text-dark" href="reports.php">Total Languages</a></li>
+                    <li><a class="dropdown-item text-dark" href="reports2.php">Total Users</a></li>
+                    <li><a class="dropdown-item text-dark" href="reports2.php">Current Signups</a></li>
+                </ul>
+            </div>
+            <div class="mt-2">
+                <a href=""><i class="fas fa-lock"></i> Change Password</a><br>
+                <a href="index.php"><i class="fas fa-lock"></i> Log-Out</a>
+            </div>
+        </div>
+    </div>
+        <div class="main-container">
             <div class="content">
                 <form action="" method="POST">
                     <?php

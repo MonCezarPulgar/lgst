@@ -44,6 +44,9 @@ $languages = $u->getLanguages();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Language Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -52,6 +55,7 @@ $languages = $u->getLanguages();
             padding: 0;
             display: flex;
             flex-direction: column;
+            min-height: 100vh;
         }
         .navbar {
             background: linear-gradient(135deg, #00c6ff, #0072ff);
@@ -202,22 +206,70 @@ $languages = $u->getLanguages();
         .main-container {
             flex: 1;
             display: flex;
-        }
-        .sidebar {
-            width: 250px; /* Adjust this width as needed */
-            background-color: #f8f9fa;
-            padding: 20px;
+            flex-wrap: wrap;
         }
         .content {
-
+            flex: 1;
+            padding: 20px;
         }
+        @media screen and (max-width: 768px) {
+            .offcanvas {
+                width: 100%;
+            }
+        }
+        
     </style>
 </head>
 <body>
-    <div class="main-content">
-        <div class="sidebar">
-            <?php include_once 'trial.php'; ?>
+    <!-- Button to toggle the sidebar -->
+    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Offcanvas Sidebar -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
+        <div class="offcanvas-header">
+            <h5 id="sidebarLabel">PremTranslate</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
+        <div class="offcanvas-body">
+            <a href="" class="d-block mb-3"><img src="images/logoo.png" height="50px" class="rounded-pill" alt="Logo"></a>
+            <a href="usermanagement.php"><i class="fas fa-house"></i> User Management</a><br>
+            <a href="languages.php"><i class="fas fa-house"></i> Language Management</a>
+            <div class="dropdown mt-2">
+                <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-circle-info"></i> Plan
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item text-dark" href="plan.php">Add Plans</a></li>
+                    <li><a class="dropdown-item text-dark" href="updateplan.php">Plan Management</a></li>
+                </ul>
+            </div>
+            <div class="dropdown mt-2">
+                <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-circle-info"></i> Payment
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item text-dark" href="reports.php">Billing</a></li>
+                </ul>
+            </div>
+            <div class="dropdown mt-2">
+                <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-circle-info"></i> Reports
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item text-dark" href="reports.php">Total Languages</a></li>
+                    <li><a class="dropdown-item text-dark" href="reports2.php">Total Users</a></li>
+                    <li><a class="dropdown-item text-dark" href="reports2.php">Current Signups</a></li>
+                </ul>
+            </div>
+            <div class="mt-2">
+                <a href=""><i class="fas fa-lock"></i> Change Password</a><br>
+                <a href="index.php"><i class="fas fa-lock"></i> Log-Out</a>
+            </div>
+        </div>
+    </div>
+    <div class="main-content">
         <h1>Add New Language</h1>
         <form method="POST" action="">
             <label for="language">Language:</label>
