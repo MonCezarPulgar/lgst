@@ -398,17 +398,17 @@ session_start();
             </div>
             <div class="menu">
                 <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="about.php">About</a></li>
-                    <li><a href="services.php">Services</a></li>
-                    <li><a href="contact.php">Contact</a></li>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
         </nav>
     </header>
 
     <main class="main">
-        <section class="section section-title">
+        <section class="section section-title" id = "home">
             <h1>PremTranslate: Bridging Language Gaps with Precision and Innovation</h1>
             <p id="typing-text">"Where words fail, our translations prevail."</p>
         </section>
@@ -424,7 +424,7 @@ session_start();
             </div>
         </section>
 
-        <section class="section">
+        <section class="section" id = "about">
             <div class="about-container">
                 <div class="about-item">
                     <h2>Who We Are</h2>
@@ -458,10 +458,9 @@ session_start();
             </div>
         </section>
 
-        <section class="section">
+        <section class="section" id = "contact">
             <div class="form">
-                <h2>Sign Up for a Free Trial</h2>
-                <p>Experience our top-notch translation services with a free trial. Sign up now!</p>
+                <h2>Contact Us!</h2>
                 <form action="" method="POST">
                 <?php
                         include 'generateconid.php';
