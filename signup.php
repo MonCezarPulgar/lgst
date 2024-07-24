@@ -242,8 +242,8 @@
                     ?>
                 <div class = "row p-4">
                         <div class = "col-md-12">
-                            <label><i class = "fas fa-user ms-2" ></i> UserId</label>
-                            <input type="text" name="userid" id="userid" class="form-control text-center" value="<?php echo $userID; ?>" readonly>
+                            <label hidden><i class = "fas fa-user ms-2" ></i> UserId</label>
+                            <input type="text" name="userid" id="userid" class="form-control text-center" value="<?php echo $userID; ?>" hidden>
                         </div>
                         <div class = "col-md-6">
                             <label><i class = "fas fa-user ms-2" ></i> First Name</label>
@@ -283,7 +283,7 @@
                         </div>
                     </div>
                     <div class = "col-md 12">
-                    <button type="submit" name = "btnsignup" class = "btn btn-warning">Sign Up</button>
+                    <button type="submit" name = "btnsignup" class = "btn btn-info">Sign Up</button>
                     </div>
                 </form>
             </div>
