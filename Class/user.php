@@ -90,6 +90,10 @@ Class User extends Database {
 			return $this->conn->error;
 		}
 	}
-
+    public function takelanguage(){
+        $sql = "select Language from languages";
+        $data = $this->conn->query($sql);
+        return $data;
+    }
 }
 ?>
