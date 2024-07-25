@@ -1,7 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <meta charset="UTF-8">
+    <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>PremTranslate: Language Translator</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -72,7 +71,7 @@
 				<div class="collapse navbar-collapse" id="collapsibleNavbar">
 					<ul class="navbar-nav">
 						<li class="nav-item">
-							<a class="nav-link text-dark" href="selectplan.php"><i class="fas fa-user"></i> Select Plan</a>
+							<a class="nav-link text-dark" href="userprofile.php"><i class="fas fa-user"></i> Select Plan</a>
 					</ul>
 					<div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
 					
@@ -82,53 +81,38 @@
 		</nav>
         <div class = "container text-center p-4 bg-light">
             <div class = "row">
-                <h1>Language Translator</h1>
-                <div class = "col-md-6">
-                    <select name="lang" id="" class = "form-control">
-                    <option value="" selected disabled>Select Language</option>
-                        <?php
+                <form action = "signup.php">
+                    <?php
                         include_once 'Class/user.php';
                         $u = new User();
-                        $data = $u->takelanguage();
-                        if ($data) {
-                            while ($row = $data->fetch_assoc()) {
-                                echo '
-                                    <option>'.$row['Language'].'</option>
-                                ';
-                            }
-                        }
-                        ?>
-                    </select>
-                    <textarea name="toText" rows="10" placeholder="Type Here..." class = "form-control"></textarea>
-                </div>
-                <div class = "col-md-6">
-                    <select name="lang" id="" class = "form-control">
-                    <option value="" selected disabled>Select Language</option>
+                        $data = $u->displayplan();
+                    ?>
+                    <div class = "row mt-3">
                         <?php
-                        include_once 'Class/user.php';
-                        $u = new User();
-                        $data = $u->takelanguage();
-                        if ($data) {
-                            while ($row = $data->fetch_assoc()) {
-                                echo '
-                                    <option>'.$row['Language'].'</option>
+                            while($row = $data->fetch_assoc()){
+                                echo'
+                                <div class="col-md-4">
+                                    <div class="card shadow-sm mb-4">
+                                        <div class="card-header text-white bg-info">
+                                            <h2 class="card-title">'.$row['PlanName'].'</h2>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-text text-dark">'.$row['Description'].'</p>
+                                            <p class="card-text text-dark">'.$row['Duration'].'</p>
+                                            <p class="card-text text-dark">$'.$row['Price'].'</p>
+                                        </div>
+                                        <div class="card-footer text-center bg-light">
+                                            <button type="submit" class="btn btn-info">Continue to Payment</button>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 ';
                             }
-                        }
                         ?>
-                    </select>
-                    <textarea name="toText" rows="10" placeholder="Translation will appear here..." class = "form-control"></textarea>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </body>
 </html>
-    <script>
-        function displayplan(planid, planname, price, duration, desc) {
-            document.getElementById("planid").value = planid;
-            document.getElementById("planname").value = planname;
-            document.getElementById("price").value = price;
-            document.getElementById("duration").value = duration;
-            document.getElementById("desc").value = desc;
-        }
-    </script>
