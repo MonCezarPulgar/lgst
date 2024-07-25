@@ -86,6 +86,7 @@
                 <h1>Language Translator</h1>
                 <div class = "col-md-6">
                     <select name="lang" id="" class = "form-control">
+                    <option value="" selected disabled>Select Language</option>
                         <?php
                         include_once 'Class/user.php';
                         $u = new User();
@@ -93,7 +94,6 @@
                         if ($data) {
                             while ($row = $data->fetch_assoc()) {
                                 echo '
-                                    <option value="" selected disabled>Select Language</option>
                                     <option>'.$row['Language'].'</option>
                                 ';
                             }
