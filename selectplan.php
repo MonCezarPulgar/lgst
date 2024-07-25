@@ -56,7 +56,7 @@
             <a href="languages.php"><i class="fas fa-house"></i> FAQ's</a>
             <div>
                 <a href=""><i class="fas fa-lock"></i> Change Password</a><br>
-                <a href="index.php"><i class="fas fa-lock"></i> Log-Out</a>
+                <a href="logout.php"><i class="fas fa-lock"></i> Log-Out</a>
             </div>
         </div>
     </div>
@@ -71,7 +71,7 @@
 				<div class="collapse navbar-collapse" id="collapsibleNavbar">
 					<ul class="navbar-nav">
 						<li class="nav-item">
-							<a class="nav-link text-dark" href="userprofile.php"><i class="fas fa-user"></i> Select Plan</a>
+							<a class="nav-link text-dark" href="selectplan.php"><i class="fas fa-user"></i> Select Plan</a>
 					</ul>
 					<div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
 					
@@ -81,7 +81,7 @@
 		</nav>
         <div class = "container text-center p-4 bg-light">
             <div class = "row">
-                <form action = "signup.php">
+                <form action = "payment.php">
                     <?php
                         include_once 'Class/user.php';
                         $u = new User();
