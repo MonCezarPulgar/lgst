@@ -47,11 +47,11 @@
                     <i class="fas fa-circle-info"></i> Profile
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item text-dark" href="plan.php">View Profile</a></li>
-                    <li><a class="dropdown-item text-dark" href="updateplan.php">Edit Profile</a></li>
+                    <li><a class="dropdown-item text-dark" href="profile.php">View Profile</a></li>
+                    <li><a class="dropdown-item text-dark" href="#">Edit Profile</a></li>
                 </ul>
             </div>
-            <a href="usermanagement.php"><i class="fas fa-house"></i> Home</a><br>
+            <a href="userprofile.php"><i class="fas fa-house"></i> Home</a><br>
             <a href="languages.php"><i class="fas fa-house"></i> Learn A Language</a><br>
             <a href="languages.php"><i class="fas fa-house"></i> FAQ's</a>
             <div>

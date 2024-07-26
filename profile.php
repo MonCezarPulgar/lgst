@@ -22,7 +22,6 @@ if ($row = $data->fetch_assoc()) {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -105,47 +104,55 @@ if ($row = $data->fetch_assoc()) {
                 </div>
             </div>
         </nav>
-        <div class="container text-center p-4 bg-light">
-            <div class="row">
-                <h1>Language Translator</h1>
-                <div class="col-md-6">
-                    <select name="lang" id="" class="form-control">
-                        <option value="" selected disabled>Select Language</option>
-                        <?php
-                        include_once 'Class/user.php';
-                        $u = new User();
-                        $data = $u->takelanguage();
-                        if ($data) {
-                            while ($row = $data->fetch_assoc()) {
-                                echo '
-                                    <option>'.$row['Language'].'</option>
-                                ';
-                            }
-                        }
-                        ?>
-                    </select>
-                    <textarea name="toText" rows="10" placeholder="Type Here..." class="form-control"></textarea>
-                </div>
-                <div class="col-md-6">
-                    <select name="lang" id="" class="form-control">
-                        <option value="" selected disabled>Select Language</option>
-                        <?php
-                        include_once 'Class/user.php';
-                        $u = new User();
-                        $data = $u->takelanguage();
-                        if ($data) {
-                            while ($row = $data->fetch_assoc()) {
-                                echo '
-                                    <option>'.$row['Language'].'</option>
-                                ';
-                            }
-                        }
-                        ?>
-                    </select>
-                    <textarea name="toText" rows="10" placeholder="Translation will appear here..." class="form-control"></textarea>
+        <form method="POST">
+            <div class="container p-4 mt-3 bg-light">
+                <h1 class="text-center">My Profile</h1>
+                <div class="row">
+                    <div class="col-md-4 d-flex flex-column align-items-center">
+                        <img src="images/profile.png" alt="Profile Image" width="350px" height="350px" class="rounded-circle mb-3">
+                        <button type="button" class="btn btn-primary">Edit Profile</button>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="fname">First Name</label>
+                                <input type="text" name="fname" id="fname" class="form-control rounded-pill" value="<?php echo $fname; ?>" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lname">Last Name</label>
+                                <input type="text" name="lname" id="lname" class="form-control rounded-pill" value="<?php echo $lname; ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="mname">Middle Name</label>
+                                <input type="text" name="mname" id="mname" class="form-control rounded-pill" value="<?php echo $mname; ?>" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="addr">Address</label>
+                                <input type="text" name="addr" id="addr" class="form-control rounded-pill" value="<?php echo $addr; ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="zip">Zip Code</label>
+                                <input type="text" name="zip" id="zip" class="form-control rounded-pill" value="<?php echo $zip; ?>" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="bday">Birthdate</label>
+                                <input type="text" name="bday" id="bday" class="form-control rounded-pill" value="<?php echo $bday; ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="email">Email Address</label>
+                                <input type="text" name="email" id="email" class="form-control rounded-pill" value="<?php echo $email; ?>" readonly>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </body>
 </html>
 <script>

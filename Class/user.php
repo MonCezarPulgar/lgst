@@ -95,5 +95,10 @@ Class User extends Database {
         $data = $this->conn->query($sql);
         return $data;
     }
+    public function displayprof($id){
+		$sql="select * from tbluser where UserId='$id'";
+		$data=$this->conn->query($sql);
+		return $data;
+	}
 }
 ?>

@@ -1,3 +1,58 @@
+<?php
+    session_start();
+        include_once 'Class/user.php';
+
+        $u = new User();
+
+        // Handle contact form submission
+        if (isset($_POST['btncontact'])) {
+            $conid = $_POST['conid'];
+            $name = $_POST['name'];
+            $email1 = $_POST['email1'];
+            $message = $_POST['message'];
+            $result = $u->AddContacts($conid,$name, $email1, $message);
+            echo '<script>alert("'.$result.'");</script>';
+        }
+
+        // Handle login form submission
+        if (isset($_POST['btnlogin'])) {
+            $un = $_POST['un'];
+            $pw = $_POST['pw'];
+            $data = $u->Login($un, $pw);
+
+            if ($row = $data->fetch_assoc()) {
+                $_SESSION['role'] = $row['Role'];
+                $_SESSION['id'] = $row['UserId'];
+                $_SESSION['status'] = $row['Status'];
+                if ($row['Role'] == 'Admin') {
+                    echo '
+                        <script>
+                            window.open("usermanagement.php","_self");
+                        </script>';
+                } else if ($row['Role'] == 'Tourist') {
+                    echo '
+                        <script>
+                            window.location.href = "userprofile.php";
+                        </script>';
+                } else if ($row['Role'] == 'Employee') {
+                    if ($row['Status'] == 'Active') {
+                        echo '<script>
+                                window.location.href = "profile.php";
+                            </script>';
+                    } else {
+                        echo '<script>
+                                alert("You are unauthorized to access this account!");
+                            </script>';
+                    }
+                }
+            } else {
+                echo '<script>
+                        alert("Incorrect Username or Password!");
+                    </script>';
+            }
+        }
+        ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -493,57 +548,4 @@ body {
     </footer>
 </body>
 </html>
-<?php
 
-        include_once 'Class/user.php';
-
-        $u = new User();
-
-        // Handle contact form submission
-        if (isset($_POST['btncontact'])) {
-            $conid = $_POST['conid'];
-            $name = $_POST['name'];
-            $email1 = $_POST['email1'];
-            $message = $_POST['message'];
-            $result = $u->AddContacts($conid,$name, $email1, $message);
-            echo '<script>alert("'.$result.'");</script>';
-        }
-
-        // Handle login form submission
-        if (isset($_POST['btnlogin'])) {
-            $un = $_POST['un'];
-            $pw = $_POST['pw'];
-            $data = $u->Login($un, $pw);
-
-            if ($row = $data->fetch_assoc()) {
-                $_SESSION['role'] = $row['Role'];
-                $_SESSION['id'] = $row['UserId'];
-                $_SESSION['status'] = $row['Status'];
-                if ($row['Role'] == 'Admin') {
-                    echo '
-                        <script>
-                            window.open("usermanagement.php","_self");
-                        </script>';
-                } else if ($row['Role'] == 'Tourist') {
-                    echo '
-                        <script>
-                            window.location.href = "userprofile.php";
-                        </script>';
-                } else if ($row['Role'] == 'Employee') {
-                    if ($row['Status'] == 'Active') {
-                        echo '<script>
-                                window.location.href = "profile.php";
-                            </script>';
-                    } else {
-                        echo '<script>
-                                alert("You are unauthorized to access this account!");
-                            </script>';
-                    }
-                }
-            } else {
-                echo '<script>
-                        alert("Incorrect Username or Password!");
-                    </script>';
-            }
-        }
-        ?>
