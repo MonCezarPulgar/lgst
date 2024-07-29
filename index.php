@@ -612,7 +612,7 @@ contact-text{
 			</div>
 			<div class="buttons">
 				<a href="freetrial.php" class="logofreetrial">Free Trial</a>
-				<a href="plans.php" class="logoplan">Plans</a>
+				<a href="#plans" class="logoplan">Plans</a>
 			</div>
 		</nav>
     </header>

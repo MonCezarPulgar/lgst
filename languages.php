@@ -6,9 +6,10 @@ $u = new User();
 if (isset($_POST['btnAddLanguage'])) {
     $language = $_POST['language'];
     $country = $_POST['country'];
+    $language_code = $_POST['language_code'];
     echo '
         <script>
-            alert("'.$u->addlanguage($language, $country).'");
+            alert("'.$u->addlanguage($language, $country, $language_code).'");
         </script>
     ';
 }
@@ -18,7 +19,8 @@ if (isset($_POST['btnUpdateLanguage'])) {
     $lid = $_POST['update_language_id'];
     $language = $_POST['update_language'];
     $country = $_POST['update_country'];
-    $result = $u->updatelanguage($lid, $language, $country);
+    $language_code = $_POST['language_code'];
+    $result = $u->updatelanguage($lid, $language, $country, $language_code);
     echo '
         <script>
             alert("'.$result.'");
@@ -276,6 +278,8 @@ $languages = $u->getLanguages();
             <input type="text" id="language" name="language" required>
             <label for="country">Country:</label>
             <input type="text" id="country" name="country" required>
+            <label for="language_code">Language Code:</label>
+            <input type="text" id="country" name="language_code" required>
             <button type="submit" name="btnAddLanguage">Add Language</button>
         </form>
 	</div>
@@ -287,6 +291,7 @@ $languages = $u->getLanguages();
                     <th>Language ID</th>
                     <th>Language</th>
                     <th>Country</th>
+                    <th>Language Code</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -296,9 +301,10 @@ $languages = $u->getLanguages();
                         <td><?php echo htmlspecialchars($language['Language_ID']); ?></td>
                         <td><?php echo htmlspecialchars($language['Language']); ?></td>
                         <td><?php echo htmlspecialchars($language['Country']); ?></td>
+                        <td><?php echo htmlspecialchars($language['LanguageCode']); ?></td>
                         <td class="actions">
                             <!-- Update Button -->
-							<button class="button update-btn" onclick="openUpdateModal('<?php echo htmlspecialchars($language['Language_ID']); ?>', '<?php echo htmlspecialchars($language['Language']); ?>', '<?php echo htmlspecialchars($language['Country']); ?>')">Update</button>
+							<button class="button update-btn" onclick="openUpdateModal('<?php echo htmlspecialchars($language['Language_ID']); ?>', '<?php echo htmlspecialchars($language['Language']); ?>', '<?php echo htmlspecialchars($language['Country']); ?>, '<?php echo htmlspecialchars($language['LanguageCode']); ?>'')">Update</button>
 
 							<!-- Delete Button -->
 							<form method="POST" style="display:inline;">
@@ -323,16 +329,19 @@ $languages = $u->getLanguages();
                 <input type="text" id="update_language" name="update_language" required>
                 <label for="update_country">Country:</label>
                 <input type="text" id="update_country" name="update_country" required>
+                <label for="update_country">Language Code:</label>
+                <input type="text" id="language_code" name="update_country" required>
                 <button type="submit" name="btnUpdateLanguage">Update Language</button>
             </form>
         </div>
     </div>
 
     <script>
-        function openUpdateModal(id, language, country) {
+        function openUpdateModal(id, language, country, language_code) {
             document.getElementById('update_language_id').value = id;
             document.getElementById('update_language').value = language;
             document.getElementById('update_country').value = country;
+            document.getElementById('language_code').value = language_code;
             document.getElementById('updateModal').style.display = 'block';
         }
 

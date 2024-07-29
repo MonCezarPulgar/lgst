@@ -58,9 +58,9 @@ Class User extends Database {
         $data=$this->conn->query($sql);
         return $data;
     }
-    public function addlanguage($language, $country) {
+    public function addlanguage($language, $country, $language_code) {
 		$lid = uniqid();
-		$sql = "INSERT INTO languages (Language_ID, Language, Country) VALUES ('$lid', '$language', '$country')";
+		$sql = "INSERT INTO languages (Language_ID, Language, Country, LanguageCode) VALUES ('$lid', '$language', '$country', '$language_code')";
 		if ($this->conn->query($sql)) {
 			return 'Successfully Added';
 		} else {
@@ -73,8 +73,8 @@ Class User extends Database {
         return $data;
     }
 	
-	public function updatelanguage($lid, $language, $country){
-		$sql="Update languages set Language='$language', Country='$country' where Language_ID='$lid'";
+	public function updatelanguage($lid, $language, $country, $language_code){
+		$sql="Update languages set Language='$language', Country='$country', LanguageCode = '$language_code' where Language_ID='$lid'";
 		if ($this->conn->query($sql)) {
             return 'Successfully Updated';
         } else {
@@ -91,7 +91,7 @@ Class User extends Database {
 		}
 	}
     public function takelanguage(){
-        $sql = "select Language from languages";
+        $sql = "select LanguageCode, Language from languages";
         $data = $this->conn->query($sql);
         return $data;
     }

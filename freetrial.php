@@ -314,22 +314,34 @@ if(isset($_POST['btnsignup'])){
                     <h2>Input Text</h2>
                     <textarea id="inputText" rows="10" placeholder="Enter text here..."></textarea>
                     <select id="inputLanguage">
-                        <option data-country="Philippines" value="tl">Filipino</option>
-                        <option data-country="United States" value="en">English</option>
-                        <option data-country="Spain" value="es">Spanish</option>
-                        <option data-country="France" value="fr">French</option>
-                        <option data-country="China" value="zh-CN">Chinese</option>
+                        <option value="" selected disable>Select Language</option>
+                        <?php
+                        include_once 'Class/user.php';
+                        $u = new User();
+                        $data = $u->takelanguage();
+                        if ($data) {
+                            while ($row = $data->fetch_assoc()) {
+                                echo '<option value="'.$row['LanguageCode'].'">'.$row['Language'].'</option>';
+                            }
+                        }
+                        ?>
                     </select>
                 </div>
                 <div class="column">
                     <h2>Translated Text</h2>
                     <textarea id="outputText" rows="10" placeholder="Translation will appear here..."></textarea>
                     <select id="outputLanguage">
-                        <option data-country="Philippines" value="tl">Filipino</option>
-                        <option data-country="United States" value="en">English</option>
-                        <option data-country="Spain" value="es">Spanish</option>
-                        <option data-country="France" value="fr">French</option>
-                        <option data-country="China" value="zh-CN">Chinese</option>
+                        <option value="" selected disable>Select Language</option>
+                        <?php
+                        include_once 'Class/user.php';
+                        $u = new User();
+                        $data = $u->takelanguage();
+                        if ($data) {
+                            while ($row = $data->fetch_assoc()) {
+                                echo '<option value="'.$row['LanguageCode'].'">'.$row['Language'].'</option>';
+                            }
+                        }
+                        ?>
                     </select>
                 </div>
             </div>
@@ -394,6 +406,51 @@ if(isset($_POST['btnsignup'])){
                     console.error("Error:", error);
                 });
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+
+                    // Function to get language based on location (lat, lon)
+                    getLanguageFromLocation(lat, lon).then(languageCode => {
+                        document.getElementById('inputLanguage').value = languageCode;
+                    });
+                }, function(error) {
+                    console.error('Error getting location', error);
+                });
+            }
+        });
+
+        async function getLanguageFromLocation(lat, lon) {
+            // You might need to implement this function based on your needs
+            // For example, you can use an API or a predefined mapping
+            // For now, let's use a simple mapping:
+            if (lat > 10 && lon > 120) {
+                return 'tl'; // Filipino (Tagalog)
+            }
+            // Add other mappings as needed
+            return '';
+        }
+
+        document.getElementById('inputLanguage').addEventListener('change', function() {
+            const selectedInputLanguage = this.value;
+            const outputLanguageSelect = document.getElementById('outputLanguage');
+
+            // Enable all options
+            Array.from(outputLanguageSelect.options).forEach(option => {
+                option.disabled = false;
+            });
+
+            // Disable options that should not be available
+            Array.from(outputLanguageSelect.options).forEach(option => {
+                if (option.value !== '' && option.value !== selectedInputLanguage) {
+                    option.disabled = true;
+                }
+            });
+        });
+
     </script>
 </body>
 </html>
