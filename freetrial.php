@@ -21,6 +21,7 @@ if(isset($_POST['btnsignup'])){
         echo'
             <script>
                 alert("'.$u->signup($userid,$fname, $mname, $lname, $addr, $zip, $bday, $email, $pass, $con).'");
+                window.open("profile.php");
             </script>
         ';
     }else{
@@ -168,7 +169,7 @@ if(isset($_POST['btnsignup'])){
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg'); /* Flag of France */
         }
         .translator select option[data-country="China"] {
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg'); /* Flag of China */
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_United_States.svg'); /* Flag of China */
         }
         .translator textarea {
             width: calc(100% - 20px); /* Adjust width to account for margin */
@@ -236,70 +237,69 @@ if(isset($_POST['btnsignup'])){
         .card {
             background-color: #f9f9f9;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             padding: 20px;
-            margin: 20px 0;
             text-align: center;
         }
 
-        .card-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #0072ff;
+        .card img {
+            border-radius: 10px;
             margin-bottom: 10px;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
         }
 
-        .card-text {
+        .card h2 {
+            color: #0072ff;
+            font-size: 22px;
+        }
+
+        .card p {
+            color: #555;
             font-size: 16px;
-            color: #333;
         }
 
-        /* Media Queries */
+        /* Responsive styles */
         @media (max-width: 768px) {
             .translator .columns {
                 flex-direction: column;
-                align-items: center;
             }
+
             .translator .column {
                 width: 100%;
-                margin-bottom: 20px;
             }
-            .form-container {
-                width: 100%;
-                margin: 20px auto;
-            }
-        }
 
-        @media (max-width: 480px) {
-            .translator h1 {
-                font-size: 24px;
+            .form-container {
+                width: 80%;
+                margin-left: 10%;
             }
-            .translator .column h2 {
-                font-size: 18px;
-            }
-            .translator select, .translator textarea {
-                font-size: 14px;
-            }
+
             .navbar {
                 flex-direction: column;
-                text-align: center;
+                align-items: flex-start;
             }
+
             .menu ul {
                 flex-direction: column;
-                align-items: center;
+                width: 100%;
             }
+
             .menu ul li {
-                margin: 10px 0;
+                margin-left: 0;
+                margin-bottom: 10px;
             }
+
             .main-content {
-                margin-top: 120px; /* Adjust top margin for smaller screens */
+                padding: 10px;
+                margin: 60px 10px 20px;
             }
         }
     </style>
 </head>
 <body>
     <div class="navbar">
-        <div class="logo">PremTranslate: Language Translator</div>
+        <div class="logo">MyWebsite</div>
         <div class="menu">
             <ul>
                 <li><a href="index.php">Home</a></li>
@@ -311,52 +311,49 @@ if(isset($_POST['btnsignup'])){
             <h1>Language Translator</h1>
             <div class="columns">
                 <div class="column">
-                    <h2>Translate From:</h2>
-                    <select name="fromLanguage">
-                        <option value="en" data-country="United States">English</option>
-                        <option value="fil" data-country="Philippines">Filipino</option>
-                        <option value="es" data-country="Spain">Spanish</option>
-                        <option value="fr" data-country="France">French</option>
-                        <option value="zh" data-country="China">Chinese</option>
+                    <h2>Input Text</h2>
+                    <textarea id="inputText" rows="10" placeholder="Enter text here..."></textarea>
+                    <select id="inputLanguage">
+                        <option data-country="Philippines" value="tl">Filipino</option>
+                        <option data-country="United States" value="en">English</option>
+                        <option data-country="Spain" value="es">Spanish</option>
+                        <option data-country="France" value="fr">French</option>
+                        <option data-country="China" value="zh-CN">Chinese</option>
                     </select>
-                    <textarea name="fromText" rows="10" placeholder="Enter text here..."></textarea>
                 </div>
                 <div class="column">
-                    <h2>Translate To:</h2>
-                    <select name="toLanguage">
-                        <option value="en" data-country="United States">English</option>
-                        <option value="fil" data-country="Philippines">Filipino</option>
-                        <option value="es" data-country="Spain">Spanish</option>
-                        <option value="fr" data-country="France">French</option>
-                        <option value="zh" data-country="China">Chinese</option>
+                    <h2>Translated Text</h2>
+                    <textarea id="outputText" rows="10" placeholder="Translation will appear here..."></textarea>
+                    <select id="outputLanguage">
+                        <option data-country="Philippines" value="tl">Filipino</option>
+                        <option data-country="United States" value="en">English</option>
+                        <option data-country="Spain" value="es">Spanish</option>
+                        <option data-country="France" value="fr">French</option>
+                        <option data-country="China" value="zh-CN">Chinese</option>
                     </select>
-                    <textarea name="toText" rows="10" placeholder="Translation will appear here..."></textarea>
                 </div>
             </div>
+            <button onclick="translateText()" class="btn btn-primary">Translate</button>
         </div>
         <div class="signup">
-            <p>Don't have an account? <a href="#" onclick="showForm()">Sign up here!</a></p>
+            <a href="#" id="signupLink">Create an account</a>
         </div>
-        <div class="form-container" id="form-container">
-            <h2 class="form-header">Sign Up</h2>
-            <form method="POST">
-                    <?php
-                        include 'generateuserid.php';
-                        $userID = generateUSERID();
-                    ?>
-                <label for="userid" hidden>User ID</label>
-                <input type="text" id="userid" name="userid" value = "<?php echo $userID; ?>" hidden>
+        <div class="form-container" id="formContainer">
+            <h2 class="form-header">Contact Form</h2>
+            <form method="POST" action="">
+                <label for="userid">User ID</label>
+                <input type="text" id="userid" name="userid" required>
                 <label for="fname">First Name</label>
                 <input type="text" id="fname" name="fname" required>
                 <label for="mname">Middle Name</label>
-                <input type="text" id="mname" name="mname">
+                <input type="text" id="mname" name="mname" required>
                 <label for="lname">Last Name</label>
                 <input type="text" id="lname" name="lname" required>
                 <label for="addr">Address</label>
-                <textarea id="addr" name="addr" rows="3" required></textarea>
-                <label for="zip">ZIP Code</label>
+                <input type="text" id="addr" name="addr" required>
+                <label for="zip">Zip Code</label>
                 <input type="text" id="zip" name="zip" required>
-                <label for="bday">Birthday</label>
+                <label for="bday">Birth Date</label>
                 <input type="date" id="bday" name="bday" required>
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
@@ -369,8 +366,33 @@ if(isset($_POST['btnsignup'])){
         </div>
     </div>
     <script>
-        function showForm() {
-            document.getElementById('form-container').style.display = 'block';
+        // Toggle contact form visibility
+        document.getElementById('signupLink').addEventListener('click', function(event) {
+            event.preventDefault();
+            var formContainer = document.getElementById('formContainer');
+            if (formContainer.style.display === 'block') {
+                formContainer.style.display = 'none';
+            } else {
+                formContainer.style.display = 'block';
+            }
+        });
+
+        function translateText() {
+            var inputText = document.getElementById("inputText").value;
+            var inputLanguage = document.getElementById("inputLanguage").value;
+            var outputLanguage = document.getElementById("outputLanguage").value;
+
+            var url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${inputLanguage}&tl=${outputLanguage}&dt=t&q=${encodeURI(inputText)}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    var translatedText = data[0][0][0];
+                    document.getElementById("outputText").value = translatedText;
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
         }
     </script>
 </body>

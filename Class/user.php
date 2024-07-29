@@ -100,5 +100,13 @@ Class User extends Database {
 		$data=$this->conn->query($sql);
 		return $data;
 	}
+    public function editprofile($userid, $fname, $lname, $mname, $addr, $zip, $bday, $email){
+        $sql = "UPDATE tbluser SET FirstName = '$fname', LastName = '$lname', MiddleName = '$mname', Address = '$addr', ZipCode = '$zip', Birthdate = '$bday', EmailAddress = '$email' WHERE UserId = '$userid'";
+        if ($this->conn->query($sql)) {
+            return 'Profile Edited!';
+        } else {
+            return $this->conn->error;
+        }
+    }
 }
 ?>

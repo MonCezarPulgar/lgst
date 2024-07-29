@@ -78,7 +78,7 @@ if ($row = $data->fetch_assoc()) {
             </div>
             <a href="userprofile.php"><i class="fas fa-house"></i> Home</a><br>
             <a href="languages.php"><i class="fas fa-house"></i> Learn A Language</a><br>
-            <a href="languages.php"><i class="fas fa-house"></i> FAQ's</a>
+            <a href="faq.php"><i class="fas fa-house"></i> FAQ's</a>
             <div>
                 <a href=""><i class="fas fa-lock"></i> Change Password</a><br>
                 <a href="index.php"><i class="fas fa-lock"></i> Log-Out</a>
@@ -219,3 +219,24 @@ if ($row = $data->fetch_assoc()) {
         document.getElementById("modal_email").value = email;
     }
 </script>
+<?php
+include_once'Class/user.php';
+if(isset($_POST['btnedit'])){
+    $userid = $_POST['modal_userid'];
+    $fname = $_POST['modal_fname'];
+    $lname = $_POST['modal_lname'];
+    $mname = $_POST['modal_mname'];
+    $addr = $_POST['modal_addr'];
+    $zip = $_POST['modal_zip'];
+    $bday = $_POST['modal_bday'];
+    $email = $_POST['modal_email'];
+    $u = new User();
+    $result = $u->editprofile($userid, $fname, $lname, $mname, $addr, $zip, $bday, $email);
+    echo'
+        <script>
+            alert("'.htmlspecialchars($result).'");
+            window.location.href = window.location.href.split("?")[0] + "?refresh=1";
+        </script>
+    ';
+}
+?>
