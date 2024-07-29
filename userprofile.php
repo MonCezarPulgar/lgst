@@ -1,3 +1,27 @@
+<?php
+session_start();
+if (!isset($_SESSION['id'])) {
+    header("Location: index.php"); // Redirect to login page if not logged in
+    exit();
+}
+
+$id = $_SESSION['id'];
+include_once 'Class/user.php';
+$u = new User();
+$data = $u->displayprof($id);
+
+if ($row = $data->fetch_assoc()) {
+    $userid = $row['UserId'];
+    $fname = $row['FirstName'];
+    $lname = $row['LastName'];
+    $mname = $row['MiddleName'];
+    $addr = $row['Address'];
+    $zip = $row['ZipCode'];
+    $bday = $row['Birthdate'];
+    $email = $row['EmailAddress'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
