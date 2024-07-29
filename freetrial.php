@@ -292,6 +292,8 @@ if(isset($_POST['btnsignup'])){
                     <select id="inputLanguage">
                         <option value="" selected disable>Select Language</option>
                         <?php
+                        include_once 'Class/user.php';
+                        $u = new User();
                         $data = $u->takelanguage();
                         if ($data) {
                             while ($row = $data->fetch_assoc()) {
@@ -308,6 +310,8 @@ if(isset($_POST['btnsignup'])){
                     <select id="outputLanguage">
                         <option value="" selected disable>Select Language</option>
                         <?php
+                        include_once 'Class/user.php';
+                        $u = new User();
                         $data = $u->takelanguage();
                         if ($data) {
                             while ($row = $data->fetch_assoc()) {
