@@ -407,7 +407,7 @@ $languages = $u->getLanguages();
                         <td><?php echo htmlspecialchars($language['LanguageCode']); ?></td>
                         <td class="actions">
                             <!-- Update Button -->
-							<button class="button update-btn" onclick="openUpdateModal('<?php echo htmlspecialchars($language['Language_ID']); ?>', '<?php echo htmlspecialchars($language['Language']); ?>', '<?php echo htmlspecialchars($language['Country']); ?>, '<?php echo htmlspecialchars($language['LanguageCode']); ?>'')">Update</button>
+							<button class="button update-btn" data-bs-toggle="modal" data-bs-target="#updateModal" onclick="openUpdateModal('<?php echo htmlspecialchars($language['Language_ID']); ?>', '<?php echo htmlspecialchars($language['Language']); ?>', '<?php echo htmlspecialchars($language['Country']); ?>', '<?php echo htmlspecialchars($language['LanguageCode']); ?>')">Update</button>
 
 							<!-- Delete Button -->
 							<form method="POST" style="display:inline;">
@@ -420,11 +420,11 @@ $languages = $u->getLanguages();
             </tbody>
         </table>
     </div>
-
-    <!-- The Modal -->
-    <div id="updateModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeUpdateModal()">&times;</span>
+    
+    <div class="modal fade" id="updateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                <span class="close">&times;</span>
             <h2>Update Language</h2>
             <form method="POST" action="">
                 <input type="hidden" id="update_language_id" name="update_language_id">
@@ -432,12 +432,13 @@ $languages = $u->getLanguages();
                 <input type="text" id="update_language" name="update_language" required>
                 <label for="update_country">Country:</label>
                 <input type="text" id="update_country" name="update_country" required>
-                <label for="update_country">Language Code:</label>
-                <input type="text" id="language_code" name="update_country" required>
+                <label for="language_code">Language Code:</label>
+                <input type="text" id="language_code" name="language_code" required>
                 <button type="submit" name="btnUpdateLanguage">Update Language</button>
             </form>
+                </div>
+            </div>
         </div>
-    </div>
 
     <script>
         function openUpdateModal(id, language, country, language_code) {
@@ -446,10 +447,6 @@ $languages = $u->getLanguages();
             document.getElementById('update_country').value = country;
             document.getElementById('language_code').value = language_code;
             document.getElementById('updateModal').style.display = 'block';
-        }
-
-        function closeUpdateModal() {
-            document.getElementById('updateModal').style.display = 'none';
         }
 
         window.onclick = function(event) {

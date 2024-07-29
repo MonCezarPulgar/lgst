@@ -172,7 +172,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <a href="" class="d-block mb-3"><img src="images/logoo.png" height="50px" class="rounded-pill" alt="Logo"></a>
+            <a href="admindashboard.php"><i class="fas fa-house"></i> Admin Dashboard</a><br>
             <a href="usermanagement.php"><i class="fas fa-house"></i> User Management</a><br>
             <a href="languages.php"><i class="fas fa-house"></i> Language Management</a>
             <div class="dropdown mt-2">

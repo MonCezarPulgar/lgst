@@ -7,7 +7,7 @@ include_once 'Class/user.php';
 
 $u = new User();
 
-// Handle contact form submission
+// Handle sign-up form submission
 if(isset($_POST['btnsignup'])){
     $userid = $_POST['userid'];
     $fname = $_POST['fname'];
@@ -19,25 +19,43 @@ if(isset($_POST['btnsignup'])){
     $email = $_POST['email'];
     $pass = $_POST['pass'];
     $con = $_POST['con'];
-    $u = new User();
-    if($pass == $con){
-        echo'
-            <script>
-                alert("'.$u->signup($userid,$fname, $mname, $lname, $addr, $zip, $bday, $email, $pass, $con).'");
-                window.open("profile.php");
-            </script>
-        ';
-    }else{
-        echo'
-        <script>
-            alert("Password did not match");
-            window.open("plan.php");
-        </script>
-        ';
-    }
-}
 
+    // Check if passwords match
+    if($pass != $con){
+        echo '<script>
+            alert("Password did not match");
+            window.location.href = "index.php";
+        </script>';
+        exit();
+    }
+
+    // Calculate age
+    $birthDate = new DateTime($bday);
+    $today = new DateTime('today');
+    $age = $today->diff($birthDate)->y;
+
+    // Validate age
+    if($age < 19){
+        echo '<script>
+            alert("You must be 19 years old or older to sign up");
+            window.location.href = "index.php";
+        </script>';
+        exit();
+    }
+
+    // Proceed with sign-up
+    $signupResult = $u->signup($userid, $fname, $mname, $lname, $addr, $zip, $bday, $email, $pass, $con);
+    echo '<script>
+        alert("'.$signupResult.'");
+        if("'.$signupResult.'" === "Signup successful") {
+            window.location.href = "profile.php";
+        } else {
+            window.location.href = "index.php";
+        }
+    </script>';
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,15 +72,6 @@ if(isset($_POST['btnsignup'])){
             margin: 0;
             padding: 0;
         }
-        .navbar {
-            background: linear-gradient(135deg, #00c6ff, #0072ff);
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-size: 18px;
-        }
-		
-		/* Navbar styles */
         .navbar {
             background-color: #0072ff;
             color: #fff;
@@ -173,7 +182,7 @@ if(isset($_POST['btnsignup'])){
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg'); /* Flag of France */
         }
         .translator select option[data-country="China"] {
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_United_States.svg'); /* Flag of China */
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_China.svg'); /* Flag of China */
         }
         .translator textarea {
             width: calc(100% - 20px); /* Adjust width to account for margin */
@@ -256,72 +265,33 @@ if(isset($_POST['btnsignup'])){
 
         .card h2 {
             color: #0072ff;
-            font-size: 22px;
+            margin-bottom: 10px;
         }
 
         .card p {
-            color: #555;
-            font-size: 16px;
-        }
-
-        /* Responsive styles */
-        @media (max-width: 768px) {
-            .translator .columns {
-                flex-direction: column;
-            }
-
-            .translator .column {
-                width: 100%;
-            }
-
-            .form-container {
-                width: 80%;
-                margin-left: 10%;
-            }
-
-            .navbar {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .menu ul {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .menu ul li {
-                margin-left: 0;
-                margin-bottom: 10px;
-            }
-
-            .main-content {
-                padding: 10px;
-                margin: 60px 10px 20px;
-            }
+            color: #333;
         }
     </style>
 </head>
 <body>
-    <div class="navbar">
+    <nav class="navbar">
         <div class="logo">PremTranslate: Language Translator</div>
         <div class="menu">
             <ul>
                 <li><a href="index.php">Home</a></li>
             </ul>
         </div>
-    </div>
+    </nav>
     <div class="main-content">
         <div class="translator">
             <h1>Language Translator</h1>
             <div class="columns">
                 <div class="column">
                     <h2>Input Text</h2>
-                    <textarea id="inputText" rows="10" placeholder="Enter text here..."></textarea>
+                    <textarea id="inputText" rows="6" placeholder="Enter text here..."></textarea>
                     <select id="inputLanguage">
                         <option value="" selected disable>Select Language</option>
                         <?php
-                        include_once 'Class/user.php';
-                        $u = new User();
                         $data = $u->takelanguage();
                         if ($data) {
                             while ($row = $data->fetch_assoc()) {
@@ -330,15 +300,14 @@ if(isset($_POST['btnsignup'])){
                         }
                         ?>
                     </select>
+                    <button onclick="startSpeechRecognition()" class="btn btn-secondary">Speak</button>
                 </div>
                 <div class="column">
                     <h2>Translated Text</h2>
-                    <textarea id="outputText" rows="10" placeholder="Translation will appear here..."></textarea>
+                    <textarea id="outputText" rows="6" placeholder="Translation will appear here..."></textarea>
                     <select id="outputLanguage">
                         <option value="" selected disable>Select Language</option>
                         <?php
-                        include_once 'Class/user.php';
-                        $u = new User();
                         $data = $u->takelanguage();
                         if ($data) {
                             while ($row = $data->fetch_assoc()) {
@@ -347,52 +316,100 @@ if(isset($_POST['btnsignup'])){
                         }
                         ?>
                     </select>
+                    <button onclick="speakTranslatedText()" class="btn btn-secondary">Speak Translated</button>
                 </div>
             </div>
-            <button onclick="translateText()" class="btn btn-primary">Translate</button>
+            <button onclick="translateText()" class="btn btn-primary mt-3">Translate</button>
         </div>
-        <div class="signup">
-            <a href="#" id="signupLink">Create an account</a>
+		
+		<div class="signup">
+            <!-- Button trigger modal -->
+            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#signupModal">Create an account</a>
         </div>
-        <div class="form-container" id="formContainer">
-            <h2 class="form-header">Contact Form</h2>
-            <form method="POST" action="">
-                <label for="userid">User ID</label>
-                <input type="text" id="userid" name="userid" required>
-                <label for="fname">First Name</label>
-                <input type="text" id="fname" name="fname" required>
-                <label for="mname">Middle Name</label>
-                <input type="text" id="mname" name="mname" required>
-                <label for="lname">Last Name</label>
-                <input type="text" id="lname" name="lname" required>
-                <label for="addr">Address</label>
-                <input type="text" id="addr" name="addr" required>
-                <label for="zip">Zip Code</label>
-                <input type="text" id="zip" name="zip" required>
-                <label for="bday">Birth Date</label>
-                <input type="date" id="bday" name="bday" required>
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-                <label for="pass">Password</label>
-                <input type="password" id="pass" name="pass" required>
-                <label for="con">Confirm Password</label>
-                <input type="password" id="con" name="con" required>
-                <button type="submit" name="btnsignup">Sign Up</button>
-            </form>
+
+        <!-- Sign-Up Modal -->
+        <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="signupForm" method="POST" action="signup.php">
+                            <div class="form-group">
+                                <label for="userid">User ID</label>
+                                <input type="text" class="form-control" id="userid" name="userid" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="fname">First Name</label>
+                                <input type="text" class="form-control" id="fname" name="fname" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="mname">Middle Name</label>
+                                <input type="text" class="form-control" id="mname" name="mname">
+                            </div>
+                            <div class="form-group">
+                                <label for="lname">Last Name</label>
+                                <input type="text" class="form-control" id="lname" name="lname" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="addr">Address</label>
+                                <input type="text" class="form-control" id="addr" name="addr" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="zip">Zip Code</label>
+                                <input type="text" class="form-control" id="zip" name="zip" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="bday">Birthday</label>
+                                <input type="date" class="form-control" id="bday" name="bday" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass">Password</label>
+                                <input type="password" class="form-control" id="pass" name="pass" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="con">Confirm Password</label>
+                                <input type="password" class="form-control" id="con" name="con" required>
+                            </div>
+                            <button type="submit" name="btnsignup" class="btn btn-primary">Sign Up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
+
+		
     </div>
     <script>
-        // Toggle contact form visibility
-        document.getElementById('signupLink').addEventListener('click', function(event) {
-            event.preventDefault();
-            var formContainer = document.getElementById('formContainer');
-            if (formContainer.style.display === 'block') {
-                formContainer.style.display = 'none';
-            } else {
-                formContainer.style.display = 'block';
-            }
-        });
+        // Initialize Speech Recognition API
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'en-US'; // You may need to set the language based on user selection
 
+        // Handle Speech Recognition
+        function startSpeechRecognition() {
+            recognition.start();
+        }
+
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            document.getElementById('inputText').value = transcript;
+        };
+
+        // Handle Text-to-Speech
+        function speakTranslatedText() {
+            const text = document.getElementById('outputText').value;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = document.getElementById('outputLanguage').value; // Set language for speech synthesis
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Translate text using Google Translate API
         function translateText() {
             var inputText = document.getElementById("inputText").value;
             var inputLanguage = document.getElementById("inputLanguage").value;
@@ -411,33 +428,7 @@ if(isset($_POST['btnsignup'])){
                 });
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
-
-                    // Function to get language based on location (lat, lon)
-                    getLanguageFromLocation(lat, lon).then(languageCode => {
-                        document.getElementById('inputLanguage').value = languageCode;
-                    });
-                }, function(error) {
-                    console.error('Error getting location', error);
-                });
-            }
-        });
-
-        async function getLanguageFromLocation(lat, lon) {
-            // You might need to implement this function based on your needs
-            // For example, you can use an API or a predefined mapping
-            // For now, let's use a simple mapping:
-            if (lat > 10 && lon > 120) {
-                return 'tl'; // Filipino (Tagalog)
-            }
-            // Add other mappings as needed
-            return '';
-        }
-
+        // Enable language selection in output based on input selection
         document.getElementById('inputLanguage').addEventListener('change', function() {
             const selectedInputLanguage = this.value;
             const outputLanguageSelect = document.getElementById('outputLanguage');
@@ -454,7 +445,6 @@ if(isset($_POST['btnsignup'])){
                 }
             });
         });
-
     </script>
 </body>
 </html>
