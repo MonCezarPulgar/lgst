@@ -168,30 +168,43 @@
     <!-- Offcanvas Sidebar -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
         <div class="offcanvas-header">
-            <h5 id="sidebarLabel"></h5>
-            <h3> PremTranslate</h3>
-            <button type="button" class="btn-close mb-2 mt-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <h5 id="sidebarLabel">PremTranslate</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <a href="" class="d-block mx-1 mb-1"><img src="images/voice.png" class="img-fluid" alt="Logo"></a>
-            <div class="links">
-                <a href="admindashboard.php"> <i class="fa-solid fa-clipboard mx-2"></i> Dashboard</a>    
-                <div class="dropdown mt-2">
-                    <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-circle-info mx-2"></i> Profile
-                    </a>
-                    <ul class="dropdown-menu mx-2">
-                        <li><a class="dropdown-item" href="profile.php">View Profile</a></li>
-                        <li><a class="dropdown-item" href="updateplan.php">Edit Profile</a></li>
-                    </ul>
-                </div>
-                <a href="usermanagement.php"><i class="fas fa-house mx-2"></i> Home</a>
-                <a href="languages.php"><i class="fas fa-language mx-2"></i> Learn A Language</a>
-                <a href="faq.php"><i class="fas fa-question-circle mx-2"></i> FAQ's</a>
+            <a href="" class="d-block mb-3"><img src="images/logoo.png" height="50px" class="rounded-pill" alt="Logo"></a>
+            <a href="usermanagement.php"><i class="fas fa-house"></i> User Management</a><br>
+            <a href="languages.php"><i class="fas fa-house"></i> Language Management</a>
+            <div class="dropdown mt-2">
+                <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-circle-info"></i> Plan
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item text-dark" href="plan.php">Add Plans</a></li>
+                    <li><a class="dropdown-item text-dark" href="updateplan.php">Plan Management</a></li>
+                </ul>
             </div>
-            <div class="mt-3">
-                <a href=""><i class="fas fa-lock mx-2"></i> Change Password</a>
-                <a href="index.php"><i class="fas fa-sign-out-alt mx-2"></i> Log-Out</a>
+            <div class="dropdown mt-2">
+                <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-circle-info"></i> Payment
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item text-dark" href="reports.php">Billing</a></li>
+                </ul>
+            </div>
+            <div class="dropdown mt-2">
+                <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-circle-info"></i> Reports
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item text-dark" href="reports.php">Total Languages</a></li>
+                    <li><a class="dropdown-item text-dark" href="reports2.php">Total Users</a></li>
+                    <li><a class="dropdown-item text-dark" href="reports2.php">Current Signups</a></li>
+                </ul>
+            </div>
+            <div class="mt-2">
+                <a href=""><i class="fas fa-lock"></i> Change Password</a><br>
+                <a href="index.php"><i class="fas fa-lock"></i> Log-Out</a>
             </div>
         </div>
     </div>
