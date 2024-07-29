@@ -51,39 +51,142 @@ $languages = $u->getLanguages();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+        }
+        .main-container {
+            flex: 1;
+            display: flex;
+        }
+        .btn-close {
+            color: #ffffff; /* Sets the icon color to white */
+            background-color: transparent; /* Ensures the button background is transparent */
+            border: none; /* Removes any default border */
+        }
+
+        .btn-close:hover {
+            color: #ffffff; /* Ensures the icon color remains white on hover */
+            background-color: rgba(255, 255, 255, 0.1); /* Adds a subtle background color on hover for visibility */
+        }
+        .offcanvas {
+            background: #282c34;
+            color: #ffffff;
+            width: 290px;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
         }
-        .navbar {
-            background: linear-gradient(135deg, #00c6ff, #0072ff);
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-size: 18px;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-        .navbar .logo {
-            font-size: 26px;
-            font-weight: bold;
-        }
-        .main-content {
-            margin-top: 100px;
+        .offcanvas .offcanvas-header {
+            border-bottom: 1px solid #444851;
             padding: 20px;
-            max-width: 800px;
-            margin: 80px auto 20px;
-            background: #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            border-radius: 8px;
+        }
+        .offcanvas .offcanvas-body {
             flex: 1;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .offcanvas .offcanvas-body .links {
+            flex: 1;
+        }
+        .offcanvas .offcanvas-body a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-top: 15px;
+            font-size: 18px;
+            display: block;
+        }
+        .offcanvas .offcanvas-body a:hover {
+            color: #ffffff;
+            background-color: #3a3f47;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .offcanvas .dropdown-menu {
+            background: #3a3f47;
+        }
+        .offcanvas .dropdown-item {
+            color: #d1d1d1;
+        }
+        .offcanvas .dropdown-item:hover {
+            color: #ffffff;
+            background-color: #3a3f47;
+        }
+        .navbar {
+            background-color: #17a2b8;
+        }
+        .navbar .navbar-brand img {
+            height: 50px;
+        }
+        .navbar .nav-link {
+            color: #fff;
+        }
+        .navbar .nav-link:hover {
+            color: #e9ecef;
+        }
+        .container {
+            padding: 20px;
+            margin-top: 50px;
+        }
+        .form-control {
+            margin-bottom: 15px;
+        }
+        .white-shadow {
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.5);
+        }
+        .btn-toggle-sidebar {
+            background-color: #282c34; /* Bright color for visibility */
+            border: none;
+            width: 50px; /* Adjust width to be circular */
+            height: 50px; /* Adjust height to be circular */
+            border-radius: 50%;
+            padding: 10px;
+            color: #fff;
+            font-size: 24px;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1050; /* Ensure it's above other content */
+        }
+        .btn-toggle-sidebar:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+        }
+        .btn-toggle-sidebar:focus {
+            outline: none; /* Remove default focus outline */
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5); /* Custom focus outline */
+        }
+        .btn-toggle-sidebar.hidden {
+            display: none; /* Hide the button when the sidebar is open */
+        }
+        .dashboard h2 {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 60px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ffffff, #aeeeee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0.5, 0.5, 0.5, 0.5); /* Adds a subtle shadow */
+        }
+        .hidden {
+            display: none;
+        }
+        @media (max-width: 576px) {
+            .btn-toggle-sidebar {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            .dashboard h2 {
+                font-size: 2rem;
+            }
         }
         h1, h2 {
             color: #0072ff;
@@ -224,7 +327,7 @@ $languages = $u->getLanguages();
 </head>
 <body>
     <!-- Button to toggle the sidebar -->
-    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
+    <button class="btn-toggle-sidebar" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle sidebar">
         <i class="fas fa-bars"></i>
     </button>
 
@@ -271,7 +374,7 @@ $languages = $u->getLanguages();
             </div>
         </div>
     </div>
-    <div class="main-content">
+    <div class="main-content container p-4">
         <h1>Add New Language</h1>
         <form method="POST" action="">
             <label for="language">Language:</label>
@@ -283,7 +386,7 @@ $languages = $u->getLanguages();
             <button type="submit" name="btnAddLanguage">Add Language</button>
         </form>
 	</div>
-	<div class="main-content">
+	<div class="main-content container p-4">
         <h2>Languages List</h2>
         <table>
             <thead>

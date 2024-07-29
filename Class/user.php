@@ -108,5 +108,46 @@ Class User extends Database {
             return $this->conn->error;
         }
     }
+    public function getTotalUsers() {
+        $sql = "SELECT COUNT(*) AS total FROM tbluser";
+        $result = $this->conn->query($sql);
+        if ($result) {
+            $row = $result->fetch_assoc();
+            return $row['total'];
+        }
+        return 0;
+    }
+
+    public function getUserList() {
+        $sql = "SELECT EmailAddress FROM tbluser";
+        $data = $this->conn->query($sql);
+        $users = [];
+        if ($data->num_rows > 0) {
+            while ($row = $data->fetch_assoc()) {
+                $users[] = $row;
+            }
+        }
+        return $users;
+    }
+    public function getTotalLanguage(){
+		$sql = "SELECT COUNT(*) AS total FROM languages";
+        $result = $this->conn->query($sql);
+        if ($result) {
+            $row = $result->fetch_assoc();
+            return $row['total'];
+        }
+        return 0;
+	}
+	public function getLanguageList() {
+        $sql = "SELECT Language_ID, Language, Country FROM languages";
+        $data = $this->conn->query($sql);
+        $users = [];
+        if ($data->num_rows > 0) {
+            while ($row = $data->fetch_assoc()) {
+                $users[] = $row;
+            }
+        }
+        return $users;
+    }
 }
 ?>

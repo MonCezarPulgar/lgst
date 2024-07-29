@@ -27,7 +27,7 @@
                 if ($row['Role'] == 'Admin') {
                     echo '
                         <script>
-                            window.open("usermanagement.php","_self");
+                            window.open("admindashboard.php","_self");
                         </script>';
                 } else if ($row['Role'] == 'Tourist') {
                     echo '
