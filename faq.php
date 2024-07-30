@@ -230,7 +230,6 @@ if ($row = $data->fetch_assoc()) {
         <div class="offcanvas-body">
             <a href="" class="d-block mx-1 mb-1"><img src="images/voice.png" class="img-fluid" alt="Logo"></a>
             <div class="links">
-                <a href="admindashboard.php"> <i class="fa-solid fa-clipboard mx-2"></i> Dashboard</a>
                 <div class="dropdown mt-2">
                     <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -241,7 +240,7 @@ if ($row = $data->fetch_assoc()) {
                         <li><a class="dropdown-item" href="updateplan.php">Edit Profile</a></li>
                     </ul>
                 </div>
-                <a href="usermanagement.php"><i class="fas fa-house mx-2"></i> Home</a>
+                <a href="userprofile.php"><i class="fas fa-house mx-2"></i> Home</a>
                 <a href="languages.php"><i class="fas fa-language mx-2"></i> Learn A Language</a>
                 <a href="faq.php"><i class="fas fa-question-circle mx-2"></i> FAQ's</a>
             </div>

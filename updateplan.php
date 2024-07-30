@@ -162,6 +162,7 @@
         </div>
         <div class="offcanvas-body">
             <a href="" class="d-block mb-3"><img src="images/logoo.png" height="50px" class="rounded-pill" alt="Logo"></a>
+            <a href="admindashboard.php"><i class="fas fa-house"></i> Admin Dashboard</a><br>
             <a href="usermanagement.php"><i class="fas fa-house"></i> User Management</a><br>
             <a href="languages.php"><i class="fas fa-house"></i> Language Management</a>
             <div class="dropdown mt-2">
@@ -302,6 +303,19 @@
             document.getElementById("duration").value = duration;
             document.getElementById("desc").value = desc;
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var sidebarToggleButton = document.querySelector('.btn-toggle-sidebar');
+            var sidebar = document.querySelector('#sidebar');
+                
+            sidebar.addEventListener('shown.bs.offcanvas', function() {
+                sidebarToggleButton.classList.add('hidden');
+            });
+                
+            sidebar.addEventListener('hidden.bs.offcanvas', function() {
+                sidebarToggleButton.classList.remove('hidden');
+            });
+        });
     </script>
 </body>
 </html>

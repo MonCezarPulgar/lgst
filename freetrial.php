@@ -302,7 +302,7 @@ if(isset($_POST['btnsignup'])){
                         }
                         ?>
                     </select>
-                    <button onclick="startSpeechRecognition()" class="btn btn-secondary">Speak</button>
+                    <button onclick="startSpeechRecognition()" class="btn btn-secondary"><i class = "fas fa-microphone"></i></button>
                 </div>
                 <div class="column">
                     <h2>Translated Text</h2>
@@ -320,7 +320,7 @@ if(isset($_POST['btnsignup'])){
                         }
                         ?>
                     </select>
-                    <button onclick="speakTranslatedText()" class="btn btn-secondary">Speak Translated</button>
+                    <button onclick="speakTranslatedText()" class="btn btn-secondary"><i class = "fas fa-microphone"></i></button>
                 </div>
             </div>
             <button onclick="translateText()" class="btn btn-primary mt-3">Translate</button>
