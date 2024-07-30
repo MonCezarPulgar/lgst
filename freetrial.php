@@ -342,8 +342,11 @@ if(isset($_POST['btnsignup'])){
                     <div class="modal-body">
                         <form id="signupForm" method="POST" action="signup.php">
                             <div class="form-group">
-                                <label for="userid">User ID</label>
-                                <input type="text" class="form-control" id="userid" name="userid" required>
+                            <?php
+                                include 'generateuserid.php';
+                                $userID = generateUSERID();
+                            ?>
+                                <input type="text" name="userid" id="userid" class="form-control text-center" value="<?php echo $userID; ?>" hidden>
                             </div>
                             <div class="form-group">
                                 <label for="fname">First Name</label>
