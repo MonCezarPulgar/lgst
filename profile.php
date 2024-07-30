@@ -176,7 +176,7 @@ if ($row = $data->fetch_assoc()) {
                         <li><a class="dropdown-item" href="updateplan.php">Edit Profile</a></li>
                     </ul>
                 </div>
-                <a href="usermanagement.php"><i class="fas fa-house mx-2"></i> Home</a>
+                <a href="userprofile.php"><i class="fas fa-house mx-2"></i> Home</a>
                 <a href="languages.php"><i class="fas fa-language mx-2"></i> Learn A Language</a>
                 <a href="faq.php"><i class="fas fa-question-circle mx-2"></i> FAQ's</a>
             </div>
