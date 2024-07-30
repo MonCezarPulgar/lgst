@@ -123,6 +123,7 @@ if ($row = $data->fetch_assoc()) {
                 </select>
 
                 <textarea name="inputText" id="inputText" rows="10" placeholder="Type Here..." class="form-control"></textarea>
+                <button onclick="startSpeechRecognition()" class="btn btn-secondary mt-2">Speak</button>
             </div>
             <div class="col-md-6">
                 <select name="outputLanguage" id="outputLanguage" class="form-control">
@@ -139,6 +140,7 @@ if ($row = $data->fetch_assoc()) {
                     ?>
                 </select>
                 <textarea name="outputText" id="outputText" rows="10" placeholder="Translation will appear here..." class="form-control" readonly></textarea>
+                <button onclick="speakTranslatedText()" class="btn btn-secondary mt-2">Speak Translated</button>
             </div>
         </div>
         <button onclick="translateText()" class="btn btn-primary mt-3">Translate</button>
@@ -186,6 +188,29 @@ if ($row = $data->fetch_assoc()) {
                 });
         }
 
+        // Initialize Speech Recognition API
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'en-US'; // You may need to set the language based on user selection
+
+        // Handle Speech Recognition
+        function startSpeechRecognition() {
+            recognition.start();
+        }
+
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            document.getElementById("inputText").value = transcript;
+        };
+
+        // Handle Speech Synthesis
+        function speakTranslatedText() {
+            var text = document.getElementById("outputText").value;
+            var outputLanguage = document.getElementById("outputLanguage").value;
+            var msg = new SpeechSynthesisUtterance();
+            msg.text = text;
+            msg.lang = outputLanguage;
+            window.speechSynthesis.speak(msg);
+        }
     </script>
 </body>
 </html>
