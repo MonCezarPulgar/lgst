@@ -653,25 +653,32 @@ contact-text{
                     <div class = "row mt-3">
                         <?php
                             while($row = $data->fetch_assoc()){
-                                echo'
+                                echo '
                                 <div class="col-md-4">
                                     <div class="card shadow-sm mb-4">
                                         <div class="card-header text-white bg-info">
-                                            <h2 class="card-title">'.$row['PlanName'].'</h2>
+                                            <h2 class="card-title">' . htmlspecialchars($row['PlanName']) . '</h2>
                                         </div>
                                         <div class="card-body">
-                                            <p class="card-text text-dark">'.$row['Description'].'</p>
-                                            <p class="card-text text-dark">'.$row['Duration'].'</p>
-                                            <p class="card-text text-dark">$'.$row['Price'].'</p>
+                                            <p class="card-text text-dark">' . htmlspecialchars($row['Description']) . '</p><br>
+                                            <h2 class="card-text text-dark">' . htmlspecialchars($row['Duration']) . '</h2><br>
+                                            <label class = "text-dark">Included Languages</label>';
+                            
+                                // Split the IncludedLanguages string by commas and output each one on a new line
+                                $languages = explode(' ', $row['IncludedLanguages']);
+                                foreach ($languages as $language) {
+                                    echo '<p class="card-text text-dark">' . htmlspecialchars(trim($language)) . '</p>';
+                                }
+                            
+                                echo '
+                                            <b><h2 class="card-text text-dark">$' . htmlspecialchars($row['Price']) . '</h2></b>
                                         </div>
                                         <div class="card-footer text-center bg-light">
                                             <button type="submit" class="btn btn-info">Continue to Sign-Up</button>
                                         </div>
                                     </div>
-                                </div>
-
-                                ';
-                            }
+                                </div>';
+                            }                            
                         ?>
                     </div>
                 </form>

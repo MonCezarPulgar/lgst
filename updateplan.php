@@ -165,6 +165,7 @@
             <a href="admindashboard.php"><i class="fas fa-house"></i> Admin Dashboard</a><br>
             <a href="usermanagement.php"><i class="fas fa-house"></i> User Management</a><br>
             <a href="languages.php"><i class="fas fa-house"></i> Language Management</a>
+            <a href="messages.php"><i class="fas fa-house"></i> Messages</a>
             <div class="dropdown mt-2">
                 <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-circle-info"></i> Plan
@@ -212,6 +213,7 @@
                             <th>Price</th>
                             <th>Duration</th>
                             <th>Description</th>
+                            <th>Included Languages</th>
                             <th>Update</th>
                         </tr>
                     </thead>
@@ -233,7 +235,8 @@
                                         <td>' . htmlspecialchars($row['Price']) . '</td>
                                         <td>' . htmlspecialchars($row['Duration']) . '</td>
                                         <td>' . htmlspecialchars($row['Description']) . '</td>
-                                        <td><button type="button" class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#UpdateModal" onclick="displayplan(&quot;' . htmlspecialchars($row['PlanId']) . '&quot;, &quot;' . htmlspecialchars($row['PlanName']) . '&quot;, &quot;' . htmlspecialchars($row['Price']) . '&quot;, &quot;' . htmlspecialchars($row['Duration']) . '&quot;, &quot;' . htmlspecialchars($row['Description']) . '&quot;)"><i class="fas fa-pen-to-square ms-2 text-dark"></i></button></td>
+                                        <td>' . htmlspecialchars($row['IncludedLanguages']) . '</td>
+                                        <td><button type="button" class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#UpdateModal" onclick="displayplan(&quot;' . htmlspecialchars($row['PlanId']) . '&quot;, &quot;' . htmlspecialchars($row['PlanName']) . '&quot;, &quot;' . htmlspecialchars($row['Price']) . '&quot;, &quot;' . htmlspecialchars($row['Duration']) . '&quot;, &quot;' . htmlspecialchars($row['Description']) . '&quot;,&quot;' . htmlspecialchars($row['IncludedLanguages']) . '&quot;)"><i class="fas fa-pen-to-square ms-2 text-dark"></i></button></td>
                                     </tr>
                                 ';
                             }
@@ -283,6 +286,10 @@
                                     <label for="desc" class="form-label">Description</label>
                                     <textarea id="desc" name="desc" rows="4" class="form-control"></textarea>
                                 </div>
+                                <div class="col-md-12">
+                                <label for="desc" class="form-label">Included Languages</label>
+                                <textarea id="incl" name="incl" rows="4" class="form-control"></textarea>
+                            </div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -296,12 +303,13 @@
     </div>
 
     <script>
-        function displayplan(planid, planname, price, duration, desc) {
+        function displayplan(planid, planname, price, duration, desc, incl) {
             document.getElementById("planid").value = planid;
             document.getElementById("planname").value = planname;
             document.getElementById("price").value = price;
             document.getElementById("duration").value = duration;
             document.getElementById("desc").value = desc;
+            document.getElementById("incl").value = incl;
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -329,8 +337,9 @@ if (isset($_POST['btnupdate'])) {
     $price = $_POST['price'];
     $duration = $_POST['duration'];
     $desc = $_POST['desc'];
+    $incl = $_POST['incl'];
     $u = new User();
-    $result = $u->planupdate($planid, $planname, $price, $duration, $desc);
+    $result = $u->planupdate($planid, $planname, $price, $duration, $desc, $incl);
     echo '<script>
         alert("' . htmlspecialchars($result) . '");
         window.location.href = window.location.href.split("?")[0] + "?refresh=1";

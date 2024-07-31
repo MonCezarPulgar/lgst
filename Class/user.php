@@ -9,8 +9,8 @@ Class User extends Database {
 			$this->conn->error;
 		}
     }
-    public function addplan($planid, $planname, $price, $duration, $desc){
-        $sql = "insert into plans values (NULL, '$planid','$planname','$price','$duration','$desc')";
+    public function addplan($planid, $planname, $price, $duration, $desc, $incl){
+        $sql = "insert into plans values (NULL, '$planid','$planname','$price','$duration','$desc','$incl')";
         if($this->conn->query($sql)){
             return 'Plan Successfully Added!';
         }else{
@@ -18,7 +18,7 @@ Class User extends Database {
         }
     }
     public function displayplan(){
-        $sql = "select PlanId, PlanName, Price, Duration, Description from plans ORDER BY Price";
+        $sql = "select PlanId, PlanName, Price, Duration, Description, IncludedLanguages from plans ORDER BY Price";
         $data = $this->conn->query($sql);
         return $data;
     }
@@ -32,8 +32,8 @@ Class User extends Database {
         $this->conn->query($sql);
         return 'User has been deleted!';
     }
-    public function planupdate($planid, $planname, $price, $duration, $desc){
-        $sql = "update plans set Planid = '$planid', PlanName = '$planname', Price = '$price', Duration = '$duration', Description = '$desc' where PlanId = '$planid'";
+    public function planupdate($planid, $planname, $price, $duration, $desc, $incl){
+        $sql = "update plans set Planid = '$planid', PlanName = '$planname', Price = '$price', Duration = '$duration', Description = '$desc', IncludedLanguages = '$incl' where PlanId = '$planid'";
         if($this->conn->query($sql)){
             return 'Plan has been Updated!';
         }else{
@@ -156,6 +156,17 @@ Class User extends Database {
     }
     public function planlanguage(){
         $sql = "SELECT Language FROM languages";
+        $data = $this->conn->query($sql);
+        return $data;
+    }
+    public function message(){
+        $sql = "SELECT Name, Message FROM contacts";
+        $data = $this->conn->query($sql);
+        return $data;
+    }
+    public function babyplan(){
+        $sql = "SELECT Language, LanguageCode FROM languages 
+        WHERE Language IN ('Filipino', 'English', 'Chinese', 'Korean', 'German', 'Spanish', 'Japanese', 'Russian', 'Italian', 'Thai')ORDER BY Language";
         $data = $this->conn->query($sql);
         return $data;
     }

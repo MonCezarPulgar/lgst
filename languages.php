@@ -342,6 +342,7 @@ $languages = $u->getLanguages();
             <a href="admindashboard.php"><i class="fas fa-house"></i> Admin Dashboard</a><br>
             <a href="usermanagement.php"><i class="fas fa-house"></i> User Management</a><br>
             <a href="languages.php"><i class="fas fa-house"></i> Language Management</a>
+            <a href="messages.php"><i class="fas fa-house"></i> Messages</a>
             <div class="dropdown mt-2">
                 <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-circle-info"></i> Plan
