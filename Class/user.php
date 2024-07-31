@@ -90,6 +90,11 @@ Class User extends Database {
 			return $this->conn->error;
 		}
 	}
+    public function takelanguagefree(){
+        $sql = "select LanguageCode, Language from freelang";
+        $data = $this->conn->query($sql);
+        return $data;
+    }
     public function takelanguage(){
         $sql = "select LanguageCode, Language from languages";
         $data = $this->conn->query($sql);
@@ -119,7 +124,7 @@ Class User extends Database {
     }
 
     public function getUserList() {
-        $sql = "SELECT EmailAddress FROM tbluser";
+        $sql = "SELECT FirstName, LastName, EmailAddress FROM tbluser WHERE Role = 'Tourist'";
         $data = $this->conn->query($sql);
         $users = [];
         if ($data->num_rows > 0) {
@@ -148,6 +153,11 @@ Class User extends Database {
             }
         }
         return $users;
+    }
+    public function planlanguage(){
+        $sql = "SELECT Language FROM languages";
+        $data = $this->conn->query($sql);
+        return $data;
     }
 }
 ?>

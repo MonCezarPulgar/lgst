@@ -228,8 +228,10 @@
                         <h5 class="card-title">User List</h5>
                         <ul class="list-group" id="userList">
                             <?php foreach ($users as $u): ?>
+                                <?php   
+                                ?>
                                 <li class="list-group-item">
-                                    <?php echo 'Username: ' . htmlspecialchars($u['Username']) . '<br>Email: ' . htmlspecialchars($u['Email']); ?>
+                                    <?php echo 'Full Name: ' . htmlspecialchars($u['FirstName']) . ' ' . htmlspecialchars($u['LastName']).'<br>Email Address: ' . htmlspecialchars($u['EmailAddress']); ?>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
