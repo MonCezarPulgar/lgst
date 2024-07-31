@@ -233,22 +233,6 @@
                                 <label for="desc" class="form-label">Description</label>
                                 <textarea id="desc" name="desc" rows="4" class="form-control"></textarea>
                             </div>
-                            <div class="col-md-6">
-                                <label for="desc" class="form-label">Language Included</label><br>
-                                <?php
-                                include_once'Class/user.php';
-                                $u = new User();
-                                $data = $u->planlanguage();
-                                if ($data) {
-                                    while ($row = $data->fetch_assoc()) {
-                                        echo '<input type = "checkbox" name = "langincluded" id = "langincluded" value = "'.$row['Language'].'">
-                                        <label>'.$row['Language'].'</label>
-                                        ';
-                                        
-                                    }
-                                }
-                                ?>
-                            </div>
                         </div>
                         <div class="col-md-3 mt-3">
                             <button type="submit" name="btnadd" class="btn btn-success">Add Plan</button>
