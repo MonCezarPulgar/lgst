@@ -328,7 +328,7 @@ if(isset($_POST['btnsignup'])){
 		
 		<div class="signup">
             <!-- Button trigger modal -->
-            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#signupModal">Create an account</a>
+            <a href="signup.php">Create an account</a>
         </div>
 
         <!-- Sign-Up Modal -->
