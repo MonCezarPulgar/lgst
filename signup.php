@@ -269,89 +269,102 @@
                     ?>
         </div>
         <!-- Modal for Update Plan-->
-        <div class="modal fade" id="Payment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title text-center" id="staticBackdropLabel"><b><i class="fas fa-user ms-2"></i> Proceed to Payment?</b></h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                            <?php
-                                include 'generatesubsid.php';
-                                $subsID = generateSUBSID();
-                            ?>
-                                <div class = "row">
-                                    <div class="col-md-6">
-                                        <label for="planid" class="form-label">Subscription ID</label>
-                                        <input type="text" name="subsid" id="subsid" class="form-control" value="<?php echo $subsID; ?>" readonly>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label for="planname">Plan Name</label>
-                                        <input type="text" name="planname" id="planname" class="form-control" readonly>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="price">Duration</label>
-                                        <input type="text" name="duration" id="duration" class="form-control" readonly>
-                                    </div>
-                                <div class = "row">
-                                    <div class="col-md-6">
-                                        <label for="price">Price</label>
-                                        <input type="text" name="price" id="price" class="form-control" readonly>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="description">Description</label>
-                                        <textarea name="description" id="description" class="form-control" rows="3" readonly></textarea>
-                                    </div>
-                                </div>
-                                <div class = "row">
-                                    <div class = "col-md-6">
-                                        <label>First Name</label>
-                                        <input type="text" name = "fname" class = "form-control">
-                                    </div>
-                                    <div class = "col-md-6">
-                                        <label>Middle Name</label>
-                                        <input type="text" name = "mname" class = "form-control">
-                                    </div>
-                                    <div class = "col-md-6">
-                                        <label>Last Name</label>
-                                        <input type="text" name = "lname" class = "form-control">
-                                    </div>
-                                    <div class = "col-md-6">
-                                        <label>Address</label>
-                                        <input type="text" name = "addr" class = "form-control">
-                                    </div>
-                                    <div class = "col-md-6">
-                                        <label>Zip Code</label>
-                                        <input type="text" name = "zip" class = "form-control">
-                                    </div>
-                                    <div class = "col-md-6">
-                                        <label>BirthDate</label>
-                                        <input type="date" name = "bday" class = "form-control">
-                                    </div>
-                                    <div class = "col-md-6">
-                                        <label>Email Address</label>
-                                        <input type="email" name = "email" class = "form-control">
-                                    </div>
-                                    <div class = "col-md-6">
-                                        <label>Password</label>
-                                        <input type="password" name = "pass" class = "form-control">
-                                    </div>
-                                    <div class = "col-md-6">
-                                        <label>Confirm Password</label>
-                                        <input type="password" name = "con" class = "form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" name = "btnsignup" class="btn btn-info rounded-pill text-white"><i class="fas fa-pen-to-square ms-2 text-dark"></i> Sign-Up</button>
-                            </div>
+<div class="modal fade" id="Payment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel"><b><i class="fas fa-user ms-2"></i> Proceed to Payment?</b></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <?php
+                    include 'generatesubsid.php';
+                    $subsID = generateSUBSID();
+                ?>
+                <form method="POST">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="subsid" class="form-label">Subscription ID</label>
+                            <input type="text" name="subsid" id="subsid" class="form-control" value="<?php echo $subsID; ?>" readonly>
                         </div>
                     </div>
-                </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="planname" class="form-label">Plan Name</label>
+                            <input type="text" name="planname" id="planname" class="form-control" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="duration" class="form-label">Duration</label>
+                            <input type="text" name="duration" id="duration" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="text" name="price" id="price" class="form-control" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea name="description" id="description" class="form-control" rows="3" readonly></textarea>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="fname" class="form-label">First Name</label>
+                            <input type="text" name="fname" id="fname" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="mname" class="form-label">Middle Name</label>
+                            <input type="text" name="mname" id="mname" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="lname" class="form-label">Last Name</label>
+                            <input type="text" name="lname" id="lname" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="addr" class="form-label">Address</label>
+                            <input type="text" name="addr" id="addr" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="zip" class="form-label">Zip Code</label>
+                            <input type="text" name="zip" id="zip" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="bday" class="form-label">Birth Date</label>
+                            <input type="date" name="bday" id="bday" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" name="email" id="email" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="pass" class="form-label">Password</label>
+                            <input type="password" name="pass" id="pass" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="con" class="form-label">Confirm Password</label>
+                            <input type="password" name="con" id="con" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" name="btnsignup" class="btn btn-info rounded-pill text-white">
+                    <i class="fas fa-pen-to-square ms-2 text-dark"></i> Sign-Up
+                </button>
+            </div>
+        </div>
     </div>
+</div>
+
     </form>
 </body>
 </html>

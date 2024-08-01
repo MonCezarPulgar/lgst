@@ -27,8 +27,8 @@ Class User extends Database {
         $data = $this->conn->query($sql);
         return $data;
     }
-    public function deleteuser($userid){
-        $sql = "delete from tbluser where UserId = '$userid'";
+    public function deleteuser($subsid){
+        $sql = "delete from tbluser2 where Subscription_ID = '$subsid'";
         $this->conn->query($sql);
         return 'User has been deleted!';
     }

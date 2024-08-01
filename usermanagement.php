@@ -235,7 +235,7 @@
                             while ($row = $data->fetch_assoc()) {
                                 echo '
                                     <tr>
-                                        <td>' . htmlspecialchars($row['UserId']) . '</td>
+                                        <td>' . htmlspecialchars($row['Subscription_ID']) . '</td>
                                         <td>' . htmlspecialchars($row['FirstName']) . '</td>
                                         <td>' . htmlspecialchars($row['MiddleName']) . '</td>
                                         <td>' . htmlspecialchars($row['LastName']) . '</td>
@@ -246,7 +246,7 @@
                                         <td>' . htmlspecialchars($row['Password']) . '</td>
                                         <td>' . htmlspecialchars($row['Role']) . '</td>
                                         <td>' . htmlspecialchars($row['Status']) . '</td>
-                                        <td><button type="button" name="btndelete" class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#DeleteModal" onclick="deleteuser(&quot;'.$row['UserId'].'&quot;)"><i class="fas fa-trash ms-2 text-dark"></i></button></td>
+                                        <td><button type="button" name="btndelete" class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#DeleteModal" onclick="deleteuser(&quot;'.$row['Subscription_ID'].'&quot;)"><i class="fas fa-trash ms-2 text-dark"></i></button></td>
                                     </tr>
                                 ';
                             }
@@ -308,9 +308,9 @@
 include_once 'Class/user.php';
 
 if (isset($_POST['btndelete'])) {
-    $userid = $_POST['userid'];
+    $subsid = $_POST['subsid'];
     $u = new User();
-    $result = $u->deleteuser($userid);
+    $result = $u->deleteuser($subsid);
     echo '<script>
         alert("' . htmlspecialchars($result) . '");
         window.location.href = window.location.href.split("?")[0] + "?refresh=1";
