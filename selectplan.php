@@ -1,6 +1,54 @@
+<?php
+session_start();
+if (!isset($_SESSION['id'])) {
+    header("Location: index.php"); // Redirect to login page if not logged in
+    exit();
+}
+
+$id = $_SESSION['id'];
+
+include_once 'Class/user.php';
+$u = new User();
+$data = $u->displayprof($id);
+
+if ($row = $data->fetch_assoc()) {
+    $userid = $row['UserId'];
+    $fname = $row['FirstName'];
+    $lname = $row['LastName'];
+    $mname = $row['MiddleName'];
+    $addr = $row['Address'];
+    $zip = $row['ZipCode'];
+    $bday = $row['Birthdate'];
+    $email = $row['EmailAddress'];
+    $fullname = $row['FullName'];
+    $emailadd = $row['EmailAddress'];
+    $plnname = $row['PlanName'];
+    $dur = $row['Duration'];
+    $prce = $row['Price'];
+    $desc = $row['Description'];
+}
+
+
+if(isset($_POST['btnpayment'])){
+    $subsid = $_POST['subsid'];
+    $fullname = $_POST['fullname'];
+    $emailadd = $_POST['emailadd'];
+    $planname = $_POST['planname'];
+    $duration = $_POST['duration'];
+    $price = $_POST['price'];
+    $description = $_POST['description'];
+    include_once 'Class/user.php';
+    $u = new User();
+    $result = $u->plansubscription($subsid, $fullname, $emailadd, $planname, $duration, $price, $description);
+    echo '<script>
+        alert("' . htmlspecialchars($result) . '");
+        window.location.href = window.location.href.split("?")[0] + "?refresh=1";
+    </script>';
+}
+?>
 <html>
     <head>
-    <meta charset="UTF-8">
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>PremTranslate: Language Translator</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -9,7 +57,7 @@
         <link rel="icon" type="image/x-icon" href="images/text.png">
     </head>
     <style>
-         body {
+        body {
             display: flex;
             min-height: 100vh;
             flex-direction: column;
@@ -137,6 +185,7 @@
 			text-fill-color: transparent;
 			text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 		}
+        
     </style>
     <body>
     <!-- Button to toggle the sidebar -->
@@ -174,64 +223,124 @@
         </div>
     </div>
 		
-		<div class="selectplan">
-			<h2> Select the Best Plan for You	 </h2>
-		</div>
-        <div class = "container text-center p-4 bg-light">
-            <div class = "row">
-                <form action = "payment.php">
+    <div class="selectplan">
+        <h2>Select the Best Plan for You</h2>
+    </div>
+    <div class="container text-center p-4 bg-light">
+        <div class="row">
+            <form action="" method = "POST">
                 <?php
-                        include_once 'Class/user.php';
-                        $u = new User();
-                        $data = $u->displayplan();
-                    ?>
-                    <div class = "row mt-3">
-                        <?php
-                            while($row = $data->fetch_assoc()){
-                                echo '
-                                <div class="col-md-4">
-                                    <div class="card shadow-sm mb-4">
-                                        <div class="card-header text-white bg-info">
-                                            <h2 class="card-title">' . htmlspecialchars($row['PlanName']) . '</h2>
-                                        </div>
-                                        <div class="card-body">
-                                            <p class="card-text text-dark">' . htmlspecialchars($row['Description']) . '</p><br>
-                                            <h2 class="card-text text-dark">' . htmlspecialchars($row['Duration']) . '</h2><br>
-                                            <label class = "text-dark">Included Languages</label>';
-                            
-                                // Split the IncludedLanguages string by commas and output each one on a new line
-                                $languages = explode(' ', $row['IncludedLanguages']);
-                                foreach ($languages as $language) {
-                                    echo '<p class="card-text text-dark">' . htmlspecialchars(trim($language)) . '</p>';
-                                }
-                            
-                                echo '
-                                            <b><h2 class="card-text text-dark">$' . htmlspecialchars($row['Price']) . '</h2></b>
-                                        </div>
-                                        <div class="card-footer text-center bg-light">
-                                            <button type="submit" class="btn btn-info">Continue to Payment</button>
-                                        </div>
+                    $data = $u->displayplan();
+                ?>
+                <div class="row mt-3">
+                    <?php
+                        while($row = $data->fetch_assoc()){
+                            echo '
+                            <div class="col-md-4">
+                                <div class="card shadow-sm mb-4">
+                                    <div class="card-header text-white bg-info">
+                                        <h2 class="card-title">' . htmlspecialchars($row['PlanName']) . '</h2>
                                     </div>
-                                </div>';
-                            }                            
-                        ?>
+                                    <div class="card-body">
+                                        <p class="card-text text-dark">' . htmlspecialchars($row['Description']) . '</p><br>
+                                        <h2 class="card-text text-dark">' . htmlspecialchars($row['Duration']) . '</h2><br>
+                                        <label class="text-dark">Included Languages</label>';
+                        
+                            // Split the IncludedLanguages string by commas and output each one on a new line
+                            $languages = explode(' ', $row['IncludedLanguages']);
+                            foreach ($languages as $language) {
+                                echo '<p class="card-text text-dark">' . htmlspecialchars(trim($language)) . '</p>';
+                            }
+                        
+                            echo '
+                                        <b><h2 class="card-text text-dark">$' . htmlspecialchars($row['Price']) . '</h2></b>
+                                    </div>
+                                    <div class="card-footer text-center bg-light">
+                                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#Payment" onclick="displayplan(\'' . htmlspecialchars($row['PlanName']) . '\',\'' . htmlspecialchars($row['Duration']) . '\', \'' . htmlspecialchars($row['Price']) . '\', \'' . htmlspecialchars($row['Description']) . '\')">Continue to Payment</button>
+                                    </div>
+                                </div>
+                            </div>';
+                        }                            
+                    ?>
+                </div>
+
+                <!-- Modal for Update Plan-->
+                <div class="modal fade" id="Payment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center" id="staticBackdropLabel"><b><i class="fas fa-user ms-2"></i> Proceed to Payment?</b></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            <?php
+                                include 'generatesubsid.php';
+                                $subsID = generateSUBSID();
+                            ?>
+                                <div class = "row">
+                                    <div class="col-md-6" hidden>
+                                        <label for="planid" class="form-label">Subscription ID</label>
+                                        <input type="text" name="subsid" id="subsid" class="form-control" value="<?php echo $subsID; ?>" readonly>
+                                    </div>
+                                    <div class = "col-md-6" hidden>
+                                        <label>Full Name</label>
+                                        <input type="text" name = "fullname" class = "form-control" value = "<?php echo $fname .' '. $mname .' '. $lname; ?>">
+                                    </div>
+                                    <div class = "col-md-6" hidden>
+                                        <label>Email Address</label>
+                                        <input type="text" name = "emailadd" class = "form-control" value = "<?php echo $email; ?>">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="planname">Plan Name</label>
+                                        <input type="text" name="planname" id="planname" class="form-control" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="price">Duration</label>
+                                        <input type="text" name="duration" id="duration" class="form-control" readonly>
+                                    </div>
+                                <div class = "row">
+                                    <div class="col-md-6">
+                                        <label for="price">Price</label>
+                                        <input type="text" name="price" id="price" class="form-control" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="description">Description</label>
+                                        <textarea name="description" id="description" class="form-control" rows="3" readonly></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" name = "btnpayment" class="btn btn-info rounded-pill text-white"><i class="fas fa-pen-to-square ms-2 text-dark"></i> Proceed to Payment</button>
+                            </div>
+                        </div>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
+    </div>
     </body>
 </html>
+
 <script>
-	document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
         var sidebarToggleButton = document.querySelector('.btn-toggle-sidebar');
         var sidebar = document.querySelector('#sidebar');
-            
+
         sidebar.addEventListener('shown.bs.offcanvas', function() {
             sidebarToggleButton.classList.add('hidden');
         });
-            
+
         sidebar.addEventListener('hidden.bs.offcanvas', function() {
             sidebarToggleButton.classList.remove('hidden');
         });
     });
+
+    function displayplan(planname, duration, price, description) {
+        document.getElementById("planname").value = planname;
+        document.getElementById("duration").value = duration;
+        document.getElementById("price").value = price;
+        document.getElementById("description").value = description;
+    }
 </script>

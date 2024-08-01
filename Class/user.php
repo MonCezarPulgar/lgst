@@ -1,8 +1,8 @@
 <?php
 include_once 'database.php';
 Class User extends Database {
-    public function signup($userid,$fname, $mname, $lname, $addr, $zip, $bday, $email, $pass, $con){
-        $sql = "insert into tbluser values (NULL, '$userid','$fname','$mname','$lname','$addr','$zip','$bday','$email','$pass','$con','Tourist','Active')";
+    public function signup($subsid, $planname, $duration, $price, $description, $fname, $mname, $lname, $addr, $zip, $bday, $email, $pass, $con){
+        $sql = "insert into tbluser2 values (NULL, '$subsid','$planname','$duration','$price','$description','$fname','$mname','$lname','$addr','$zip','$bday','$email','$pass','$con','Tourist','Active')";
         if($this->conn->query($sql)){
 			return 'Signup Successful!';
 		}else{
@@ -18,12 +18,12 @@ Class User extends Database {
         }
     }
     public function displayplan(){
-        $sql = "select PlanId, PlanName, Price, Duration, Description, IncludedLanguages from plans ORDER BY Price";
+        $sql = "select PlanId, PlanName, Price, Duration, Description, IncludedLanguages from plans ORDER BY PlanName";
         $data = $this->conn->query($sql);
         return $data;
     }
     public function displayusers(){
-        $sql = "select UserId, FirstName, MiddleName, LastName, Address, ZipCode, Birthdate, EmailAddress, Password, Role, Status from tbluser";
+        $sql = "select Subscription_ID, FirstName, MiddleName, LastName, Address, ZipCode, Birthdate, EmailAddress, Password, Role, Status from tbluser2";
         $data = $this->conn->query($sql);
         return $data;
     }
@@ -54,7 +54,7 @@ Class User extends Database {
 		 }
 	}
     public function Login($un, $pw){
-        $sql="select * from tbluser where EmailAddress='$un' and Password='$pw'";
+        $sql="select * from tbluser2 where EmailAddress='$un' and Password='$pw'";
         $data=$this->conn->query($sql);
         return $data;
     }
@@ -100,11 +100,12 @@ Class User extends Database {
         $data = $this->conn->query($sql);
         return $data;
     }
-    public function displayprof($id){
-		$sql="select * from tbluser where UserId='$id'";
-		$data=$this->conn->query($sql);
-		return $data;
-	}
+    public function displayprof($id) {
+        $sql = "SELECT * FROM tbluser2 WHERE Subscription_ID = '$id'";
+        $data = $this->conn->query($sql);
+        return $data;
+    }
+    
     public function editprofile($userid, $fname, $lname, $mname, $addr, $zip, $bday, $email){
         $sql = "UPDATE tbluser SET FirstName = '$fname', LastName = '$lname', MiddleName = '$mname', Address = '$addr', ZipCode = '$zip', Birthdate = '$bday', EmailAddress = '$email' WHERE UserId = '$userid'";
         if ($this->conn->query($sql)) {
@@ -114,7 +115,7 @@ Class User extends Database {
         }
     }
     public function getTotalUsers() {
-        $sql = "SELECT COUNT(*) AS total FROM tbluser";
+        $sql = "SELECT COUNT(*) AS total FROM tbluser2";
         $result = $this->conn->query($sql);
         if ($result) {
             $row = $result->fetch_assoc();
@@ -124,7 +125,7 @@ Class User extends Database {
     }
 
     public function getUserList() {
-        $sql = "SELECT FirstName, LastName, EmailAddress FROM tbluser WHERE Role = 'Tourist'";
+        $sql = "SELECT FirstName, LastName, EmailAddress FROM tbluser2 WHERE Role = 'Tourist'";
         $data = $this->conn->query($sql);
         $users = [];
         if ($data->num_rows > 0) {
@@ -167,6 +168,43 @@ Class User extends Database {
     public function babyplan(){
         $sql = "SELECT Language, LanguageCode FROM languages 
         WHERE Language IN ('Filipino', 'English', 'Chinese', 'Korean', 'German', 'Spanish', 'Japanese', 'Russian', 'Italian', 'Thai')ORDER BY Language";
+        $data = $this->conn->query($sql);
+        return $data;
+    }
+    public function teenplan(){
+        $sql = "SELECT Language, LanguageCode FROM languages 
+        WHERE Language IN ('Filipino', 'English', 'Chinese', 'Korean', 'German', 'Spanish', 'Japanese', 'Russian', 'Italian', 'Thai','Korean','French','Portuguese','Arabic','Hindi','Bengali','Punjabi','Javanese','Turkish','Vietnamese','Persian','Swahili','Tamil','Gujarati','Greek','Hebrew','Polish','Ukranian','Romanian','Hungarian','Czech')ORDER BY Language";
+        $data = $this->conn->query($sql);
+        return $data;
+    }
+    public function grandplan() {
+        $sql = "SELECT DISTINCT Language, LanguageCode 
+                FROM languages 
+                ORDER BY Language";
+        $data = $this->conn->query($sql);
+        return $data;
+    }
+    
+    public function subscribed($fname, $mname, $lname, $addr, $zip, $bday, $email, $pass, $con, $planName, $planDescription, $planDuration, $planPrice, $planIncludedLanguages) {
+		$userid = uniqid();
+		$planid = uniqid();
+		$sql = "INSERT INTO subscribed VALUES (NULL, '$userid', '$fname', '$mname', '$lname', '$addr', '$zip', '$bday', '$email', '$pass', '$con', '$planid', '$planName', '$planDescription', '$planDuration', '$planPrice', '$planIncludedLanguages', 'Tourist', 'Active')";
+		if ($this->conn->query($sql)) {
+			return 'Subscription Successful!';
+		} else {
+			return $this->conn->error;
+		}
+	}
+    public function plansubscription($subsid, $fullname, $emailadd, $planname, $duration, $price, $description){
+        $sql = "INSERT INTO subscriptions VALUES(NULL, '$subsid','$fullname','$emailadd','$planname','$duration','$price','$description')";
+        if($this->conn->query($sql)){
+            return 'Subscription Success!';
+        }else{
+            return $this->conn->error;
+        }
+    }
+    public function displaysubs(){
+        $sql = "SELECT Subscription_ID, FullName, EmailAddress, PlanName, Duration, Price, Description FROM subscriptions";
         $data = $this->conn->query($sql);
         return $data;
     }

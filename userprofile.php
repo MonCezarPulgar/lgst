@@ -6,12 +6,17 @@ if (!isset($_SESSION['id'])) {
 }
 
 $id = $_SESSION['id'];
+
 include_once 'Class/user.php';
 $u = new User();
 $data = $u->displayprof($id);
 
 if ($row = $data->fetch_assoc()) {
-    $userid = $row['UserId'];
+    $subid = $row['Subscription_ID'];
+    $planname = $row['PlanName'];
+    $duration = $row['Duration'];
+    $price = $row['Price'];
+    $description = $row['Description'];
     $fname = $row['FirstName'];
     $lname = $row['LastName'];
     $mname = $row['MiddleName'];
@@ -32,35 +37,34 @@ if ($row = $data->fetch_assoc()) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="images/text.png">
-</head>
-<style>
-    body {
+    <style>
+        body {
             display: flex;
             min-height: 100vh;
             flex-direction: column;
             background: linear-gradient(135deg, #00c6ff, #0072ff);
         }
-		.container {
-			padding: 20px;
-			margin-top: 15px;
-			background-color: #f8f9fa; /* light background color */
-			border-radius: 10px;
-			box-shadow: 0 4px 8px rgba(0.5, 0.5, 0.5, 0.5); /* Adds a subtle shadow */
-		}
+        .container {
+            padding: 20px;
+            margin-top: 15px;
+            background-color: #f8f9fa; /* light background color */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0.5, 0.5, 0.5, 0.5); /* Adds a subtle shadow */
+        }
         .main-container {
             flex: 1;
             display: flex;
         }
-		.btn-close {
-			color: #ffffff; /* Sets the icon color to white */
-			background-color: transparent; /* Ensures the button background is transparent */
-			border: none; /* Removes any default border */
-		}
+        .btn-close {
+            color: #ffffff; /* Sets the icon color to white */
+            background-color: transparent; /* Ensures the button background is transparent */
+            border: none; /* Removes any default border */
+        }
 
-		.btn-close:hover {
-			color: #ffffff; /* Ensures the icon color remains white on hover */
-			background-color: rgba(255, 255, 255, 0.1); /* Adds a subtle background color on hover for visibility */
-		}
+        .btn-close:hover {
+            color: #ffffff; /* Ensures the icon color remains white on hover */
+            background-color: rgba(255, 255, 255, 0.1); /* Adds a subtle background color on hover for visibility */
+        }
         .offcanvas {
             background: #282c34;
             color: #ffffff;
@@ -149,7 +153,8 @@ if ($row = $data->fetch_assoc()) {
         .btn-toggle-sidebar.hidden {
             display: none; /* Hide the button when the sidebar is open */
         }
-</style>
+    </style>
+</head>
 <body>
     <!-- Button to toggle the sidebar -->
     <button class="btn-toggle-sidebar" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle sidebar">
@@ -160,7 +165,7 @@ if ($row = $data->fetch_assoc()) {
     <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
         <div class="offcanvas-header">
             <h5 id="sidebarLabel"></h5>
-			<h2> PremTranslate</h2>
+            <h2> PremTranslate</h2>
             <button type="button" class="btn-close mb-2 mt-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
@@ -175,7 +180,7 @@ if ($row = $data->fetch_assoc()) {
                         <li><a class="dropdown-item" href="updateplan.php">Edit Profile</a></li>
                     </ul>
                 </div>
-                <a href="userprofile.php"><i class="fas fa-house mx-2"></i> Home</a>
+                <a href="userprofile.php"><i class="fas fa-house mx-2"></i> Language Translator</a>
                 <a href="languages.php"><i class="fas fa-language mx-2"></i> Learn A Language</a>
                 <a href="faq.php"><i class="fas fa-question-circle mx-2"></i> FAQ's</a>
             </div>
@@ -185,65 +190,129 @@ if ($row = $data->fetch_assoc()) {
             </div>
         </div>
     </div>
-	
-    <nav class="navbar navbar-expand-sm mt-2 mb-2 ms-4" style="background:linear-gradient(135deg, #00c6ff, #0072ff); font-size:20px; font-weight:bold;">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="mlibrary.php">
-                
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="selectplan.php"><i class="fas fa-user mx-1 ms-4"></i> Select Plan</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="container text-center p-4 bg-light">
-        <div class="row">
-            <h1>Language Translator</h1>
-            <div class="col-md-6">
-                <select name="inputLanguage" id="inputLanguage" class="form-control">
-                    <option value="" selected disabled>Select Language</option>
-                    <?php
-                    include_once 'Class/user.php';
-                    $u = new User();
-                    $data = $u->takelanguage();
-                    if ($data) {
-                        while ($row = $data->fetch_assoc()) {
-                            echo '<option value="'.$row['LanguageCode'].'">'.$row['Language'].'</option>';
-                        }
-                    }
-                    ?>
-                </select>
 
-                <textarea name="inputText" id="inputText" rows="10" placeholder="Type Here..." class="form-control"></textarea>
-                <button onclick="startSpeechRecognition()" class="btn btn-secondary mt-2"><i class = "fas fa-microphone"></i></button>
-            </div>
-            <div class="col-md-6">
-                <select name="outputLanguage" id="outputLanguage" class="form-control">
-                    <option value="" selected disabled>Select Language</option>
-                    <?php
-                    include_once 'Class/user.php';
-                    $u = new User();
-                    $data = $u->takelanguage();
-                    if ($data) {
-                        while ($row = $data->fetch_assoc()) {
-                            echo '<option value="'.$row['LanguageCode'].'">'.$row['Language'].'</option>';
-                        }
-                    }
-                    ?>
-                </select>
-                <textarea name="outputText" id="outputText" rows="10" placeholder="Translation will appear here..." class="form-control" readonly></textarea>
-                <button onclick="speakTranslatedText()" class="btn btn-secondary mt-2"><i class = "fas fa-microphone"></i></button>
-            </div>
-        </div>
-        <button onclick="translateText()" class="btn btn-primary mt-3">Translate</button>
-    </div>
+    <form method="POST">
+        <?php
+        if ($planname == 'Baby Plan') {
+            echo '
+                <div class="container text-center p-4 bg-light">
+                    <div class="row">
+                        <h1>Language Translator</h1>
+                        <div class="col-md-6">
+                            <select name="inputLanguage" id="inputLanguage" class="form-control">
+                                <option value="" selected disabled>Select Language</option>';
+                                include_once 'Class/user.php';
+                                $u = new User();
+                                $data = $u->babyplan();
+                                if ($data) {
+                                    while ($row = $data->fetch_assoc()) {
+                                        echo '<option value="' . $row['LanguageCode'] . '">' . $row['Language'] . '</option>';
+                                    }
+                                }
+            echo '
+                            </select>
+                            <textarea name="inputText" id="inputText" rows="10" placeholder="Type Here..." class="form-control"></textarea>
+                            <button type="button" onclick="startSpeechRecognition()" class="btn btn-secondary mt-2"><i class="fas fa-microphone"></i></button>
+                        </div>
+                        <div class="col-md-6">
+                            <select name="outputLanguage" id="outputLanguage" class="form-control">
+                                <option value="" selected disabled>Select Language</option>';
+                                $data->data_seek(0);
+                                if ($data) {
+                                    while ($row = $data->fetch_assoc()) {
+                                        echo '<option value="' . $row['LanguageCode'] . '">' . $row['Language'] . '</option>';
+                                    }
+                                }
+            echo '
+                            </select>
+                            <textarea name="outputText" id="outputText" rows="10" placeholder="Translation will appear here..." class="form-control" readonly></textarea>
+                            <button type="button" onclick="speakTranslatedText()" class="btn btn-secondary mt-2"><i class="fas fa-microphone"></i></button>
+                        </div>
+                    </div>
+                    <button type="button" onclick="translateText()" class="btn btn-primary mt-3">Translate</button>
+                </div>
+            ';
+        }else if($planname == 'Teen Plan'){
+            echo '
+                <div class="container text-center p-4 bg-light">
+                    <div class="row">
+                        <h1>Language Translator</h1>
+                        <div class="col-md-6">
+                            <select name="inputLanguage" id="inputLanguage" class="form-control">
+                                <option value="" selected disabled>Select Language</option>';
+                                include_once 'Class/user.php';
+                                $u = new User();
+                                $data = $u->teenplan();
+                                if ($data) {
+                                    while ($row = $data->fetch_assoc()) {
+                                        echo '<option value="' . $row['LanguageCode'] . '">' . $row['Language'] . '</option>';
+                                    }
+                                }
+            echo '
+                            </select>
+                            <textarea name="inputText" id="inputText" rows="10" placeholder="Type Here..." class="form-control"></textarea>
+                            <button type="button" onclick="startSpeechRecognition()" class="btn btn-secondary mt-2"><i class="fas fa-microphone"></i></button>
+                        </div>
+                        <div class="col-md-6">
+                            <select name="outputLanguage" id="outputLanguage" class="form-control">
+                                <option value="" selected disabled>Select Language</option>';
+                                $data->data_seek(0);
+                                if ($data) {
+                                    while ($row = $data->fetch_assoc()) {
+                                        echo '<option value="' . $row['LanguageCode'] . '">' . $row['Language'] . '</option>';
+                                    }
+                                }
+            echo '
+                            </select>
+                            <textarea name="outputText" id="outputText" rows="10" placeholder="Translation will appear here..." class="form-control" readonly></textarea>
+                            <button type="button" onclick="speakTranslatedText()" class="btn btn-secondary mt-2"><i class="fas fa-microphone"></i></button>
+                        </div>
+                    </div>
+                    <button type="button" onclick="translateText()" class="btn btn-primary mt-3">Translate</button>
+                </div>
+            ';
+        }else if($planname == 'Grand Plan'){
+            echo '
+                <div class="container text-center p-4 bg-light">
+                    <div class="row">
+                        <h1>Language Translator</h1>
+                        <div class="col-md-6">
+                            <select name="inputLanguage" id="inputLanguage" class="form-control">
+                                <option value="" selected disabled>Select Language</option>';
+                                include_once 'Class/user.php';
+                                $u = new User();
+                                $data = $u->grandplan();
+                                if ($data) {
+                                    while ($row = $data->fetch_assoc()) {
+                                        echo '<option value="' . $row['LanguageCode'] . '">' . $row['Language'] . '</option>';
+                                    }
+                                }
+            echo '
+                            </select>
+                            <textarea name="inputText" id="inputText" rows="10" placeholder="Type Here..." class="form-control"></textarea>
+                            <button type="button" onclick="startSpeechRecognition()" class="btn btn-secondary mt-2"><i class="fas fa-microphone"></i></button>
+                        </div>
+                        <div class="col-md-6">
+                            <select name="outputLanguage" id="outputLanguage" class="form-control">
+                                <option value="" selected disabled>Select Language</option>';
+                                $data->data_seek(0);
+                                if ($data) {
+                                    while ($row = $data->fetch_assoc()) {
+                                        echo '<option value="' . $row['LanguageCode'] . '">' . $row['Language'] . '</option>';
+                                    }
+                                }
+            echo '
+                            </select>
+                            <textarea name="outputText" id="outputText" rows="10" placeholder="Translation will appear here..." class="form-control" readonly></textarea>
+                            <button type="button" onclick="speakTranslatedText()" class="btn btn-secondary mt-2"><i class="fas fa-microphone"></i></button>
+                        </div>
+                    </div>
+                    <button type="button" onclick="translateText()" class="btn btn-primary mt-3">Translate</button>
+                </div>
+            ';
+        }
+        ?>
+    </form>
 
     <script>
         function translateText() {
@@ -310,18 +379,19 @@ if ($row = $data->fetch_assoc()) {
             msg.lang = outputLanguage;
             window.speechSynthesis.speak(msg);
         }
+
         document.addEventListener('DOMContentLoaded', function() {
-        var sidebarToggleButton = document.querySelector('.btn-toggle-sidebar');
-        var sidebar = document.querySelector('#sidebar');
+            var sidebarToggleButton = document.querySelector('.btn-toggle-sidebar');
+            var sidebar = document.querySelector('#sidebar');
             
-        sidebar.addEventListener('shown.bs.offcanvas', function() {
-            sidebarToggleButton.classList.add('hidden');
-        });
+            sidebar.addEventListener('shown.bs.offcanvas', function() {
+                sidebarToggleButton.classList.add('hidden');
+            });
             
-        sidebar.addEventListener('hidden.bs.offcanvas', function() {
-            sidebarToggleButton.classList.remove('hidden');
+            sidebar.addEventListener('hidden.bs.offcanvas', function() {
+                sidebarToggleButton.classList.remove('hidden');
+            });
         });
-    });
     </script>
 </body>
 </html>

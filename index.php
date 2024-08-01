@@ -22,7 +22,7 @@
 
             if ($row = $data->fetch_assoc()) {
                 $_SESSION['role'] = $row['Role'];
-                $_SESSION['id'] = $row['UserId'];
+                $_SESSION['id'] = $row['Subscription_ID'];
                 $_SESSION['status'] = $row['Status'];
                 if ($row['Role'] == 'Admin') {
                     echo '
@@ -612,7 +612,7 @@ contact-text{
 			</div>
 			<div class="buttons">
 				<a href="freetrial.php" class="logofreetrial">Free Trial</a>
-				<a href="#plans" class="logoplan">Plans</a>
+				<a href="signup.php" class="logoplan">Sign-Up</a>
 			</div>
 		</nav>
     </header>

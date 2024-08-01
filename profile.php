@@ -6,12 +6,17 @@ if (!isset($_SESSION['id'])) {
 }
 
 $id = $_SESSION['id'];
+
 include_once 'Class/user.php';
 $u = new User();
 $data = $u->displayprof($id);
 
 if ($row = $data->fetch_assoc()) {
-    $userid = $row['UserId'];
+    $subid = $row['Subscription_ID'];
+    $planname = $row['PlanName'];
+    $duration = $row['Duration'];
+    $price = $row['Price'];
+    $description = $row['Description'];
     $fname = $row['FirstName'];
     $lname = $row['LastName'];
     $mname = $row['MiddleName'];
@@ -20,6 +25,7 @@ if ($row = $data->fetch_assoc()) {
     $bday = $row['Birthdate'];
     $email = $row['EmailAddress'];
 }
+
 ?>
 
 
@@ -176,7 +182,7 @@ if ($row = $data->fetch_assoc()) {
                         <li><a class="dropdown-item" href="updateplan.php">Edit Profile</a></li>
                     </ul>
                 </div>
-                <a href="userprofile.php"><i class="fas fa-house mx-2"></i> Home</a>
+                <a href="userprofile.php"><i class="fas fa-house mx-2"></i> Language Translator</a>
                 <a href="languages.php"><i class="fas fa-language mx-2"></i> Learn A Language</a>
                 <a href="faq.php"><i class="fas fa-question-circle mx-2"></i> FAQ's</a>
             </div>
@@ -187,34 +193,17 @@ if ($row = $data->fetch_assoc()) {
         </div>
     </div>
 	
-    <nav class="navbar navbar-expand-sm mt-2 mb-2 ms-4" style="background:linear-gradient(135deg, #00c6ff, #0072ff); font-size:20px; font-weight:bold;">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="mlibrary.php">
-                
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="selectplan.php"><i class="fas fa-user mx-1 ms-4"></i> Select Plan</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
     <form method="POST">
         <div class="container p-4 mt-3 bg-light">
             <h1 class="text-center">My Profile</h1>
             <div class="row">
                 <div class="col-md-4 d-flex flex-column align-items-center">
                     <img src="images/profile.png" alt="Profile Image" width="350px" height="350px" class="rounded-circle mb-3">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditProfile" onclick="displayprofile('<?php echo $userid; ?>', '<?php echo $fname; ?>', '<?php echo $lname; ?>', '<?php echo $mname; ?>', '<?php echo $addr; ?>', '<?php echo $zip; ?>', '<?php echo $bday; ?>', '<?php echo $email; ?>')">Edit Profile</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditProfile" onclick="displayprofile('<?php echo $subid; ?>', '<?php echo $fname; ?>', '<?php echo $lname; ?>', '<?php echo $mname; ?>', '<?php echo $addr; ?>', '<?php echo $zip; ?>', '<?php echo $bday; ?>', '<?php echo $email; ?>')">Edit Profile</button>
                 </div>
                 <div class="col-md-8">
                         <div class="col-md-6">
-                            <input type="text" name="userid" id="profile_user" class="form-control rounded-pill" value="<?php echo $userid; ?>" hidden>
+                            <input type="text" name="subid" id="profile_user" class="form-control rounded-pill" value="<?php echo $subid; ?>" hidden>
                         </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
@@ -308,8 +297,8 @@ if ($row = $data->fetch_assoc()) {
 </body>
 </html>
 <script>
-    function displayprofile(userid, fname, lname, mname, addr, zip, bday, email) {
-        document.getElementById("modal_userid").value = userid;
+    function displayprofile(subid, fname, lname, mname, addr, zip, bday, email) {
+        document.getElementById("modal_userid").value = subid;
         document.getElementById("modal_fname").value = fname;
         document.getElementById("modal_lname").value = lname;
         document.getElementById("modal_mname").value = mname;

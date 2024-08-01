@@ -6,12 +6,17 @@ if (!isset($_SESSION['id'])) {
 }
 
 $id = $_SESSION['id'];
+
 include_once 'Class/user.php';
 $u = new User();
 $data = $u->displayprof($id);
 
 if ($row = $data->fetch_assoc()) {
-    $userid = $row['UserId'];
+    $subid = $row['Subscription_ID'];
+    $planname = $row['PlanName'];
+    $duration = $row['Duration'];
+    $price = $row['Price'];
+    $description = $row['Description'];
     $fname = $row['FirstName'];
     $lname = $row['LastName'];
     $mname = $row['MiddleName'];
@@ -20,6 +25,7 @@ if ($row = $data->fetch_assoc()) {
     $bday = $row['Birthdate'];
     $email = $row['EmailAddress'];
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -240,7 +246,7 @@ if ($row = $data->fetch_assoc()) {
                         <li><a class="dropdown-item" href="updateplan.php">Edit Profile</a></li>
                     </ul>
                 </div>
-                <a href="userprofile.php"><i class="fas fa-house mx-2"></i> Home</a>
+                <a href="userprofile.php"><i class="fas fa-house mx-2"></i> Language Translator</a>
                 <a href="languages.php"><i class="fas fa-language mx-2"></i> Learn A Language</a>
                 <a href="faq.php"><i class="fas fa-question-circle mx-2"></i> FAQ's</a>
             </div>

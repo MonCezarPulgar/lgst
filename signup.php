@@ -229,72 +229,140 @@
     </style>
 </head>
 <body>
+    <form method = "POST">
     <div class="main">
-
-        <div class="content">
-            <div class="card">
-                <h2>Sign Up</h2>
-                <div class="alert">Sign-Up Successful</div>
-                <form action="signup.php" method = "POST">
+        <div class = "container p-4">
                 <?php
-                        include 'generateuserid.php';
-                        $userID = generateUSERID();
+                    include_once'Class/user.php';
+                    $u = new User();
+                    $data = $u->displayplan();
+                ?>
+                <div class="row mt-3">
+                    <?php
+                        while($row = $data->fetch_assoc()){
+                            echo '
+                            <div class="col-md-4">
+                                <div class="card shadow-sm mb-4">
+                                    <div class="card-header text-white bg-info">
+                                        <h2 class="card-title">' . htmlspecialchars($row['PlanName']) . '</h2>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text text-dark">' . htmlspecialchars($row['Description']) . '</p><br>
+                                        <h2 class="card-text text-dark">' . htmlspecialchars($row['Duration']) . '</h2><br>
+                                        <label class="text-dark">Included Languages</label>';
+                        
+                            // Split the IncludedLanguages string by commas and output each one on a new line
+                            $languages = explode(' ', $row['IncludedLanguages']);
+                            foreach ($languages as $language) {
+                                echo '<p class="card-text text-dark">' . htmlspecialchars(trim($language)) . '</p>';
+                            }
+                        
+                            echo '
+                                        <b><h2 class="card-text text-dark">$' . htmlspecialchars($row['Price']) . '</h2></b>
+                                    </div>
+                                    <div class="card-footer text-center bg-light">
+                                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#Payment" onclick="displayplan(\'' . htmlspecialchars($row['PlanName']) . '\',\'' . htmlspecialchars($row['Duration']) . '\', \'' . htmlspecialchars($row['Price']) . '\', \'' . htmlspecialchars($row['Description']) . '\')">Continue to Signup</button>
+                                    </div>
+                                </div>
+                            </div>';
+                        }                            
                     ?>
-                <div class = "row p-4">
-                        <div class = "col-md-12">
-                            <label hidden><i class = "fas fa-user ms-2" ></i> UserId</label>
-                            <input type="text" name="userid" id="userid" class="form-control text-center" value="<?php echo $userID; ?>" hidden>
-                        </div>
-                        <div class = "col-md-6">
-                            <label><i class = "fas fa-user ms-2" ></i> First Name</label>
-                            <input type="text" name = "fname" id = "fname" class = "form-control text-center">
-                        </div>
-                        <div class = "col-md-6">
-                            <label><i class = "fas fa-user ms-2" ></i> Middle Name</label>
-                            <input type="text" name = "mname" id = "mname" class = "form-control text-center">
-                        </div>
-                        <div class = "col-md-6">
-                            <label><i class = "fas fa-user ms-2" ></i> Last Name</label>
-                            <input type="text" name = "lname" id = "lname" class = "form-control text-center">
-                        </div>
-                        <div class = "col-md-6">
-                            <label><i class = "fas fa-home ms-2" ></i> Address</label>
-                            <input type="text" name = "addr" id = "addr" class = "form-control text-center">
-                        </div>
-                        <div class = "col-md-6">
-                            <label><i class = "fas fa-file-zipper ms-2" ></i> Zip Code</label>
-                            <input type="text" name = "zip" id = "zip" class = "form-control text-center">
-                        </div>
-                        <div class = "col-md-6">
-                            <label><i class = "fas fa-calendar ms-2" ></i> Birthdate</label>
-                            <input type="date" name = "bday" id = "bday" class = "form-control text-center">
-                        </div>
-                        <div class = "col-md-12">
-                            <label><i class = "fas fa-envelope ms-2" ></i> Email Address</label>
-                            <input type="email" name = "email" id = "email" class = "form-control text-center" required>
-                        </div>
-                        <div class = "col-md-12">
-                            <label><i class = "fas fa-lock ms-2" ></i> Password</label>
-                            <input type="password" name = "pass" id = "pass" class = "form-control text-center" required>
-                        </div>
-                        <div class = "col-md-12">
-                            <label><i class = "fas fa-lock ms-2" ></i>Confirm Password</label>
-                            <input type="password" name = "con" id = "pass" class = "form-control text-center" required>
-                        </div>
-                    </div>
-                    <div class = "col-md 12">
-                    <button type="submit" name = "btnsignup" class = "btn btn-info">Sign Up</button>
-                    </div>
-                </form>
-            </div>
         </div>
+        <!-- Modal for Update Plan-->
+        <div class="modal fade" id="Payment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center" id="staticBackdropLabel"><b><i class="fas fa-user ms-2"></i> Proceed to Payment?</b></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            <?php
+                                include 'generatesubsid.php';
+                                $subsID = generateSUBSID();
+                            ?>
+                                <div class = "row">
+                                    <div class="col-md-6">
+                                        <label for="planid" class="form-label">Subscription ID</label>
+                                        <input type="text" name="subsid" id="subsid" class="form-control" value="<?php echo $subsID; ?>" readonly>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="planname">Plan Name</label>
+                                        <input type="text" name="planname" id="planname" class="form-control" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="price">Duration</label>
+                                        <input type="text" name="duration" id="duration" class="form-control" readonly>
+                                    </div>
+                                <div class = "row">
+                                    <div class="col-md-6">
+                                        <label for="price">Price</label>
+                                        <input type="text" name="price" id="price" class="form-control" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="description">Description</label>
+                                        <textarea name="description" id="description" class="form-control" rows="3" readonly></textarea>
+                                    </div>
+                                </div>
+                                <div class = "row">
+                                    <div class = "col-md-6">
+                                        <label>First Name</label>
+                                        <input type="text" name = "fname" class = "form-control">
+                                    </div>
+                                    <div class = "col-md-6">
+                                        <label>Middle Name</label>
+                                        <input type="text" name = "mname" class = "form-control">
+                                    </div>
+                                    <div class = "col-md-6">
+                                        <label>Last Name</label>
+                                        <input type="text" name = "lname" class = "form-control">
+                                    </div>
+                                    <div class = "col-md-6">
+                                        <label>Address</label>
+                                        <input type="text" name = "addr" class = "form-control">
+                                    </div>
+                                    <div class = "col-md-6">
+                                        <label>Zip Code</label>
+                                        <input type="text" name = "zip" class = "form-control">
+                                    </div>
+                                    <div class = "col-md-6">
+                                        <label>BirthDate</label>
+                                        <input type="date" name = "bday" class = "form-control">
+                                    </div>
+                                    <div class = "col-md-6">
+                                        <label>Email Address</label>
+                                        <input type="email" name = "email" class = "form-control">
+                                    </div>
+                                    <div class = "col-md-6">
+                                        <label>Password</label>
+                                        <input type="password" name = "pass" class = "form-control">
+                                    </div>
+                                    <div class = "col-md-6">
+                                        <label>Confirm Password</label>
+                                        <input type="password" name = "con" class = "form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" name = "btnsignup" class="btn btn-info rounded-pill text-white"><i class="fas fa-pen-to-square ms-2 text-dark"></i> Sign-Up</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
     </div>
+    </form>
 </body>
 </html>
 <?php
 include_once 'Class/user.php';
 if(isset($_POST['btnsignup'])){
-    $userid = $_POST['userid'];
+    $subsid = $_POST['subsid'];
+    $planname = $_POST['planname'];
+    $duration = $_POST['duration'];
+    $price = $_POST['price'];
+    $description = $_POST['description'];
     $fname = $_POST['fname'];
     $mname = $_POST['mname'];
     $lname = $_POST['lname'];
@@ -308,16 +376,25 @@ if(isset($_POST['btnsignup'])){
     if($pass == $con){
         echo'
             <script>
-                alert("'.$u->signup($userid,$fname, $mname, $lname, $addr, $zip, $bday, $email, $pass, $con).'");
+                alert("'.$u->signup($subsid, $planname, $duration, $price, $description, $fname, $mname, $lname, $addr, $zip, $bday, $email, $pass, $con).'");
             </script>
         ';
     }else{
         echo'
         <script>
             alert("Password did not match");
-            window.open("plan.php");
+            window.open("index.php");
         </script>
         ';
     }
 }
 ?>
+
+<script>
+    function displayplan(planname, duration, price, description) {
+        document.getElementById("planname").value = planname;
+        document.getElementById("duration").value = duration;
+        document.getElementById("price").value = price;
+        document.getElementById("description").value = description;
+    }
+</script>
