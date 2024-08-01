@@ -135,17 +135,18 @@ Class User extends Database {
         }
         return $users;
     }
-    public function getTotalLanguage(){
-		$sql = "SELECT COUNT(*) AS total FROM languages";
+    public function getTotalLanguage() {
+        $sql = "SELECT COUNT(*) AS total FROM languages";
         $result = $this->conn->query($sql);
         if ($result) {
             $row = $result->fetch_assoc();
             return $row['total'];
         }
         return 0;
-	}
-	public function getLanguageList() {
-        $sql = "SELECT Language_ID, Language, Country FROM languages";
+    }
+
+    public function getLanguageList() {
+        $sql = "SELECT Language_ID, Language, Country, LanguageCode FROM languages";
         $data = $this->conn->query($sql);
         $users = [];
         if ($data->num_rows > 0) {
@@ -207,6 +208,30 @@ Class User extends Database {
         $sql = "SELECT Subscription_ID, FullName, EmailAddress, PlanName, Duration, Price, Description FROM subscriptions";
         $data = $this->conn->query($sql);
         return $data;
+    }
+    public function displayReport() {
+        $totalLanguages = $this->getTotalLanguage();
+        $languages = $this->getLanguageList();
+
+        echo "<div class='report-container'>";
+        echo "<h2>Language Report</h2>";
+        echo "<p>Total Languages: " . $totalLanguages . "</p>";
+
+        if (!empty($languages)) {
+            echo "<ul>";
+            foreach ($languages as $language) {
+				echo "<li>";
+				echo "Language ID: " . $language["Language_ID"] . "<br>";
+				echo "Language Code: " . $language["LanguageCode"] . "<br>";
+				echo "Name: " . $language["Language"] . "<br>";
+				echo "Country: " . $language["Country"];
+				echo "</li>";
+			}
+            echo "</ul>";
+        } else {
+            echo "<p>No languages found.</p>";
+        }
+        echo "</div>";
     }
 }
 ?>

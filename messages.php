@@ -291,16 +291,7 @@
                     <li><a class="dropdown-item text-dark" href="reports.php">Billing</a></li>
                 </ul>
             </div>
-            <div class="dropdown mt-2">
-                <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-circle-info"></i> Reports
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item text-dark" href="reports.php">Total Languages</a></li>
-                    <li><a class="dropdown-item text-dark" href="reports2.php">Total Users</a></li>
-                    <li><a class="dropdown-item text-dark" href="reports2.php">Current Signups</a></li>
-                </ul>
-            </div>
+            <a href="language-reports.php"><i class="fas fa-house"></i> Reports</a>
             <div class="mt-2">
                 <a href=""><i class="fas fa-lock"></i> Change Password</a><br>
                 <a href="index.php"><i class="fas fa-lock"></i> Log-Out</a>
