@@ -233,5 +233,23 @@ Class User extends Database {
         }
         echo "</div>";
     }
+    public function getPlans() {
+        $sql = "SELECT PlanName, COUNT(*) as userCount FROM tbluser2 GROUP BY PlanName";
+        $data = $this->conn->query($sql);
+    
+        // Convert the result to an associative array
+        $plans = [];
+        while ($row = $data->fetch_assoc()) {
+            $plans[] = $row;
+        }
+    
+        return $plans;
+    }
+
+    public function getUsersByPlan($planName) {
+        $sql = "SELECT * FROM tbluser2 WHERE PlanName = '$planName'";
+        $data = $this->conn->query($sql);
+        return $data;
+    }
 }
 ?>

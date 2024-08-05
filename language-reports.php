@@ -213,32 +213,38 @@ $user = new User();
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <a href="admindashboard.php"><i class="fas fa-house"></i> Admin Dashboard</a><br>
-            <a href="usermanagement.php"><i class="fas fa-house"></i> User Management</a><br>
-            <a href="languages.php"><i class="fas fa-house"></i> Language Management</a>
-            <a href="messages.php"><i class="fas fa-house"></i> Messages</a>
+            <a href="admindashboard.php"><i class="fa-solid fa-folder mx-2"></i>  Admin Dashboard</a>
+            <a href="usermanagement.php"><i class="fa-solid fa-list-check mx-2"></i>  User Management</a>
+            <a href="languages.php"><i class="fa-solid fa-list-check mx-2"></i>  Language Management</a>
+            <a href="messages.php"><i class="fa-solid fa-message mx-2"></i> Messages</a>
             <div class="dropdown mt-2">
                 <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-circle-info"></i> Plan
+                <i class="fa-solid fa-list-check mx-2"></i> Plan
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item text-dark" href="plan.php">Add Plans</a></li>
-                    <li><a class="dropdown-item text-dark" href="updateplan.php">Plan Management</a></li>
+                    <li><a class="dropdown-item text-white" href="plan.php">Add Plans</a></li>
+                    <li><a class="dropdown-item text-white" href="updateplan.php">Plan Management</a></li>
                 </ul>
             </div>
-            <div class="dropdown mt-2">
+            <div class="dropdowns">
                 <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-circle-info"></i> Payment
+                <i class="fa-solid fa-credit-card mx-2"></i> Payment
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item text-dark" href="reports.php">Billing</a></li>
+                    <li><a class="dropdown-item text-white" href="reports.php">Billing</a></li>
                 </ul>
             </div>
-            <a href="language-reports.php"><i class="fas fa-house"></i> Reports</a>
-            <div class="mt-2">
-                <a href=""><i class="fas fa-lock"></i> Change Password</a><br>
-                <a href="index.php"><i class="fas fa-lock"></i> Log-Out</a>
+            <div class="dropdowns">
+                <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-circle-info mx-2"></i> Reports
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item text-white" href="language-reports.php">Language Report</a></li>
+                    <li><a class="dropdown-item text-white" href="subscription-report.php">Subscription Report</a></li>
+                    <li><a class="dropdown-item text-white" href="users-report.php">Users Report</a></li>
+                </ul>
             </div>
+            <a href="adminlogout.php"><i class="fa-solid fa-right-from-bracket mx-2"></i> Logout</a>
         </div>
     </div>
     <div class="container">

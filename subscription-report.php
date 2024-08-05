@@ -1,23 +1,49 @@
+<?php
+include_once "Class/user.php";
+
+// Initialize the User object
+$user = new User();
+
+try {
+    // Fetch the plans from the User object
+    $plans = $user->getPlans();
+} catch (Exception $e) {
+    // Handle any exceptions that might be thrown by getPlans()
+    $plans = [];
+    echo 'Error fetching plans: ' . $e->getMessage();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PremTranslate: Language Translator</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="images/text.png">
     <style>
         body {
             display: flex;
             min-height: 100vh;
             flex-direction: column;
             background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color: #fff;
         }
+
         .main-container {
             flex: 1;
             display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Align items vertically */
         }
+
         .btn-close {
             color: #ffffff; /* Sets the icon color to white */
             background-color: transparent; /* Ensures the button background is transparent */
@@ -58,8 +84,6 @@
         .offcanvas .offcanvas-body a:hover {
             color: #ffffff;
             background-color: #3a3f47;
-            border-radius: 5px;
-            padding: 10px;
         }
         .offcanvas .dropdown-menu {
             background: #3a3f47;
@@ -117,9 +141,10 @@
         .btn-toggle-sidebar.hidden {
             display: none; /* Hide the button when the sidebar is open */
         }
+
         .dashboard h2 {
             text-align: center;
-            margin-top: 50px;
+            margin-top: 30px;
             font-size: 60px;
             font-weight: bold;
             background: linear-gradient(135deg, #ffffff, #aeeeee);
@@ -129,22 +154,28 @@
             text-fill-color: transparent;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
-        .card {
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0.5, 0.5, 0.5, 0.5); /* Adds a subtle shadow */
-        }
-        .hidden {
-            display: none;
-        }
+
         @media (max-width: 576px) {
             .btn-toggle-sidebar {
                 width: 40px;
                 height: 40px;
                 font-size: 20px;
             }
-            .dashboard h2 {
+
+            .container {
+                padding: 10px;
+            }
+
+            .report-container h2 {
                 font-size: 2rem;
             }
+        }
+
+        /* Canvas size adjustments */
+        #planChart {
+            max-width: 1000px;
+            max-height: 1000px;
+            margin: 20px auto; /* Center it within the container */
         }
     </style>
 </head>
@@ -188,7 +219,6 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item text-white" href="language-reports.php">Language Report</a></li>
-                    <li><a class="dropdown-item text-white" href="subscription-report.php">Subscription Report</a></li>
                     <li><a class="dropdown-item text-white" href="users-report.php">Users Report</a></li>
                 </ul>
             </div>
@@ -196,126 +226,133 @@
         </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="content container p-1">
-        <h1 class="text-center">Users Management</h1>
-        <form action="" method="POST">
-            <div class="table-responsive">
-                <table class="table table-hover p-4">
-                    <thead class="bg-info">
-                        <tr>
-                            <th>User ID</th>
-                            <th>First Name</th>
-                            <th>Middle Name</th>
-                            <th>Last Name</th>
-                            <th>Address</th>
-                            <th>Zip Code</th>
-                            <th>Birthdate</th>
-                            <th>Email Address</th>
-                            <th>Password</th>
-                            <th>Role</th>
-                            <th>Status</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-light">
-                        <?php
-                        ini_set('display_errors', 1);
-                        ini_set('display_startup_errors', 1);
-                        error_reporting(E_ALL);
-
-                        include_once 'Class/user.php';
-                        $u = new User();
-                        $data = $u->displayusers();
-                        if ($data) {
-                            while ($row = $data->fetch_assoc()) {
-                                echo '
-                                    <tr>
-                                        <td>' . htmlspecialchars($row['Subscription_ID']) . '</td>
-                                        <td>' . htmlspecialchars($row['FirstName']) . '</td>
-                                        <td>' . htmlspecialchars($row['MiddleName']) . '</td>
-                                        <td>' . htmlspecialchars($row['LastName']) . '</td>
-                                        <td>' . htmlspecialchars($row['Address']) . '</td>
-                                        <td>' . htmlspecialchars($row['ZipCode']) . '</td>
-                                        <td>' . htmlspecialchars($row['Birthdate']) . '</td>
-                                        <td>' . htmlspecialchars($row['EmailAddress']) . '</td>
-                                        <td>' . htmlspecialchars($row['Password']) . '</td>
-                                        <td>' . htmlspecialchars($row['Role']) . '</td>
-                                        <td>' . htmlspecialchars($row['Status']) . '</td>
-                                        <td><button type="button" name="btndelete" class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#DeleteModal" onclick="deleteuser(&quot;'.$row['Subscription_ID'].'&quot;)"><i class="fas fa-trash ms-2 text-dark"></i></button></td>
-                                    </tr>
-                                ';
-                            }
-                        } else {
-                            echo '<tr><td colspan="12">No users found</td></tr>';
-                        }
-                        ?>
-                    </tbody>
-                </table>
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="container dashboard">
+            <h2>Plan Report</h2>
+            <div class="report-container">
+                <canvas id="planChart"></canvas>
             </div>
-            <!-- Modal for Delete User -->
-            <div class="modal fade" id="DeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title text-center" id="staticBackdropLabel"><b><i class="fas fa-user ms-2"></i> Delete User</b></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row mb-3">
-                                <h1>Confirm to DELETE this user.</h1>
-                                <div class="col-md-6">
-                                    <label for="userid" class="form-label">User ID</label>
-                                    <input type="text" name="userid" id="userid" class="form-control" readonly>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" name="btndelete" class="btn btn-danger rounded-pill"><i class="fas fa-trash ms-2 text-dark"></i> Delete</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
 
+    <!-- User Details Modal -->
+    <div class="modal fade" id="userDetailsModal" tabindex="-1" aria-labelledby="userDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userDetailsModalLabel">Users for <span id="modalPlanName"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul id="modalUserList" class="list-group">
+                        <!-- User list will be populated here -->
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        function deleteuser(userid) {
-            document.getElementById("userid").value = userid;
+        const planData = <?php echo json_encode($plans); ?>;
+        console.log(planData); // Check this output in the browser console
+
+        const ctx = document.getElementById('planChart').getContext('2d');
+        const planNames = planData.map(plan => plan.PlanName);
+        const planCounts = planData.map(plan => plan.userCount);
+
+        const chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: planNames,
+                datasets: [{
+                    label: 'Plans',
+                    data: planCounts,
+                    backgroundColor: [
+                        '#FF6F61', // Coral
+                        '#6B5B95', // Purple
+                        '#88B04B', // Green
+                        '#F7CAC9', // Light Pink
+                        '#92A8D1', // Light Blue
+                        '#F5B7B1'  // Light Red
+                    ],
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const totalUsers = context.raw;
+                                const label = context.label || '';
+                                return `${label}: ${totalUsers} users`; // Display user count
+                            }
+                        }
+                    }
+                },
+                onClick: (evt, item) => {
+                    if (item.length > 0) {
+                        const index = item[0].index;
+                        const selectedPlan = planNames[index];
+                        fetchUsers(selectedPlan);
+                    }
+                }
+            }
+        });
+
+        function fetchUsers(planName) {
+            fetch('user.php?plan=' + encodeURIComponent(planName))
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const modalPlanName = document.getElementById('modalPlanName');
+                    const modalUserList = document.getElementById('modalUserList');
+                    modalPlanName.textContent = planName;
+                    modalUserList.innerHTML = '';
+
+                    if (data.error) {
+                        modalUserList.innerHTML = `<li class="list-group-item text-danger">${data.error}</li>`;
+                    } else {
+                        data.forEach(user => {
+                            const li = document.createElement('li');
+                            li.classList.add('list-group-item');
+                            li.textContent = `${user.FirstName} ${user.LastName} - ${user.Address}`;
+                            modalUserList.appendChild(li);
+                        });
+                    }
+
+                    // Show the modal
+                    const userDetailsModal = new bootstrap.Modal(document.getElementById('userDetailsModal'));
+                    userDetailsModal.show();
+                })
+                .catch(error => {
+                    console.error('Error fetching users:', error);
+                });
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             var sidebarToggleButton = document.querySelector('.btn-toggle-sidebar');
             var sidebar = document.querySelector('#sidebar');
-                
-            sidebar.addEventListener('shown.bs.offcanvas', function() {
+
+            sidebar.addEventListener('shown.bs.offcanvas', function () {
                 sidebarToggleButton.classList.add('hidden');
             });
-                
-            sidebar.addEventListener('hidden.bs.offcanvas', function() {
+
+            sidebar.addEventListener('hidden.bs.offcanvas', function () {
                 sidebarToggleButton.classList.remove('hidden');
             });
         });
     </script>
 </body>
 </html>
-
-<?php
-include_once 'Class/user.php';
-
-if (isset($_POST['btndelete'])) {
-    $subsid = $_POST['subsid'];
-    $u = new User();
-    $result = $u->deleteuser($subsid);
-    echo '<script>
-        alert("' . htmlspecialchars($result) . '");
-        window.location.href = window.location.href.split("?")[0] + "?refresh=1";
-    </script>';
-}
-
-if (isset($_GET['refresh'])) {
-    echo '<script>
-        window.history.replaceState(null, null, window.location.href.split("?")[0]);
-    </script>';
-}
-?>
