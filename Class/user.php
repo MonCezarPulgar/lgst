@@ -2,13 +2,93 @@
 include_once 'database.php';
 Class User extends Database {
     public function signup($subsid, $planname, $duration, $price, $description, $fname, $mname, $lname, $addr, $zip, $bday, $email, $pass, $con){
-        $sql = "insert into tbluser2 values (NULL, '$subsid','$planname','$duration','$price','$description','$fname','$mname','$lname','$addr','$zip','$bday','$email','$pass','$con','Tourist','Active')";
+        // Get the current date in 'YYYY-MM-DD' format
+        $planStartDate = date('Y-m-d');
+        
+        // Calculate the expiration date based on the plan name
+        switch ($planname) {
+            case 'Baby Plan':
+                $interval = 'P30D'; // 30 days
+                break;
+            case 'Teen Plan':
+                $interval = 'P6M'; // 6 months
+                break;
+            case 'Grand Plan':
+                $interval = 'P1Y'; // 1 year
+                break;
+            default:
+                $interval = 'P0D'; // Default to 0 days if the plan name is not recognized
+                break;
+        }
+    
+        // Create DateTime objects for start and expiration dates
+        $startDate = new DateTime($planStartDate);
+        $expirationDate = $startDate->add(new DateInterval($interval));
+        
+        // Format expiration date in 'YYYY-MM-DD' format
+        $expirationDateFormatted = $expirationDate->format('Y-m-d');
+        
+        // Update SQL query to include PlanStartDate and ExpirationDate
+        $sql = "INSERT INTO tbluser2 VALUES (NULL, '$subsid', '$planname', '$duration', '$price', '$description', '$fname', '$mname', '$lname', '$addr', '$zip', '$bday', '$email', '$pass', '$con', 'Tourist', 'Active', '$planStartDate', '$expirationDateFormatted')";
+        
         if($this->conn->query($sql)){
-			return 'Signup Successful!';
-		}else{
-			$this->conn->error;
-		}
+            return 'Signup Successful!';
+        } else {
+            return 'Error: ' . $this->conn->error;
+        }
     }
+    
+    public function renewplan($modal_subid, $modal_planname, $modal_duration) {
+        // Get current date
+        $currentDate = new DateTime();
+        
+        // Fetch the current plan details
+        $sql = "SELECT PlanName, PlanStartDate, ExpirationDate FROM tbluser2 WHERE Subscription_ID = '$modal_subid'";
+        $result = $this->conn->query($sql);
+        
+        if ($result && $row = $result->fetch_assoc()) {
+            $currentPlanName = $row['PlanName'];
+            $planStartDate = new DateTime($row['PlanStartDate']);
+            $currentExpirationDate = new DateTime($row['ExpirationDate']);
+            
+            // Calculate remaining days from the current plan
+            $interval = $currentDate->diff($currentExpirationDate);
+            $remainingDays = $interval->days;
+            
+            // Calculate new expiration date based on the new plan
+            switch ($modal_planname) {
+                case 'Baby Plan':
+                    $newPlanInterval = new DateInterval('P30D');
+                    break;
+                case 'Teen Plan':
+                    $newPlanInterval = new DateInterval('P6M');
+                    break;
+                case 'Grand Plan':
+                    $newPlanInterval = new DateInterval('P1Y');
+                    break;
+                default:
+                    $newPlanInterval = new DateInterval('P0D');
+                    break;
+            }
+    
+            // Add remaining days to the new plan duration
+            $newPlanExpirationDate = $currentDate->add($newPlanInterval);
+            $newPlanExpirationDate->add(new DateInterval('P' . $remainingDays . 'D'));
+            
+            // Update the plan details in the database
+            $sql = "UPDATE tbluser2 SET PlanName = '$modal_planname', Duration = '$modal_duration', PlanStartDate = '{$currentDate->format('Y-m-d')}', ExpirationDate = '{$newPlanExpirationDate->format('Y-m-d')}' WHERE Subscription_ID = '$modal_subid'";
+            
+            if ($this->conn->query($sql)) {
+                return 'Renewing Plan Successful';
+            } else {
+                return $this->conn->error;
+            }
+        } else {
+            return 'Failed to retrieve current plan details';
+        }
+    }
+        
+    
     public function addplan($planid, $planname, $price, $duration, $desc, $incl){
         $sql = "insert into plans values (NULL, '$planid','$planname','$price','$duration','$desc','$incl')";
         if($this->conn->query($sql)){
@@ -107,7 +187,7 @@ Class User extends Database {
     }
     
     public function editprofile($userid, $fname, $lname, $mname, $addr, $zip, $bday, $email){
-        $sql = "UPDATE tbluser SET FirstName = '$fname', LastName = '$lname', MiddleName = '$mname', Address = '$addr', ZipCode = '$zip', Birthdate = '$bday', EmailAddress = '$email' WHERE UserId = '$userid'";
+        $sql = "UPDATE tbluser2 SET FirstName = '$fname', LastName = '$lname', MiddleName = '$mname', Address = '$addr', ZipCode = '$zip', Birthdate = '$bday', EmailAddress = '$email' WHERE Subscription_ID = '$userid'";
         if ($this->conn->query($sql)) {
             return 'Profile Edited!';
         } else {
@@ -125,7 +205,7 @@ Class User extends Database {
     }
 
     public function getUserList() {
-        $sql = "SELECT FirstName, LastName, EmailAddress FROM tbluser2 WHERE Role = 'Tourist'";
+        $sql = "SELECT FirstName, MiddleName, LastName, Address, ZipCode, Birthdate, EmailAddress FROM tbluser2 WHERE Role = 'Tourist'";
         $data = $this->conn->query($sql);
         $users = [];
         if ($data->num_rows > 0) {
@@ -251,5 +331,40 @@ Class User extends Database {
         $data = $this->conn->query($sql);
         return $data;
     }
+    public function displayUsersReport() {
+        $totalusers = $this->getTotalUsers();
+        $users = $this->getUserList();
+    
+        echo "<div class='report-container'>";
+    
+        // Container for the total languages count and print all button
+        echo "<div class='d-flex justify-content-between align-items-center'>";
+        echo "<h3>Total Users: " . $totalusers . "</h3>";
+        echo "<button class='btn btn-success' onclick='printAllUser()'> <i class='fa-solid fa-print'></i> Print All</button>"; // Button to print all languages
+        echo "</div>";
+    
+        if (!empty($users)) {
+            echo "<ul>";
+            foreach ($users as $user) {
+                $subscriptionId = isset($user["Subscription_ID"]) ? $user["Subscription_ID"] : 'unknown';
+                $elementId = 'users-' . $subscriptionId; // Unique ID for each user
+            
+                echo "<li id='$elementId'>"; // Ensure each list item has a unique ID
+                echo "Full Name: " . (isset($user["FirstName"]) ? $user["FirstName"] : 'N/A') . " " . 
+                    (isset($user["MiddleName"]) ? $user["MiddleName"] : 'N/A') . " " . 
+                    (isset($user["LastName"]) ? $user["LastName"] : 'N/A') . "<br>";
+                echo "Address: " . (isset($user["Address"]) ? $user["Address"] : 'N/A') . "<br>";
+                echo "Zip Code: " . (isset($user["ZipCode"]) ? $user["ZipCode"] : 'N/A') . "<br>";
+                echo "Email Address: " . (isset($user["EmailAddress"]) ? $user["EmailAddress"] : 'N/A') . "<br>";
+                echo "<button class='btn btn-primary btn-sm ms-5' onclick=\"printUser('$subscriptionId')\"> <i class='fa-solid fa-print'></i> Print </button>";
+                echo "</li>";
+            }
+            echo "</ul>";
+        } else {
+            echo "<p>No Users found.</p>";
+        }
+        echo "</div>";
+    }
+    
 }
 ?>

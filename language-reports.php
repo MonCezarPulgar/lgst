@@ -37,79 +37,6 @@ $user = new User();
             border: none;
         }
 
-        .btn-close:hover {
-            color: #ffffff;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .offcanvas {
-            background: #282c34;
-            color: #ffffff;
-            width: 290px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .offcanvas .offcanvas-header {
-            border-bottom: 1px solid #444851;
-            padding: 20px;
-        }
-
-        .offcanvas .offcanvas-body {
-            flex: 1;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .offcanvas .offcanvas-body .links {
-            flex: 1;
-        }
-
-        .offcanvas .offcanvas-body a {
-            color: #ffffff;
-            text-decoration: none;
-            margin-top: 15px;
-            font-size: 18px;
-            display: block;
-        }
-
-        .offcanvas .offcanvas-body a:hover {
-            color: #ffffff;
-            background-color: #3a3f47;
-            border-radius: 5px;
-            padding: 10px;
-        }
-
-        .offcanvas .dropdown-menu {
-            background: #3a3f47;
-        }
-
-        .offcanvas .dropdown-item {
-            color: #d1d1d1;
-        }
-
-        .offcanvas .dropdown-item:hover {
-            color: #ffffff;
-            background-color: #3a3f47;
-        }
-
-        .navbar {
-            background-color: #17a2b8;
-        }
-
-        .navbar .navbar-brand img {
-            height: 50px;
-        }
-
-        .navbar .nav-link {
-            color: #fff;
-        }
-
-        .navbar .nav-link:hover {
-            color: #e9ecef;
-        }
-
         .container {
             padding: 20px;
             margin-top: 50px;
@@ -154,35 +81,6 @@ $user = new User();
             font-size: 16px;
             color: #0072ff;
         }
-
-        .btn-toggle-sidebar {
-            background-color: #282c34;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            padding: 10px;
-            color: #fff;
-            font-size: 24px;
-            position: fixed;
-            top: 15px;
-            left: 15px;
-            z-index: 1050;
-        }
-
-        .btn-toggle-sidebar:hover {
-            background-color: #0056b3;
-        }
-
-        .btn-toggle-sidebar:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
-        }
-
-        .btn-toggle-sidebar.hidden {
-            display: none;
-        }
-
         @media (max-width: 576px) {
             .btn-toggle-sidebar {
                 width: 40px;
@@ -201,52 +99,11 @@ $user = new User();
     </style>
 </head>
 <body>
-    <!-- Button to toggle the sidebar -->
-    <button class="btn-toggle-sidebar" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle sidebar">
-        <i class="fas fa-bars"></i>
-    </button>
+    
+    <?php
+    include_once 'sidebar.php';
+    ?>
 
-    <!-- Offcanvas Sidebar -->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
-        <div class="offcanvas-header">
-            <h5 id="sidebarLabel">PremTranslate</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <a href="admindashboard.php"><i class="fa-solid fa-folder mx-2"></i>  Admin Dashboard</a>
-            <a href="usermanagement.php"><i class="fa-solid fa-list-check mx-2"></i>  User Management</a>
-            <a href="languages.php"><i class="fa-solid fa-list-check mx-2"></i>  Language Management</a>
-            <a href="messages.php"><i class="fa-solid fa-message mx-2"></i> Messages</a>
-            <div class="dropdown mt-2">
-                <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-list-check mx-2"></i> Plan
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item text-white" href="plan.php">Add Plans</a></li>
-                    <li><a class="dropdown-item text-white" href="updateplan.php">Plan Management</a></li>
-                </ul>
-            </div>
-            <div class="dropdowns">
-                <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-credit-card mx-2"></i> Payment
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item text-white" href="reports.php">Billing</a></li>
-                </ul>
-            </div>
-            <div class="dropdowns">
-                <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-circle-info mx-2"></i> Reports
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item text-white" href="language-reports.php">Language Report</a></li>
-                    <li><a class="dropdown-item text-white" href="subscription-report.php">Subscription Report</a></li>
-                    <li><a class="dropdown-item text-white" href="users-report.php">Users Report</a></li>
-                </ul>
-            </div>
-            <a href="adminlogout.php"><i class="fa-solid fa-right-from-bracket mx-2"></i> Logout</a>
-        </div>
-    </div>
     <div class="container">
         <!-- Display the language report -->
         <div class="report-container">

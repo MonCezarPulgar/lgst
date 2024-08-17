@@ -11,6 +11,8 @@ include_once 'Class/user.php';
 $u = new User();
 $data = $u->displayprof($id);
 
+$planExpired = false;
+
 if ($row = $data->fetch_assoc()) {
     $subid = $row['Subscription_ID'];
     $planname = $row['PlanName'];
@@ -24,8 +26,62 @@ if ($row = $data->fetch_assoc()) {
     $zip = $row['ZipCode'];
     $bday = $row['Birthdate'];
     $email = $row['EmailAddress'];
+    $planStartDate = new DateTime($row['PlanStartDate']);
+    $currentDate = new DateTime();
+
+    // Calculate expiration date based on the plan
+    switch ($planname) {
+        case 'Baby Plan':
+            $expirationDate = $planStartDate->add(new DateInterval('P30D'));
+            break;
+        case 'Teen Plan':
+            $expirationDate = $planStartDate->add(new DateInterval('P6M'));
+            break;
+        case 'Grand Plan':
+            $expirationDate = $planStartDate->add(new DateInterval('P1Y'));
+            break;
+        default:
+            $expirationDate = $currentDate;
+            break;
+    }
+
+    $expirationDateStr = $expirationDate->format('Y-m-d');
+
+    if ($currentDate > $expirationDate) {
+        $planExpired = true;
+    }else{
+        // Calculate the number of days remaining
+        $interval = $currentDate->diff($expirationDate);
+        $daysRemaining = $interval->days;
+    }
+
+    if ($currentDate > $expirationDate) {
+        $planExpired = true;
+    } else {
+        // Calculate the number of days remaining
+        $interval = $currentDate->diff($expirationDate);
+        $daysRemaining = $interval->days;
+    }
+
 }
+
+if(isset($_POST['btnrenew'])){
+    include_once 'Class/user.php';
+    $modal_subid = $_POST['modal-subid'];
+    $modal_planname = $_POST['modal-planname'];
+    $modal_duration = $_POST['modal-duration'];
+    $u = new User();
+    $result = $u->renewplan($modal_subid, $modal_planname, $modal_duration);
+    echo'
+        <script>
+            alert("'.htmlspecialchars($result).'");
+            window.location.href = window.location.href.split("?")[0] + "?refresh=1";
+        </script>
+    ';
+}
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,9 +92,11 @@ if ($row = $data->fetch_assoc()) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
     <link rel="icon" type="image/x-icon" href="images/text.png">
     <style>
         body {
+            font-family: 'Poppins', sans-serif; /* Apply Poppins font */
             display: flex;
             min-height: 100vh;
             flex-direction: column;
@@ -153,6 +211,10 @@ if ($row = $data->fetch_assoc()) {
         .btn-toggle-sidebar.hidden {
             display: none; /* Hide the button when the sidebar is open */
         }
+        .disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -181,7 +243,7 @@ if ($row = $data->fetch_assoc()) {
                     </ul>
                 </div>
                 <a href="userprofile.php"><i class="fas fa-house mx-2"></i> Language Translator</a>
-                <a href="languages.php"><i class="fas fa-language mx-2"></i> Learn A Language</a>
+                <a href="#"><i class="fas fa-language mx-2"></i> Learn A Language</a>
                 <a href="faq.php"><i class="fas fa-question-circle mx-2"></i> FAQ's</a>
             </div>
             <div class="mt-3">
@@ -192,206 +254,218 @@ if ($row = $data->fetch_assoc()) {
     </div>
 
     <form method="POST">
-        <?php
-        if ($planname == 'Baby Plan') {
+    <?php
+        if ($planExpired) {
             echo '
                 <div class="container text-center p-4 bg-light">
-                    <div class="row">
-                        <h1>Language Translator</h1>
-                        <div class="col-md-6">
-                            <select name="inputLanguage" id="inputLanguage" class="form-control">
-                                <option value="" selected disabled>Select Language</option>';
-                                include_once 'Class/user.php';
-                                $u = new User();
-                                $data = $u->babyplan();
-                                if ($data) {
-                                    while ($row = $data->fetch_assoc()) {
-                                        echo '<option value="' . $row['LanguageCode'] . '">' . $row['Language'] . '</option>';
-                                    }
-                                }
-            echo '
-                            </select>
-                            <textarea name="inputText" id="inputText" rows="10" placeholder="Type Here..." class="form-control"></textarea>
-                            <button type="button" onclick="startSpeechRecognition()" class="btn btn-secondary mt-2"><i class="fas fa-microphone"></i></button>
-                        </div>
-                        <div class="col-md-6">
-                            <select name="outputLanguage" id="outputLanguage" class="form-control">
-                                <option value="" selected disabled>Select Language</option>';
-                                $data->data_seek(0);
-                                if ($data) {
-                                    while ($row = $data->fetch_assoc()) {
-                                        echo '<option value="' . $row['LanguageCode'] . '">' . $row['Language'] . '</option>';
-                                    }
-                                }
-            echo '
-                            </select>
-                            <textarea name="outputText" id="outputText" rows="10" placeholder="Translation will appear here..." class="form-control" readonly></textarea>
-                            <button type="button" onclick="speakTranslatedText()" class="btn btn-secondary mt-2"><i class="fas fa-microphone"></i></button>
-                        </div>
-                    </div>
-                    <button type="button" onclick="translateText()" class="btn btn-primary mt-3">Translate</button>
+                    <h1>Your Plan Has Expired</h1>
+                    <p>Please renew your subscription to continue using the translator.</p>
                 </div>
             ';
-        }else if($planname == 'Teen Plan'){
-            echo '
-                <div class="container text-center p-4 bg-light">
-                    <div class="row">
-                        <h1>Language Translator</h1>
-                        <div class="col-md-6">
-                            <select name="inputLanguage" id="inputLanguage" class="form-control">
-                                <option value="" selected disabled>Select Language</option>';
-                                include_once 'Class/user.php';
-                                $u = new User();
-                                $data = $u->teenplan();
-                                if ($data) {
-                                    while ($row = $data->fetch_assoc()) {
-                                        echo '<option value="' . $row['LanguageCode'] . '">' . $row['Language'] . '</option>';
+        } else {
+            $planFunctionMap = [
+                'Baby Plan' => 'babyplan',
+                'Teen Plan' => 'teenplan',
+                'Grand Plan' => 'grandplan',
+            ];
+            $planFunction = $planFunctionMap[$planname] ?? '';
+
+            if ($planFunction) {
+                echo '
+                    <div class="container text-center p-4 bg-light">
+                        <div class="row">
+                            <h1>Language Translator</h1>
+                            <div class="col-md-6">
+                                <select name="inputLanguage" id="inputLanguage" class="form-control">
+                                    <option value="" selected disabled>Select Language</option>';
+                                    $data = $u->$planFunction();
+                                    if ($data) {
+                                        while ($row = $data->fetch_assoc()) {
+                                            echo '<option value="' . $row['LanguageCode'] . '">' . $row['Language'] . '</option>';
+                                        }
                                     }
-                                }
-            echo '
-                            </select>
-                            <textarea name="inputText" id="inputText" rows="10" placeholder="Type Here..." class="form-control"></textarea>
-                            <button type="button" onclick="startSpeechRecognition()" class="btn btn-secondary mt-2"><i class="fas fa-microphone"></i></button>
-                        </div>
-                        <div class="col-md-6">
-                            <select name="outputLanguage" id="outputLanguage" class="form-control">
-                                <option value="" selected disabled>Select Language</option>';
-                                $data->data_seek(0);
-                                if ($data) {
-                                    while ($row = $data->fetch_assoc()) {
-                                        echo '<option value="' . $row['LanguageCode'] . '">' . $row['Language'] . '</option>';
+                echo '
+                                </select>
+                                <textarea name="inputText" id="inputText" rows="10" placeholder="Type Here..." class="form-control"></textarea>
+                                <button type="button" onclick="startSpeechRecognition()" class="btn btn-secondary mt-2"><i class="fas fa-microphone"></i></button>
+                            </div>
+                            <div class="col-md-6">
+                                <select name="outputLanguage" id="outputLanguage" class="form-control">
+                                    <option value="" selected disabled>Select Language</option>';
+                                    $data->data_seek(0);
+                                    if ($data) {
+                                        while ($row = $data->fetch_assoc()) {
+                                            echo '<option value="' . $row['LanguageCode'] . '">' . $row['Language'] . '</option>';
+                                        }
                                     }
-                                }
-            echo '
-                            </select>
-                            <textarea name="outputText" id="outputText" rows="10" placeholder="Translation will appear here..." class="form-control" readonly></textarea>
-                            <button type="button" onclick="speakTranslatedText()" class="btn btn-secondary mt-2"><i class="fas fa-microphone"></i></button>
+                echo '
+                                </select>
+                                <textarea name="outputText" id="outputText" rows="10" placeholder="Translation will appear here..." class="form-control" readonly></textarea>
+                                <button type="button" onclick="speakTranslatedText()" class="btn btn-secondary mt-2"><i class="fas fa-microphone"></i></button>
+                            </div>
                         </div>
+                        <button type="button" onclick="translateText()" class="btn btn-primary mt-3">Translate</button>
                     </div>
-                    <button type="button" onclick="translateText()" class="btn btn-primary mt-3">Translate</button>
-                </div>
-            ';
-        }else if($planname == 'Grand Plan'){
-            echo '
-                <div class="container text-center p-4 bg-light">
-                    <div class="row">
-                        <h1>Language Translator</h1>
-                        <div class="col-md-6">
-                            <select name="inputLanguage" id="inputLanguage" class="form-control">
-                                <option value="" selected disabled>Select Language</option>';
-                                include_once 'Class/user.php';
-                                $u = new User();
-                                $data = $u->grandplan();
-                                if ($data) {
-                                    while ($row = $data->fetch_assoc()) {
-                                        echo '<option value="' . $row['LanguageCode'] . '">' . $row['Language'] . '</option>';
-                                    }
-                                }
-            echo '
-                            </select>
-                            <textarea name="inputText" id="inputText" rows="10" placeholder="Type Here..." class="form-control"></textarea>
-                            <button type="button" onclick="startSpeechRecognition()" class="btn btn-secondary mt-2"><i class="fas fa-microphone"></i></button>
-                        </div>
-                        <div class="col-md-6">
-                            <select name="outputLanguage" id="outputLanguage" class="form-control">
-                                <option value="" selected disabled>Select Language</option>';
-                                $data->data_seek(0);
-                                if ($data) {
-                                    while ($row = $data->fetch_assoc()) {
-                                        echo '<option value="' . $row['LanguageCode'] . '">' . $row['Language'] . '</option>';
-                                    }
-                                }
-            echo '
-                            </select>
-                            <textarea name="outputText" id="outputText" rows="10" placeholder="Translation will appear here..." class="form-control" readonly></textarea>
-                            <button type="button" onclick="speakTranslatedText()" class="btn btn-secondary mt-2"><i class="fas fa-microphone"></i></button>
-                        </div>
-                    </div>
-                    <button type="button" onclick="translateText()" class="btn btn-primary mt-3">Translate</button>
-                </div>
-            ';
+                ';
+            }
         }
         ?>
+        <!-- Renew Plan -->
+    <div class="modal fade" id="RenewPlan" tabindex="-1" aria-labelledby="welcomeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="welcomeModalLabel">Renew Plan</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class = "row">
+                        <div class = "col-md-8">
+                            <input type="text" name = "modal-subid" class = "form-control" value = "<?php echo $subid?>" hidden>
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div class = "col-md-6">
+                            <label>Plan Name</label>
+                            <select name="modal-planname" id="modal-planname" class = "form-control">
+                                <option>Baby Plan</option>
+                                <option>Teen Plan</option>
+                                <option>Grand Plan</option>
+                            </select>
+                        </div>
+                        <div class = "col-md-6">
+                            <label>Duration</label>
+                            <input type="text" id = "modal-duration" name = "modal-duration" class = "form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="btnrenew" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#EditProfile">Renew Plan</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <!-- Optional: Add an action button here -->
+                    <!-- <button type="button" class="btn btn-primary">Action</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
     </form>
+    
+    <!-- Bootstrap Modal -->
+    <div class="modal fade" id="welcomeModal" tabindex="-1" aria-labelledby="welcomeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="welcomeModalLabel">Prem Alert!</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Good day MR/MS. <b><?php echo $lname; ?></b>, you only have <b><?php echo $daysRemaining; ?></b> days before you plan expires on <b><?php echo $expirationDateStr; ?></b>.<br><br>
+                    <b>Renew Plan?</b>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="btnedit" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#RenewPlan">Renew</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <!-- Optional: Add an action button here -->
+                    <!-- <button type="button" class="btn btn-primary">Action</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
-        function translateText() {
-            var inputText = document.getElementById("inputText").value;
-            var inputLanguage = document.getElementById("inputLanguage").value;
-            var outputLanguage = document.getElementById("outputLanguage").value;
+    // Initialize Speech Recognition API
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'en-US'; // You may need to set the language based on user selection
 
-            // Logging the values to check if they are correct
-            console.log("Input Text:", inputText);
-            console.log("Input Language:", inputLanguage);
-            console.log("Output Language:", outputLanguage);
+    // Handle Speech Recognition
+    function startSpeechRecognition() {
+        recognition.start();
+    }
 
-            // Check if any of the values are empty and alert the user
-            if (!inputText) {
-                alert("Input text is empty. Please type something to translate.");
-                return;
-            }
-            if (!inputLanguage) {
-                alert("Input language is not selected. Please select a language.");
-                return;
-            }
-            if (!outputLanguage) {
-                alert("Output language is not selected. Please select a language.");
-                return;
-            }
+    recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById('inputText').value = transcript;
+    };
 
-            // Constructing the URL for the API request
-            var url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${inputLanguage}&tl=${outputLanguage}&dt=t&q=${encodeURIComponent(inputText)}`;
+    // Handle Text-to-Speech
+    function speakTranslatedText() {
+        const text = document.getElementById('outputText').value;
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = document.getElementById('outputLanguage').value; // Set language for speech synthesis
+        window.speechSynthesis.speak(utterance);
+    }
 
-            // Fetching the translation
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    console.log("Translation Data:", data);
-                    var translatedText = data[0][0][0];
-                    document.getElementById("outputText").value = translatedText;
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                    alert("Error fetching translation. Please try again later.");
-                });
+    // Translate text using Google Translate API
+    function translateText() {
+        var inputText = document.getElementById("inputText").value;
+        var inputLanguage = document.getElementById("inputLanguage").value;
+        var outputLanguage = document.getElementById("outputLanguage").value;
+
+        if (!inputText) {
+            alert("Input text is empty. Please type something to translate.");
+            return;
+        }
+        if (!inputLanguage) {
+            alert("Input language is not selected. Please select a language.");
+            return;
+        }
+        if (!outputLanguage) {
+            alert("Output language is not selected. Please select a language.");
+            return;
         }
 
-        // Initialize Speech Recognition API
-        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.lang = 'en-US'; // You may need to set the language based on user selection
+        var url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${inputLanguage}&tl=${outputLanguage}&dt=t&q=${encodeURI(inputText)}`;
 
-        // Handle Speech Recognition
-        function startSpeechRecognition() {
-            recognition.start();
-        }
-
-        recognition.onresult = function(event) {
-            const transcript = event.results[0][0].transcript;
-            document.getElementById("inputText").value = transcript;
-        };
-
-        // Handle Speech Synthesis
-        function speakTranslatedText() {
-            var text = document.getElementById("outputText").value;
-            var outputLanguage = document.getElementById("outputLanguage").value;
-            var msg = new SpeechSynthesisUtterance();
-            msg.text = text;
-            msg.lang = outputLanguage;
-            window.speechSynthesis.speak(msg);
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            var sidebarToggleButton = document.querySelector('.btn-toggle-sidebar');
-            var sidebar = document.querySelector('#sidebar');
-            
-            sidebar.addEventListener('shown.bs.offcanvas', function() {
-                sidebarToggleButton.classList.add('hidden');
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                var translatedText = data[0][0][0];
+                document.getElementById("outputText").value = translatedText;
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Error fetching translation. Please try again later.");
             });
-            
-            sidebar.addEventListener('hidden.bs.offcanvas', function() {
-                sidebarToggleButton.classList.remove('hidden');
-            });
-        });
-    </script>
+    }
+
+    // Show the modal on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        var myModal = new bootstrap.Modal(document.getElementById('welcomeModal'));
+        myModal.show();
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const planDropdown = document.getElementById('modal-planname');
+        const durationTextbox = document.getElementById('modal-duration');
+
+        // Function to update the duration based on selected plan
+        function updateDuration() {
+            const selectedPlan = planDropdown.value;
+
+            switch (selectedPlan) {
+                case 'Baby Plan':
+                    durationTextbox.value = '1 Month';
+                    break;
+                case 'Teen Plan':
+                    durationTextbox.value = '6 Months';
+                    break;
+                case 'Grand Plan':
+                    durationTextbox.value = '1 Year';
+                    break;
+                default:
+                    durationTextbox.value = '';
+                    break;
+            }
+        }
+
+        // Add event listener to update duration when dropdown value changes
+        planDropdown.addEventListener('change', updateDuration);
+
+        // Initialize duration based on the default selected plan
+        updateDuration();
+    });
+</script>
+
+    
 </body>
 </html>

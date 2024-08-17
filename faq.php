@@ -40,6 +40,7 @@ if ($row = $data->fetch_assoc()) {
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
     <link rel="icon" type="image/x-icon" href="images/text.png">
     <style>
         body {
@@ -47,6 +48,7 @@ if ($row = $data->fetch_assoc()) {
             min-height: 100vh;
             flex-direction: column;
             background: linear-gradient(135deg, #00c6ff, #0072ff);
+            font-family: 'Poppins', sans-serif; /* Apply Poppins font */
         }
 
         .main-container {
