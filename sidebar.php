@@ -155,16 +155,7 @@
                     <li><a class="dropdown-item text-white" href="reports.php">Billing</a></li>
                 </ul>
             </div>
-            <div class="dropdown mt-2">
-                <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-circle-info mx-2"></i> Reports
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item text-white" href="language-reports.php">Language Report</a></li>
-                    <li><a class="dropdown-item text-white" href="subscription-report.php">Subscription Report</a></li>
-                    <li><a class="dropdown-item text-white" href="users-report.php">Users Report</a></li>
-                </ul>
-            </div>
+            <a href="users-report.php"><i class="fa-solid fa-folder mx-2"></i> Reports</a>
             <div style="margin-top:130px;">
                 <a href=""><i class="fas fa-lock mx-2"></i> Change Password</a>
                 <a href="logout.php"><i class="fa-solid fa-right-from-bracket mx-2"></i> Log-Out</a>

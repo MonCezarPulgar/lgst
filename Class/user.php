@@ -384,6 +384,44 @@ Class User extends Database {
         $data = $this->conn->query($sql); // Use $this->conn instead of $this->db
         $row = $data->fetch_assoc(); // Fetch the result as an associative array
         return isset($row['Total_net_worth']) ? (float) $row['Total_net_worth'] : 0.0; // Corrected the key to match the SQL alias
-    }  
+    } 
+    public function getUsers() {
+        $sql = "SELECT Subscription_ID, FirstName, MiddleName, LastName FROM tbluser2";
+        $data = $this->conn->query($sql);
+        return $data;
+    }
+
+    public function getPlansReport($reportType) {
+        // Determine the date condition based on the report type
+        switch ($reportType) {
+            case 'daily':
+                $dateCondition = 'DATE(PlanStartDate) = CURDATE()';
+                break;
+            case 'weekly':
+                $dateCondition = 'YEARWEEK(PlanStartDate, 1) = YEARWEEK(CURDATE(), 1)';
+                break;
+            case 'monthly':
+                $dateCondition = 'YEAR(PlanStartDate) = YEAR(CURDATE()) AND MONTH(PlanStartDate) = MONTH(CURDATE())';
+                break;
+            default:
+                $dateCondition = '1=1'; // Default condition (should not be reached)
+                break;
+        }
+    
+        // SQL query to fetch plans based on the date condition
+        $sql = "SELECT FirstName, MiddleName, LastName, PlanName, PlanStartDate, ExpirationDate, Price, Description FROM tbluser2 WHERE $dateCondition";
+    
+        // Execute the query
+        $result = $this->conn->query($sql);
+    
+        // Check if query execution was successful
+        if ($result === false) {
+            // Handle error
+            throw new Exception("Error executing query: " . $this->conn->error);
+        }
+    
+        // Return result or do further processing
+        return $result;
+    }
 }
 ?>

@@ -333,7 +333,7 @@ if (isset($_POST['btnsignup'])) {
             const email = this.value;
             const message = document.getElementById('emailValidationMessage');
 
-            fetch('https://api.emailvalidator.net/api/verify?EmailAddress=' + encodeURIComponent(email) + '&APIKey=YOUR_API_KEY')
+            fetch('https://api.hunter.io/v2/email-verifier?email=${email}&api_key=${API_KEY}')
                 .then(response => response.json())
                 .then(data => {
                     if (data.is_valid) {
