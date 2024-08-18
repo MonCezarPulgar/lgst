@@ -379,6 +379,11 @@ Class User extends Database {
         }
         echo "</div>";
     }
-    
+    public function getTotalNetWorth(){
+        $sql = "SELECT SUM(Price) as Total_net_worth FROM tbluser2";
+        $data = $this->conn->query($sql); // Use $this->conn instead of $this->db
+        $row = $data->fetch_assoc(); // Fetch the result as an associative array
+        return isset($row['Total_net_worth']) ? (float) $row['Total_net_worth'] : 0.0; // Corrected the key to match the SQL alias
+    }  
 }
 ?>
