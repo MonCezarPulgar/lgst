@@ -102,11 +102,25 @@ Class User extends Database {
         $data = $this->conn->query($sql);
         return $data;
     }
-    public function displayusers(){
-        $sql = "select Subscription_ID, FirstName, MiddleName, LastName, Address, ZipCode, Birthdate, EmailAddress, Password, Role, Status from tbluser2";
-        $data = $this->conn->query($sql);
+    public function displayusers($planFilter = 'All') {
+        // Base SQL query
+        $sql = "SELECT Subscription_ID, FirstName, MiddleName, LastName, PlanName, Address, ZipCode, Birthdate, EmailAddress, Password, Role, Status FROM tbluser2";
+        
+        // Add filtering based on the plan selected
+        if ($planFilter !== 'All') {
+            $sql .= " WHERE PlanName = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param('s', $planFilter);
+            $stmt->execute();
+            $data = $stmt->get_result();
+            $stmt->close();
+        } else {
+            $data = $this->conn->query($sql);
+        }
+    
         return $data;
     }
+    
     public function deleteuser($subsid){
         $sql = "delete from tbluser2 where Subscription_ID = '$subsid'";
         $this->conn->query($sql);
