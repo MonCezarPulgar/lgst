@@ -146,16 +146,8 @@
                     <li><a class="dropdown-item text-white" href="updateplan.php">Plan Management</a></li>
                 </ul>
             </div>
-
-            <div class="dropdown mt-2">
-                <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-credit-card mx-2"></i> Payment
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item text-white" href="reports.php">Billing</a></li>
-                </ul>
-            </div>
             <a href="users-report.php"><i class="fa-solid fa-folder mx-2"></i> Reports</a>
+            <a href="subscription-report.php"><i class="fa-solid fa-folder mx-2"></i>Subscriptions</a>
             <div style="margin-top:130px;">
                 <a href=""><i class="fas fa-lock mx-2"></i> Change Password</a>
                 <a href="logout.php"><i class="fa-solid fa-right-from-bracket mx-2"></i> Log-Out</a>

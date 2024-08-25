@@ -180,56 +180,15 @@ try {
     </style>
 </head>
 <body>
-    <!-- Button to toggle the sidebar -->
-    <button class="btn-toggle-sidebar" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle sidebar">
-        <i class="fas fa-bars"></i>
-    </button>
-
-    <!-- Offcanvas Sidebar -->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
-        <div class="offcanvas-header">
-            <h5 id="sidebarLabel">PremTranslate</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <a href="admindashboard.php"><i class="fa-solid fa-folder mx-2"></i>  Admin Dashboard</a>
-            <a href="usermanagement.php"><i class="fa-solid fa-list-check mx-2"></i>  User Management</a>
-            <a href="languages.php"><i class="fa-solid fa-list-check mx-2"></i>  Language Management</a>
-            <a href="messages.php"><i class="fa-solid fa-message mx-2"></i> Messages</a>
-            <div class="dropdown mt-2">
-                <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-list-check mx-2"></i> Plan
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item text-white" href="plan.php">Add Plans</a></li>
-                    <li><a class="dropdown-item text-white" href="updateplan.php">Plan Management</a></li>
-                </ul>
-            </div>
-            <div class="dropdowns">
-                <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-credit-card mx-2"></i> Payment
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item text-white" href="reports.php">Billing</a></li>
-                </ul>
-            </div>
-            <div class="dropdowns">
-                <a class="dropdown-toggle d-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-circle-info mx-2"></i> Reports
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item text-white" href="language-reports.php">Language Report</a></li>
-                    <li><a class="dropdown-item text-white" href="users-report.php">Users Report</a></li>
-                </ul>
-            </div>
-            <a href="adminlogout.php"><i class="fa-solid fa-right-from-bracket mx-2"></i> Logout</a>
-        </div>
-    </div>
+    
+<?php
+include_once 'sidebar.php';
+?>
 
     <!-- Main Container -->
     <div class="main-container">
         <div class="container dashboard">
-            <h2>Plan Report</h2>
+            <h2>Subscriptions</h2>
             <div class="report-container">
                 <canvas id="planChart"></canvas>
             </div>
