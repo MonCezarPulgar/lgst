@@ -439,69 +439,62 @@ if(isset($_POST['btnrenew'])){
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-    const planDropdown = document.getElementById('modal-planname');
-    const durationTextbox = document.getElementById('modal-duration');
-    const priceTextbox = document.getElementById('modal-price');
+        const planDropdown = document.getElementById('modal-planname');
+        const durationTextbox = document.getElementById('modal-duration');
+        const priceTextbox = document.getElementById('modal-price');
 
-    // Function to update the duration based on selected plan
-    function updateDuration() {
-        const selectedPlan = planDropdown.value;
+        // Function to update the duration based on the selected plan
+        function updateDuration() {
+            const selectedPlan = planDropdown.value;
 
-        switch (selectedPlan) {
-            case 'Baby Plan':
-                durationTextbox.value = '1 Month';
-                break;
-            case 'Teen Plan':
-                durationTextbox.value = '6 Months';
-                break;
-            case 'Grand Plan':
-                durationTextbox.value = '1 Year';
-                break;
-            default:
-                durationTextbox.value = '';
-                break;
+            switch (selectedPlan) {
+                case 'Baby Plan':
+                    durationTextbox.value = '1 Month';
+                    break;
+                case 'Teen Plan':
+                    durationTextbox.value = '6 Months';
+                    break;
+                case 'Grand Plan':
+                    durationTextbox.value = '1 Year';
+                    break;
+                default:
+                    durationTextbox.value = '';
+                    break;
+            }
         }
-    }
 
-    // Function to update the price based on selected plan
-    function updatePrice() {
-        const selectedPlan = planDropdown.value;
+        // Function to update the price based on the selected plan
+        function updatePrice() {
+            const selectedPlan = planDropdown.value;
 
-        switch (selectedPlan) {
-            case 'Baby Plan':
-                priceTextbox.value = '39';
-                break;
-            case 'Teen Plan':
-                priceTextbox.value = '99';
-                break;
-            case 'Grand Plan':
-                priceTextbox.value = '129';
-                break;
-            default:
-                priceTextbox.value = '';
-                break;
+            switch (selectedPlan) {
+                case 'Baby Plan':
+                    priceTextbox.value = '39';
+                    break;
+                case 'Teen Plan':
+                    priceTextbox.value = '99';
+                    break;
+                case 'Grand Plan':
+                    priceTextbox.value = '129';
+                    break;
+                default:
+                    priceTextbox.value = '';
+                    break;
+            }
         }
-    }
 
-    // Add event listener to update duration and price when dropdown value changes
-    planDropdown.addEventListener('change', function() {
+        // Add event listener to update duration and price when dropdown value changes
+        planDropdown.addEventListener('change', function() {
+            updateDuration();
+            updatePrice();
+        });
+
+        // Initialize duration and price based on the default selected plan
         updateDuration();
         updatePrice();
     });
-
-    // Initialize duration and price based on the default selected plan
-    updateDuration();
-    updatePrice();
-});
-
-
-        // Add event listener to update duration when dropdown value changes
-        planDropdown.addEventListener('change', updateDuration);
-
-        // Initialize duration based on the default selected plan
-        updateDuration();
-    });
 </script>
+
 
     
 </body>
