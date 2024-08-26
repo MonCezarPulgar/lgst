@@ -635,6 +635,7 @@ contact-text{
 						<p>
 							<input type="password" id="pw" name="pw" placeholder="Password" required>
 						</p>
+                        <p><a href="forgotpassword.php">Forgot Password?</a></p>
 						<p>
                         <button type="submit" name="btnlogin">Login</button>
 						</p>

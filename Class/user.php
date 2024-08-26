@@ -423,5 +423,48 @@ Class User extends Database {
         // Return result or do further processing
         return $result;
     }
+    public function storeResetToken($email, $token) {
+        $stmt = $this->conn->prepare("INSERT INTO password_resets (email, token) VALUES (?, ?)");
+        $stmt->bind_param("ss", $email, $token);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    // Add this method to get user by email
+    public function getUserByEmail($email) {
+        $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result->fetch_assoc();
+    }
+
+    // Add this method to verify the token
+    public function verifyResetToken($token) {
+        $stmt = $this->conn->prepare("SELECT * FROM password_resets WHERE token = ?");
+        $stmt->bind_param("s", $token);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result->fetch_assoc();
+    }
+
+    // Add this method to update the password
+    public function updatePassword($email, $newPassword) {
+        $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+        $stmt = $this->conn->prepare("UPDATE users SET password = ? WHERE email = ?");
+        $stmt->bind_param("ss", $hashedPassword, $email);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    // Add this method to delete the token after successful reset
+    public function deleteResetToken($token) {
+        $stmt = $this->conn->prepare("DELETE FROM password_resets WHERE token = ?");
+        $stmt->bind_param("s", $token);
+        $stmt->execute();
+        $stmt->close();
+    }
 }
 ?>
