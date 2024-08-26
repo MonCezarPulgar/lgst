@@ -21,13 +21,13 @@
                 // Delete the reset token
                 $u->deleteResetToken($token);
 
-                echo '<script>alert("Your password has been reset successfully."); window.location.href = "login.php";</script>';
+                echo '<script>alert("Your password has been reset successfully."); window.location.href = "index.php";</script>';
             }
         } else {
-            echo '<script>alert("Invalid or expired token."); window.location.href = "login.php";</script>';
+            echo '<script>alert("Invalid or expired token."); window.location.href = "index.php";</script>';
         }
     } else {
-        echo '<script>alert("No token provided."); window.location.href = "login.php";</script>';
+        echo '<script>alert("No token provided."); window.location.href = "index.php";</script>';
     }
 ?>
 <!DOCTYPE html>
