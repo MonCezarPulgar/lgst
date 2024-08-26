@@ -149,7 +149,6 @@
             <a href="users-report.php"><i class="fa-solid fa-folder mx-2"></i> Reports</a>
             <a href="subscription-report.php"><i class="fa-solid fa-bell mx-2"></i>Subscriptions</a>
             <div style="margin-top:130px;">
-                <a href=""><i class="fas fa-lock mx-2"></i> Change Password</a>
                 <a href="logout.php"><i class="fa-solid fa-right-from-bracket mx-2"></i> Log-Out</a>
             </div>
         </div>
