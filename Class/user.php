@@ -432,7 +432,7 @@ Class User extends Database {
 
     // Add this method to get user by email
     public function getUserByEmail($email) {
-        $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt = $this->conn->prepare("SELECT * FROM tbluser2 WHERE EmailAddress = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
