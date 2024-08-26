@@ -16,10 +16,10 @@
             $u->storeResetToken($email, $token);
 
             // Send reset link via email
-            $resetLink = "http://yourdomain.com/resetpassword.php?token=$token";
+            $resetLink = "http://language-translator.com/resetpassword.php?token=$token";
             $subject = "Password Reset Request";
             $message = "Click the following link to reset your password: $resetLink";
-            $headers = "From: no-reply@yourdomain.com";
+            $headers = "From: no-reply@language-translator.com";
 
             if (mail($email, $subject, $message, $headers)) {
                 echo '<script>alert("A password reset link has been sent to your email address.");</script>';
