@@ -453,7 +453,7 @@ Class User extends Database {
     // Add this method to update the password
     public function updatePassword($email, $newPassword) {
         $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-        $stmt = $this->conn->prepare("UPDATE users SET password = ? WHERE email = ?");
+        $stmt = $this->conn->prepare("UPDATE tbluser2 SET Password = ? WHERE EmailAddress = ?");
         $stmt->bind_param("ss", $hashedPassword, $email);
         $stmt->execute();
         $stmt->close();
