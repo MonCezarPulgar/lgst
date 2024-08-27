@@ -450,17 +450,14 @@ Class User extends Database {
         return $result->fetch_assoc();
     }
 
-    // Function to update the password
     public function updatePassword($email, $newPassword) {
-        // Hash the new password
-        $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-        
-        // Prepare and execute the update query
+        // Do not hash the password
         $stmt = $this->conn->prepare("UPDATE tbluser2 SET Password = ? WHERE EmailAddress = ?");
-        $stmt->bind_param("ss", $hashedPassword, $email);
+        $stmt->bind_param("ss", $newPassword, $email);
         $stmt->execute();
         $stmt->close();
     }
+    
 
     // Add this method to delete the token after successful reset
     public function deleteResetToken($token) {

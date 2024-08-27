@@ -19,43 +19,38 @@
             $un = $_POST['un'];
             $pw = $_POST['pw'];
             $data = $u->Login($un, $pw);
-        
-            if ($data) {
-                if ($row = $data->fetch_assoc()) {
-                    $_SESSION['role'] = $row['Role'];
-                    $_SESSION['id'] = $row['Subscription_ID'];
-                    $_SESSION['status'] = $row['Status'];
-                    if ($row['Role'] == 'Admin') {
+
+            if ($row = $data->fetch_assoc()) {
+                $_SESSION['role'] = $row['Role'];
+                $_SESSION['id'] = $row['Subscription_ID'];
+                $_SESSION['status'] = $row['Status'];
+                if ($row['Role'] == 'Admin') {
+                    echo '
+                        <script>
+                            window.open("admindashboard.php","_self");
+                        </script>';
+                } else if ($row['Role'] == 'Tourist') {
+                    echo '
+                        <script>
+                            window.location.href = "userprofile.php";
+                        </script>';
+                } else if ($row['Role'] == 'Employee') {
+                    if ($row['Status'] == 'Active') {
                         echo '<script>
-                                window.open("admindashboard.php","_self");
-                              </script>';
-                    } else if ($row['Role'] == 'Tourist') {
+                                window.location.href = "profile.php";
+                            </script>';
+                    } else {
                         echo '<script>
-                                window.location.href = "userprofile.php";
-                              </script>';
-                    } else if ($row['Role'] == 'Employee') {
-                        if ($row['Status'] == 'Active') {
-                            echo '<script>
-                                    window.location.href = "profile.php";
-                                  </script>';
-                        } else {
-                            echo '<script>
-                                    alert("You are unauthorized to access this account!");
-                                  </script>';
-                        }
+                                alert("You are unauthorized to access this account!");
+                            </script>';
                     }
-                } else {
-                    echo '<script>
-                            alert("Incorrect Username or Password!");
-                          </script>';
                 }
             } else {
                 echo '<script>
-                        alert("There was an error processing your request. Please try again later.");
-                      </script>';
+                        alert("Incorrect Username or Password!");
+                    </script>';
             }
         }
-        
         ?>
 <!DOCTYPE html>
 <html lang="en">
