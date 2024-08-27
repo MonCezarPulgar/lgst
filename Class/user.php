@@ -147,52 +147,11 @@ Class User extends Database {
 			 return $this->conn->error;
 		 }
 	}
-    public function Login($un, $pw) {
-        try {
-            // Prepare a statement to securely fetch the hashed password from the database
-            $stmt = $this->conn->prepare("SELECT * FROM tbluser2 WHERE EmailAddress = ?");
-            if (!$stmt) {
-                throw new Exception("Preparation failed: " . $this->conn->error);
-            }
-    
-            $stmt->bind_param("s", $un);
-            if (!$stmt->execute()) {
-                throw new Exception("Execution failed: " . $stmt->error);
-            }
-    
-            // Get the result and fetch the user's data
-            $result = $stmt->get_result();
-            if (!$result) {
-                throw new Exception("Getting result failed: " . $stmt->error);
-            }
-    
-            $user = $result->fetch_assoc();
-            $stmt->close();
-    
-            // Check if a user with that email exists
-            if ($user) {
-                // Verify the password
-                if (password_verify($pw, $user['Password'])) {
-                    // Password is correct, return user data
-                    return $user;
-                } else {
-                    // Password is incorrect
-                    throw new Exception("Incorrect password provided.");
-                }
-            } else {
-                // User with that email does not exist
-                throw new Exception("User with email $un does not exist.");
-            }
-        } catch (Exception $e) {
-            // Output the detailed error message for debugging purposes
-            echo "Detailed Error: " . $e->getMessage();
-            return false;
-        }
+    public function Login($un, $pw){
+        $sql="select * from tbluser2 where EmailAddress='$un' and Password='$pw'";
+        $data=$this->conn->query($sql);
+        return $data;
     }
-    
-
-
-    
     public function addlanguage($language, $country, $language_code) {
 		$lid = uniqid();
 		$sql = "INSERT INTO languages (Language_ID, Language, Country, LanguageCode) VALUES ('$lid', '$language', '$country', '$language_code')";
