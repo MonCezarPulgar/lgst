@@ -147,11 +147,29 @@ Class User extends Database {
 			 return $this->conn->error;
 		 }
 	}
-    public function Login($un, $pw){
-        $sql="select * from tbluser2 where EmailAddress='$un' and Password='$pw'";
-        $data=$this->conn->query($sql);
-        return $data;
+    public function Login($un, $pw) {
+        // Prepare a statement to securely fetch the hashed password from the database
+        $stmt = $this->conn->prepare("SELECT * FROM tbluser2 WHERE EmailAddress = ?");
+        $stmt->bind_param("s", $un);
+        $stmt->execute();
+        
+        // Get the result and fetch the user's data
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+        
+        // Close the statement
+        $stmt->close();
+    
+        // Check if a user with that email exists and if the password matches the hashed password
+        if ($user && password_verify($pw, $user['Password'])) {
+            // Password is correct, return user data or true to indicate success
+            return $user; // Or `return true;` if you only need to check if login is successful
+        } else {
+            // Password is incorrect or user doesn't exist
+            return false;
+        }
     }
+    
     public function addlanguage($language, $country, $language_code) {
 		$lid = uniqid();
 		$sql = "INSERT INTO languages (Language_ID, Language, Country, LanguageCode) VALUES ('$lid', '$language', '$country', '$language_code')";
@@ -450,10 +468,13 @@ Class User extends Database {
         return $result->fetch_assoc();
     }
 
-    // Add this method to update the password
+    // Function to update the password
     public function updatePassword($email, $newPassword) {
+        // Hash the new password
         $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-        $stmt = $this->conn->prepare("UPDATE tbluser2 SET Password = '$newPassword' WHERE EmailAddress = '$email'");
+        
+        // Prepare and execute the update query
+        $stmt = $this->conn->prepare("UPDATE tbluser2 SET Password = ? WHERE EmailAddress = ?");
         $stmt->bind_param("ss", $hashedPassword, $email);
         $stmt->execute();
         $stmt->close();
