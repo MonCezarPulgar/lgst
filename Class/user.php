@@ -148,27 +148,45 @@ Class User extends Database {
 		 }
 	}
     public function Login($un, $pw) {
-        // Prepare a statement to securely fetch the hashed password from the database
-        $stmt = $this->conn->prepare("SELECT * FROM tbluser2 WHERE EmailAddress = ?");
-        $stmt->bind_param("s", $un);
-        $stmt->execute();
-        
-        // Get the result and fetch the user's data
-        $result = $stmt->get_result();
-        $user = $result->fetch_assoc();
-        
-        // Close the statement
-        $stmt->close();
+        try {
+            // Prepare a statement to securely fetch the hashed password from the database
+            $stmt = $this->conn->prepare("SELECT * FROM tbluser2 WHERE EmailAddress = ?");
+            if (!$stmt) {
+                throw new Exception("Preparation failed: " . $this->conn->error);
+            }
     
-        // Check if a user with that email exists and if the password matches the hashed password
-        if ($user && password_verify($pw, $user['Password'])) {
-            // Password is correct, return user data or true to indicate success
-            return $user; // Or `return true;` if you only need to check if login is successful
-        } else {
-            // Password is incorrect or user doesn't exist
-            return false;
+            $stmt->bind_param("s", $un);
+            $stmt->execute();
+    
+            // Get the result and fetch the user's data
+            $result = $stmt->get_result();
+            if (!$result) {
+                throw new Exception("Getting result failed: " . $stmt->error);
+            }
+    
+            $user = $result->fetch_assoc();
+            $stmt->close();
+    
+            // Check if a user with that email exists
+            if ($user) {
+                // Verify the password
+                if (password_verify($pw, $user['Password'])) {
+                    // Password is correct, return user data
+                    return $user;
+                } else {
+                    // Password is incorrect
+                    return false;
+                }
+            } else {
+                // User with that email does not exist
+                return false;
+            }
+        } catch (Exception $e) {
+            // Output the error message for debugging purposes
+            die("Error: " . $e->getMessage());
         }
     }
+    
     
     public function addlanguage($language, $country, $language_code) {
 		$lid = uniqid();
